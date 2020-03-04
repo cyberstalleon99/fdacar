@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for municipality_or_city in cities_or_municipalities %}
+<option value="{{ municipality_or_city.pk }}">{{ municipality_or_city.name }}</option>
+{% endfor %}

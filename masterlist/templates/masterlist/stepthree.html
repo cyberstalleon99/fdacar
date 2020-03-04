@@ -1,0 +1,88 @@
+{% extends 'masterlist/partial/add-establishment-base.html' %}
+{% load widget_tweaks %}
+{% block addsteps %}
+<form class="form-horizontal" method="post" action="{% url 'masterlist:stepthree' %}">
+    {% csrf_token %}
+    <div class="title">
+        <strong>Authorized Officer</strong>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.authorized_firstname.label }}</label>
+        <div class="col-sm-9">
+            {{ form.authorized_firstname|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.authorized_lastname.label }}</label>
+        <div class="col-sm-9">
+            {{ form.authorized_lastname|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.authorized_middleinit.label }}</label>
+        <div class="col-sm-9">
+            {{ form.authorized_middleinit|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.authorized_desig.label }}</label>
+        <div class="col-sm-9">
+            {{ form.authorized_desig|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+
+    <div class="title">
+        <strong>Qualified Person</strong>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.qualified_firstname.label }}</label>
+        <div class="col-sm-9">
+            {{ form.qualified_firstname|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.qualified_lastname.label }}</label>
+        <div class="col-sm-9">
+            {{ form.qualified_lastname|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.qualified_middleinit.label }}</label>
+        <div class="col-sm-9">
+            {{ form.qualified_middleinit|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.qualified_desig.label }}</label>
+        <div class="col-sm-9">
+            {{ form.qualified_desig|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+        <div class="line"></div>
+        <div class="form-group row">
+        <label class="col-sm-3 form-control-label">{{ form.status.label }}</label>
+        <div class="col-sm-9">
+            {{ form.status|add_class:'form-control' }}
+        </div>
+    </div>
+    <div class="line"></div>
+
+    <div class="form-group row">
+        <div class="col-sm-9 ml-auto">
+            <form class="form-horizontal" method="post" action="{% url 'masterlist:stepone' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Back</button>
+            </form>
+            <button type="submit" class="btn btn-primary">Next Step</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
