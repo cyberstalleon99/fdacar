@@ -25,6 +25,7 @@
                             <th>LTO No.</th>
                             <th>Expiry</th>
                             <th>Address</th>
+                            <th>Folder No.</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,7 @@
                             <td>{{est.lto.lto_number}}</td>
                             <td>{{est.lto.expiry.date}}</td>
                             <td>{{est.plant_address.full_address}}</td>
+                            <td>{{est.folder_id}}</td>
                         </tr>
                         {% endfor %}
                         </tbody>

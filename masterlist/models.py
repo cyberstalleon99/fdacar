@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from . import constants
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -150,6 +151,7 @@ class Establishment(models.Model):
         ('A', 'Active')
     ]
     status = models.CharField(max_length=1, choices=EST_STATUS, null=True, blank=True)
+    folder_id = models.IntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -161,36 +163,6 @@ class QualifiedPerson(Person):
     def __str__(self):
         return self.full_name()
 
-class Inspection(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    INSPECTION_TYPES = [
-        ('PLI', 'Post Licensing Inspection'),
-        ('REN', 'Renewal of LTO'),
-        ('INI', 'Initial Inspection'),
-        ('RTN', 'Routine Inspection')
-    ]
-    type_of_inspection = models.CharField(max_length=20, choices=INSPECTION_TYPES)
-    date_inspected = models.DateTimeField('date_inspected')
-    frequency_of_inspection = models.IntegerField(default=0)
-    RISK_RATINGS = [
-        ('Low', 'Low'),
-        ('Medium', 'Medium'),
-        ('High', 'High')
-    ]
-    risk_rating = models.CharField(max_lengt=7, choices=RISK_RATINGS)
-    date_of_followup_inspection = models.DateTimeField('date_followup_inspection')
-    INSPECTORS = [
-        ('GGM', 'Giovanni G. Monang'),
-        ('RTB', 'Rochelle T. Bayanes'),
-        ('NDN', 'Nadia D. Navarro'),
-        ('SOP', 'Saturnina O. Pandosen')
-    ]
-    inspector = models.CharField(max_length=3, choices=INSPECTORS)
-    remarks = models.CharField(max_length=200, null=True)
-
-    def __str__(self):
-        return self.date_inspected
-
 class CapaPreparator(Person):
     # designation =
     pass
@@ -198,10 +170,10 @@ class CapaPreparator(Person):
 class Capa(models.Model):
     start_date = models.DateTimeField('start_date')
     prepared_by = models.ForeignKey(CapaPreparator, on_delete=models.SET_NULL, null=True, blank=True)
-    approved_by = models.CharField(max_length=10, choices=Inspection.INSPECTORS)
+    approved_by = models.CharField(max_length=10, choices=constants.INSPECTORS)
     date_submitted = models.DateTimeField('date_submitted')
     date_approved = models.DateTimeField('date_approved')
-    remks = models.CharField(max_length=200)
+    remarks = models.CharField(max_length=200)
 
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
@@ -217,6 +189,32 @@ class CapaDeficiency(models.Model):
     proposed_comletion_date = models.DateTimeField()
     inspector_comment = models.CharField(max_length=200)
     accepted = models.BooleanField(default=False)
+
+class Inspection(models.Model):
+    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
+    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True)
+    INSPECTION_TYPES = [
+        ('PLI', 'Post Licensing Inspection'),
+        ('REN', 'Renewal of LTO'),
+        ('INI', 'Initial Inspection'),
+        ('RTN', 'Routine Inspection')
+    ]
+    type_of_inspection = models.CharField(max_length=20, choices=INSPECTION_TYPES)
+    date_inspected = models.DateTimeField('date_inspected')
+    frequency_of_inspection = models.IntegerField(default=0)
+    RISK_RATINGS = [
+        ('Low', 'Low'),
+        ('Medium', 'Medium'),
+        ('High', 'High')
+    ]
+    risk_rating = models.CharField(max_length=7, choices=RISK_RATINGS, null=True)
+    date_of_followup_inspection = models.DateTimeField('date_followup_inspection')
+    inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
+    remarks = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.date_inspected
+
 
 
 

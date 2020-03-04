@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, \
-    PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, Inspection
+    PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, Inspection, Capa, CapaDeficiency, CapaPreparator
 
 # admin.site.register(ProductType)
 admin.site.register(Establishment)
@@ -18,6 +18,9 @@ admin.site.register(WarehouseAddress)
 admin.site.register(OfficeAddress)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(Inspection)
+admin.site.register(Capa)
+admin.site.register(CapaDeficiency)
+admin.site.register(CapaPreparator)
 # class EstablishmentAdmin(admin.ModelAdmin):
 #     # fieldsets = [
 #     #     ('LTO Information', {'fields': ['lto'], 'classes': ['collapse']}),
