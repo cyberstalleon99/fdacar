@@ -37,6 +37,8 @@ class Person(models.Model):
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     middle_initial = models.CharField(max_length=1, null=True, blank=True)
+    email = models.EmailField(max_length=250, null=True)
+    mobile = models.CharField(max_length=11, null=True, blank=True)
 
     def __str__(self):
         return self.full_name()
@@ -61,14 +63,6 @@ class AuthorizedOfficer(Person):
 
     def __str__(self):
         return self.full_name()
-
-class Lto(models.Model):
-    issuance = models.DateTimeField('date issued')
-    lto_number = models.CharField(max_length=20)
-    expiry = models.DateTimeField('expiry date')
-
-    def __str__(self):
-        return self.lto_number
 
 class Region(models.Model):
     name = models.CharField(max_length=30)
@@ -124,9 +118,9 @@ class Establishment(models.Model):
     application = models.CharField(max_length=1, choices=APPLICATIONS)
     name = models.CharField(max_length=60)
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
-    center = models.CharField(max_length=6)
+    center = models.CharField(max_length=6, choices=constants.CENTERS)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
-    lto = models.OneToOneField(Lto, on_delete=models.CASCADE)
+    # lto = models.ForeignKey(Lto, on_delete=models.CASCADE)
     specific_activity = models.ManyToManyField(SpecificActivity)
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
@@ -151,10 +145,19 @@ class Establishment(models.Model):
         ('A', 'Active')
     ]
     status = models.CharField(max_length=1, choices=EST_STATUS, null=True, blank=True)
-    folder_id = models.IntegerField(null=True)
+    folder_id = models.CharField(max_length=10, null=True)
 
     def __str__(self):
         return self.name
+
+class Lto(models.Model):
+    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    issuance = models.DateTimeField('date issued')
+    lto_number = models.CharField(max_length=20)
+    expiry = models.DateTimeField('expiry date')
+
+    def __str__(self):
+        return self.lto_number
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
@@ -175,11 +178,16 @@ class Capa(models.Model):
     date_approved = models.DateTimeField('date_approved')
     remarks = models.CharField(max_length=200)
 
+    def __str__(self):
+        dateStr = self.start_date.strftime("%d %b %Y ")
+        return dateStr
+
+
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.CharField(max_length=200)
     action = models.CharField(max_length=200)
-    evidence = models.FileField()
+    evidence = models.FileField(blank=True)
     CAPA_TYPES = [
         ('Critical', 'Critical'),
         ('Major', 'Major'),
@@ -187,8 +195,11 @@ class CapaDeficiency(models.Model):
     ]
     type = models.CharField(max_length=10, choices=CAPA_TYPES)
     proposed_comletion_date = models.DateTimeField()
-    inspector_comment = models.CharField(max_length=200)
+    inspector_comment = models.CharField(max_length=200, blank=True)
     accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.pk)
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
@@ -210,17 +221,8 @@ class Inspection(models.Model):
     risk_rating = models.CharField(max_length=7, choices=RISK_RATINGS, null=True)
     date_of_followup_inspection = models.DateTimeField('date_followup_inspection')
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
-    remarks = models.CharField(max_length=200, null=True)
+    remarks = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return self.date_inspected
-
-
-
-
-
-
-
-
-
-
+        dateStr = self.date_inspected.strftime("%d %b %Y ")
+        return dateStr

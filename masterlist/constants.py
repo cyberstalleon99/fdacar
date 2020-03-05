@@ -11,3 +11,10 @@ INSPECTORS = [
     ('NDN', 'Nadia D. Navarro'),
     ('SOP', 'Saturnina O. Pandosen')
 ]
+
+CENTERS = [
+    ('CFRR', 'CFRR'),
+    ('CDRR', 'CDRR'),
+    ('CCRR', 'CCRR'),
+    ('CDRRHR', 'CDRRHR')
+]

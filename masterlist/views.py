@@ -20,6 +20,7 @@ class EstablishmentListView(ListView):
     def get_queryset(self):
         return Establishment.objects.all()
 
+
 class EstablishmentDetailView(DetailView):
     template_name = 'masterlist/establishment-detail.html'
     context_object_name = 'establishment'
@@ -47,15 +48,16 @@ class StepOneView(FormView):
         issuance_val = self.request.POST['issuance']
         lto_number_val = self.request.POST['lto_number']
         expiry_val = self.request.POST['expiry']
-        newlto = Lto(issuance=issuance_val, lto_number=lto_number_val, expiry=expiry_val)
-        newlto.save()
 
         form = StepOneForm(self.request.POST)
         newform = form.save(commit=False)
-        newform.lto = newlto
+        # newform.lto = newlto
         newform.save()
         form.save_m2m()
         self.request.session['est_id'] = newform.id
+        est = Establishment.objects.get(pk=newform.id)
+        newlto = Lto(establishment=est, issuance=issuance_val, lto_number=lto_number_val, expiry=expiry_val)
+        newlto.save()
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -127,6 +129,7 @@ class StepThreeView(FormView):
                        middle_initial=self.request.POST['qualified_middleinit'],
                        designation=QualifiedPersonDesignation.objects.get(pk=self.request.POST['qualified_desig']), establishment=curr_est).save()
         curr_est.save()
+        return super().form_valid(form)
 
     # Redirect to Tool List after successful registration
     def get_success_url(self):

@@ -4,10 +4,6 @@
     <list default="true" id="9ee438be-4930-49c0-997b-d1114a87a705" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/masterlist/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/masterlist/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/masterlist/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/masterlist/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/masterlist/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/masterlist/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/masterlist/templates/masterlist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/masterlist/templates/masterlist/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +16,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/establishment-detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="117">
               <caret line="9" column="76" selection-start-line="9" selection-start-column="76" selection-end-line="9" selection-end-column="76" />
             </state>
           </provider>
@@ -29,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/masterlist/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="211" column="65" selection-start-line="211" selection-start-column="65" selection-end-line="211" selection-end-column="65" />
+            <state relative-caret-position="337">
+              <caret line="131" column="88" selection-start-line="131" selection-start-column="88" selection-end-line="131" selection-end-column="88" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -41,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/constants.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="65">
               <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
             </state>
           </provider>
@@ -50,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
+            <state relative-caret-position="351">
               <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
             </state>
           </provider>
@@ -59,7 +55,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1407">
+            <state relative-caret-position="871">
               <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
             </state>
           </provider>
@@ -68,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="65">
               <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -80,7 +76,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/masterlist/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="195">
               <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
@@ -180,7 +176,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
+    <option name="x" value="1790" />
+    <option name="y" value="-8" />
     <option name="width" value="980" />
     <option name="height" value="1090" />
   </component>
@@ -194,24 +191,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="fdacarv1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fdacarv1" type="462c0819:PsiDirectoryNode" />
+              <item name="fdacar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fdacar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="fdacarv1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fdacarv1" type="462c0819:PsiDirectoryNode" />
-              <item name="fdacarv1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fdacarv1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fdacarv1" type="462c0819:PsiDirectoryNode" />
+              <item name="fdacar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fdacar" type="462c0819:PsiDirectoryNode" />
               <item name="masterlist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fdacarv1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fdacarv1" type="462c0819:PsiDirectoryNode" />
-              <item name="masterlist" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -223,9 +209,9 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/masterlist/templates/masterlist" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -265,10 +251,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
-    <editor active="true" />
+    <frame x="1912" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14531043" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17459138" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -510,16 +495,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/establishment-detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="9" column="76" selection-start-line="9" selection-start-column="76" selection-end-line="9" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/masterlist/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/masterlist/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1407">
+        <state relative-caret-position="871">
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/masterlist/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="65">
           <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
@@ -527,16 +533,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/establishment-detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="76" selection-start-line="9" selection-start-column="76" selection-end-line="9" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/masterlist/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="195">
           <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
@@ -544,24 +543,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/masterlist/templates/masterlist/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/masterlist/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="53" selection-start-line="5" selection-start-column="53" selection-end-line="5" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/masterlist/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="211" column="65" selection-start-line="211" selection-start-column="65" selection-end-line="211" selection-end-column="65" />
+        <state relative-caret-position="337">
+          <caret line="131" column="88" selection-start-line="131" selection-start-column="88" selection-end-line="131" selection-end-column="88" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
