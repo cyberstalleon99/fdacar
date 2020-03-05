@@ -17,7 +17,7 @@
                 <span>{{spec_act.name}}</span><br>
                 {% endfor %}
             </a>
-            <div class="contributions">{{establishment.lto}} <br> {{establishment.lto.expiry.date}}</div> <br><br/>
+            <div class="contributions">{{establishment.lto.lto_number}} <br> {{establishment.lto.expiry.date}}</div> <br><br/>
             <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">Update</a><br/>
             <a href="#">Add branch</a>
             <div class="details d-flex">

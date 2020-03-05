@@ -58,12 +58,6 @@ class AuthorizedOfficerDesignation(models.Model):
     def __str__(self):
         return self.name
 
-class AuthorizedOfficer(Person):
-    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.full_name()
-
 class Region(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=50, null=True)
@@ -137,7 +131,7 @@ class Establishment(models.Model):
 
     # Added radiologist as a Designation for Qualified Person; not as a separate model
     # radiologist = models.ForeignKey(Radiologist, on_delete=models.CASCADE, null=True, blank=True)
-    authorized_officer = models.ForeignKey(AuthorizedOfficer, on_delete=models.CASCADE, null=True, blank=True)
+    # authorized_officer = models.ForeignKey(AuthorizedOfficer, on_delete=models.CASCADE, null=True, blank=True)
     # qualified_person = models.ForeignKey(QualifiedPerson, on_delete=models.CASCADE, null=True, blank=True)
     # inspection = models.ForeignKey(Inspection, on_delete=models.CASCADE, null=True, blank=True)
     EST_STATUS = [
@@ -149,6 +143,13 @@ class Establishment(models.Model):
 
     def __str__(self):
         return self.name
+
+class AuthorizedOfficer(Person):
+    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.full_name()
 
 class Lto(models.Model):
     establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)

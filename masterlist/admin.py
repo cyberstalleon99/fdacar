@@ -37,13 +37,19 @@ admin.site.register(Capa, CapaAdmin)
 class LtoInline(admin.StackedInline):
     model=Lto
 
-# admin.site.register(Lto)
+class AuthorizedOfficerInline(admin.StackedInline):
+    model=AuthorizedOfficer
+
+class QualifiedPersonInline(admin.TabularInline):
+    model=QualifiedPerson
+    extra=2
+
 class EstablishmentAdmin(admin.ModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['application', 'name', 'center', 'product_type', 'primary_activity',
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
     ]
 
-    inlines = [LtoInline]
+    inlines = [LtoInline, AuthorizedOfficerInline, QualifiedPersonInline]
 
 admin.site.register(Establishment, EstablishmentAdmin)
