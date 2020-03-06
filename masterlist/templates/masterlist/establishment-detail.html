@@ -11,7 +11,7 @@
             </div>
             <a href="#" class="user-title">
                 <h3 class="h5">{{establishment.name}}</h3>
-                <span>{{establishment.authorized_officer.full_name}}</span> <br />
+                <span>{{establishment.authorizedofficer.full_name}}</span> <br />
                 <br />
                 {% for spec_act in establishment.specific_activity.all %}
                 <span>{{spec_act.name}}</span><br>
@@ -21,9 +21,9 @@
             <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">Update</a><br/>
             <a href="#">Add branch</a>
             <div class="details d-flex">
-              <div class="item"><i class="icon-info"></i><strong>{{establishment.inspection_set.all.count}}</strong></div>
-              <div class="item"><i class="fa fa-gg"></i><strong>420</strong></div>
-              <div class="item"><i class="icon-flow-branch"></i><strong>272</strong></div>
+              <div class="item" data-toggle="tooltip" title="Number of Inspections"><i class="icon-info"></i><strong>{{establishment.inspection_set.all.count}}</strong></div>
+              <div class="item" data-toggle="tooltip" title="Month/s before expiration"><i class="fa fa-gg"></i><strong>420</strong></div>
+              <div class="item" data-toggle="tooltip" title="Status"><i class="icon-flow-branch"></i><strong>{{establishment.status}}</strong></div>
             </div>
         </div>
     </div>
@@ -57,19 +57,23 @@
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Plant Address</th>
-                        <td class="text-left">{{establishment.plant_address.full_address}}</td>
+                        <td class="text-left">{{establishment.plantaddress.full_address}}</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Warehouse Address</th>
-                        <td class="text-left">{{establishment.warehouse_address.full_address}}</td>
+                        <td class="text-left">
+                          {% for warehouse in establishment.warehouseaddress_set.all %}
+                          {{warehouse.full_address}} <br/>
+                          {% endfor %}
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Office Address</th>
-                        <td class="text-left">{{establishment.office_address.full_address}}</td>
+                        <td class="text-left">{{establishment.officeaddress.full_address}}</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Authorized Officer</th>
-                        <td class="text-left">{{establishment.authorized_officer.full_name}} ({{establishment.authorized_officer.email}}, {{establishment.authorized_officer.mobile}})</td>
+                        <td class="text-left">{{establishment.authorizedofficer.full_name}} ({{establishment.authorizedofficer.email}}, {{establishment.authorizedofficer.mobile}})</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Qualified Personnel</th>
@@ -112,7 +116,11 @@
                         {% for inspection in inspections %}
                         <tr>
                             <td><a href="{% url 'admin:masterlist_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
+                            {% if inspection.capa %}
                             <td><a href="{% url 'admin:masterlist_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
+                            {% else %}
+                            <td>None</td>
+                            {% endif %}
                             <td>{{inspection.inspector}}</td>
                             <td>{{inspection.type_of_inspection}}</td>
                             <td>{{inspection.frequency_of_inspection}}</td>

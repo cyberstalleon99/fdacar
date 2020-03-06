@@ -91,58 +91,34 @@ class Address(models.Model):
     def full_address(self):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
-class PlantAddress(Address):
-    pass
-
-class WarehouseAddress(Address):
-    pass
-
-class OfficeAddress(Address):
-    pass
-
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
-
-    # Step One Form Fields
-    APPLICATIONS = [
-        ('I', 'Initial'),
-        ('R', 'Renewal'),
-        ('V', 'Variation')
-    ]
-    application = models.CharField(max_length=1, choices=APPLICATIONS)
+    application = models.CharField(max_length=1, choices=constants.APPLICATIONS)
     name = models.CharField(max_length=60)
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
-    # lto = models.ForeignKey(Lto, on_delete=models.CASCADE)
     specific_activity = models.ManyToManyField(SpecificActivity)
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     remarks = models.CharField(max_length=100, null=True, blank=True)
-
-    # Step Two A Form Fields
-    plant_address = models.ForeignKey(PlantAddress, on_delete=models.CASCADE, null=True, blank=True)
-
-    # Step Two B Form Fields
-    warehouse_address = models.ForeignKey(WarehouseAddress, on_delete=models.CASCADE, null=True, blank=True)
-
-    # Step Two C Form Fields
-    office_address = models.ForeignKey(OfficeAddress, on_delete=models.CASCADE, null=True, blank=True)
-
-    # Added radiologist as a Designation for Qualified Person; not as a separate model
-    # radiologist = models.ForeignKey(Radiologist, on_delete=models.CASCADE, null=True, blank=True)
-    # authorized_officer = models.ForeignKey(AuthorizedOfficer, on_delete=models.CASCADE, null=True, blank=True)
-    # qualified_person = models.ForeignKey(QualifiedPerson, on_delete=models.CASCADE, null=True, blank=True)
-    # inspection = models.ForeignKey(Inspection, on_delete=models.CASCADE, null=True, blank=True)
-    EST_STATUS = [
-        ('I', 'Inactive'),
-        ('A', 'Active')
-    ]
-    status = models.CharField(max_length=1, choices=EST_STATUS, null=True, blank=True)
+    status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True)
 
     def __str__(self):
         return self.name
+
+class PlantAddress(Address):
+    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
+    pass
+
+class WarehouseAddress(Address):
+    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
+    pass
+
+class OfficeAddress(Address):
+    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
+    pass
 
 class AuthorizedOfficer(Person):
     establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
@@ -189,12 +165,8 @@ class CapaDeficiency(models.Model):
     description = models.CharField(max_length=200)
     action = models.CharField(max_length=200)
     evidence = models.FileField(blank=True)
-    CAPA_TYPES = [
-        ('Critical', 'Critical'),
-        ('Major', 'Major'),
-        ('Others', 'Others')
-    ]
-    type = models.CharField(max_length=10, choices=CAPA_TYPES)
+
+    type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
     proposed_comletion_date = models.DateTimeField()
     inspector_comment = models.CharField(max_length=200, blank=True)
     accepted = models.BooleanField(default=False)
@@ -204,22 +176,11 @@ class CapaDeficiency(models.Model):
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True)
-    INSPECTION_TYPES = [
-        ('PLI', 'Post Licensing Inspection'),
-        ('REN', 'Renewal of LTO'),
-        ('INI', 'Initial Inspection'),
-        ('RTN', 'Routine Inspection')
-    ]
-    type_of_inspection = models.CharField(max_length=20, choices=INSPECTION_TYPES)
+    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
+    type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('date_inspected')
     frequency_of_inspection = models.IntegerField(default=0)
-    RISK_RATINGS = [
-        ('Low', 'Low'),
-        ('Medium', 'Medium'),
-        ('High', 'High')
-    ]
-    risk_rating = models.CharField(max_length=7, choices=RISK_RATINGS, null=True)
+    risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True)
     date_of_followup_inspection = models.DateTimeField('date_followup_inspection')
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
     remarks = models.CharField(max_length=200, blank=True)

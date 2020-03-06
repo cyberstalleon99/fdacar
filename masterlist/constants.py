@@ -1,10 +1,3 @@
-# STAGE_1="1"
-# STAGE_2="2"
-# STAGE_3="3"
-# COMPLETE = "Complete"
-#
-# STAGE_ORDER = [STAGE_1, STAGE_2, STAGE_3, COMPLETE]
-
 INSPECTORS = [
     ('GGM', 'Giovanni G. Monang'),
     ('RTB', 'Rochelle T. Bayanes'),
@@ -17,4 +10,34 @@ CENTERS = [
     ('CDRR', 'CDRR'),
     ('CCRR', 'CCRR'),
     ('CDRRHR', 'CDRRHR')
+]
+
+APPLICATIONS = [
+    ('I', 'Initial'),
+    ('R', 'Renewal'),
+    ('V', 'Variation')
+]
+
+EST_STATUS = [
+    ('Inactive', 'Inactive'),
+    ('Active', 'Active')
+]
+
+CAPA_TYPES = [
+    ('Critical', 'Critical'),
+    ('Major', 'Major'),
+    ('Others', 'Others')
+]
+
+INSPECTION_TYPES = [
+    ('PLI', 'Post Licensing Inspection'),
+    ('REN', 'Renewal of LTO'),
+    ('INI', 'Initial Inspection'),
+    ('RTN', 'Routine Inspection')
+]
+
+RISK_RATINGS = [
+    ('Low', 'Low'),
+    ('Medium', 'Medium'),
+    ('High', 'High')
 ]
