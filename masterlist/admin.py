@@ -21,7 +21,7 @@ admin.site.register(CapaPreparator)
 
 class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency
-    extra=3
+    extra=1
 
 class CapaAdmin(admin.ModelAdmin):
     fieldsets = [
