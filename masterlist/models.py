@@ -103,7 +103,7 @@ class Establishment(models.Model):
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     remarks = models.CharField(max_length=100, null=True, blank=True)
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
-    folder_id = models.CharField(max_length=10, null=True)
+    folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
 
     def __str__(self):
         return self.name
@@ -143,13 +143,9 @@ class QualifiedPerson(Person):
     def __str__(self):
         return self.full_name()
 
-class CapaPreparator(Person):
-    # designation =
-    pass
-
 class Capa(models.Model):
     start_date = models.DateTimeField('start_date')
-    prepared_by = models.ForeignKey(CapaPreparator, on_delete=models.SET_NULL, null=True, blank=True)
+    # prepared_by = models.ForeignKey(CapaPreparator, on_delete=models.SET_NULL, null=True, blank=True)
     approved_by = models.CharField(max_length=10, choices=constants.INSPECTORS)
     date_submitted = models.DateTimeField('date_submitted')
     date_approved = models.DateTimeField('date_approved')
@@ -159,6 +155,10 @@ class Capa(models.Model):
         dateStr = self.start_date.strftime("%d %b %Y ")
         return dateStr
 
+class CapaPreparator(Person):
+    capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
+    pass
+
 
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
@@ -167,7 +167,7 @@ class CapaDeficiency(models.Model):
     evidence = models.FileField(blank=True)
 
     type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
-    proposed_comletion_date = models.DateTimeField()
+    proposed_comletion_date = models.DateTimeField(verbose_name="Proposed Completion Date")
     inspector_comment = models.CharField(max_length=200, blank=True)
     accepted = models.BooleanField(default=False)
 
@@ -178,10 +178,10 @@ class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
-    date_inspected = models.DateTimeField('date_inspected')
-    frequency_of_inspection = models.IntegerField(default=0)
+    date_inspected = models.DateTimeField('Date Inspected')
+    frequency_of_inspection = models.IntegerField(default=0, verbose_name="Frequency of Inspection")
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True)
-    date_of_followup_inspection = models.DateTimeField('date_followup_inspection')
+    date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection')
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
     remarks = models.CharField(max_length=200, blank=True)
 

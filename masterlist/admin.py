@@ -17,7 +17,10 @@ admin.site.register(OfficeAddress)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(Inspection)
-admin.site.register(CapaPreparator)
+# admin.site.register(CapaPreparator)
+
+class CapaPreparatorInline(admin.StackedInline):
+    model = CapaPreparator
 
 class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency
@@ -25,10 +28,10 @@ class CapaDeficiencyInline(admin.TabularInline):
 
 class CapaAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Start', {'fields': ['start_date', 'prepared_by']}),
+        ('Start', {'fields': ['start_date']}),
         ('End', {'fields': ['date_submitted', 'date_approved', 'approved_by', 'remarks']})
     ]
-    inlines = [CapaDeficiencyInline]
+    inlines = [CapaPreparatorInline, CapaDeficiencyInline]
 
 admin.site.register(Capa, CapaAdmin)
 
@@ -54,7 +57,7 @@ class QualifiedPersonInline(admin.TabularInline):
 
 class EstablishmentAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('General Information', {'fields': ['status', 'application', 'name', 'center', 'product_type', 'primary_activity',
+        ('General Information', {'fields': ['folder_id', 'status', 'application', 'name', 'center', 'product_type', 'primary_activity',
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
     ]
 

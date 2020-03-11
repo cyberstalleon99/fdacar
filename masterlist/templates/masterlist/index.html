@@ -6,7 +6,7 @@
     <div class="col-lg-12">
         <div class="block">
             <div class="title">
-                <strong>List of Establishments</strong>  <a href="{% url 'admin:masterlist_establishment_add' %}">Add an Establishment</a>
+                <strong>List of Establishments</strong>  <a href="{% url 'admin:masterlist_establishment_add' %}" target="_blank">Add an Establishment</a>
                 <span class="d-block">Displayed is the list of active establishments</span>
             </div>
             <div class="row">
@@ -34,7 +34,7 @@
                             <td><a href="{% url 'masterlist:est-detail' est.id %}">{{est.name}}</a></td>
                             <td>{{est.lto.lto_number}}</td>
                             <td>{{est.lto.expiry.date}}</td>
-                            <td>{{est.plant_address.full_address}}</td>
+                            <td>{{est.plantaddress.full_address}}</td>
                             <td>{{est.folder_id}}</td>
                         </tr>
                         {% endfor %}
