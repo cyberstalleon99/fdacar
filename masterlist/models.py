@@ -155,6 +155,7 @@ class Capa(models.Model):
         dateStr = self.start_date.strftime("%d %b %Y ")
         return dateStr
 
+<<<<<<< HEAD
 class CapaPreparator(Person):
     capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
     pass
@@ -173,18 +174,45 @@ class CapaDeficiency(models.Model):
 
     def __str__(self):
         return str(self.pk)
+=======
+def report_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/inspection reports/report_<inspection_id>/<filename>
+    return 'inspection reports/report_{0}/{1}'.format(instance.establishment.id, filename)
+>>>>>>> 4e989bcb6a7f2fe96cd3ee632814bfe8bc55fbf7
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected')
+<<<<<<< HEAD
     frequency_of_inspection = models.IntegerField(default=0, verbose_name="Frequency of Inspection")
+=======
+    frequency_of_inspection = models.IntegerField(default=0)
+>>>>>>> 4e989bcb6a7f2fe96cd3ee632814bfe8bc55fbf7
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True)
     date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection')
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
     remarks = models.CharField(max_length=200, blank=True)
+    inspection_report = models.FileField(null=True, blank=False, upload_to=report_directory_path, verbose_name='Inspection Report')
 
     def __str__(self):
         dateStr = self.date_inspected.strftime("%d %b %Y ")
         return dateStr
+
+def capa_attachments_directory_path(instance, filename):
+
+    return 'inspection report attachments/report_{0}/{1}'.format(instance.capa.id, filename)
+
+class CapaDeficiency(models.Model):
+    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.CharField(max_length=200)
+    action = models.CharField(max_length=200)
+    evidence = models.FileField(upload_to=capa_attachments_directory_path, blank=True)
+    type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
+    proposed_comletion_date = models.DateTimeField()
+    inspector_comment = models.CharField(max_length=200, blank=True)
+    accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.pk)
