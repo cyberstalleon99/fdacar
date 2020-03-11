@@ -155,7 +155,6 @@ class Capa(models.Model):
         dateStr = self.start_date.strftime("%d %b %Y ")
         return dateStr
 
-<<<<<<< HEAD
 class CapaPreparator(Person):
     capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
     pass
@@ -174,22 +173,18 @@ class CapaDeficiency(models.Model):
 
     def __str__(self):
         return str(self.pk)
-=======
+
 def report_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/inspection reports/report_<inspection_id>/<filename>
-    return 'inspection reports/report_{0}/{1}'.format(instance.establishment.id, filename)
->>>>>>> 4e989bcb6a7f2fe96cd3ee632814bfe8bc55fbf7
+    return 'masterlist/inspection reports/report_{0}/{1}'.format(instance.establishment.id, filename)
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected')
-<<<<<<< HEAD
     frequency_of_inspection = models.IntegerField(default=0, verbose_name="Frequency of Inspection")
-=======
     frequency_of_inspection = models.IntegerField(default=0)
->>>>>>> 4e989bcb6a7f2fe96cd3ee632814bfe8bc55fbf7
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True)
     date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection')
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
@@ -202,7 +197,7 @@ class Inspection(models.Model):
 
 def capa_attachments_directory_path(instance, filename):
 
-    return 'inspection report attachments/report_{0}/{1}'.format(instance.capa.id, filename)
+    return 'masterlist/inspection report attachments/report_{0}/{1}'.format(instance.capa.id, filename)
 
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
