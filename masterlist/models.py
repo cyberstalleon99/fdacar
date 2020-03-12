@@ -129,7 +129,7 @@ class AuthorizedOfficer(Person):
 
 class Lto(models.Model):
     establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
-    issuance = models.DateTimeField('date issued')
+    issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
 
@@ -176,7 +176,7 @@ class CapaDeficiency(models.Model):
 
 def report_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/inspection reports/report_<inspection_id>/<filename>
-    return 'masterlist/inspection reports/report_{0}/{1}'.format(instance.establishment.id, filename)
+    return 'masterlist/inspection/ir_{0}/{1}'.format(instance.establishment.id, filename)
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
@@ -196,8 +196,7 @@ class Inspection(models.Model):
         return dateStr
 
 def capa_attachments_directory_path(instance, filename):
-
-    return 'masterlist/inspection report attachments/report_{0}/{1}'.format(instance.capa.id, filename)
+    return 'masterlist/inspection/attachments/report_{0}/{1}'.format(instance.capa.id, filename)
 
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)

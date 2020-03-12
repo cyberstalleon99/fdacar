@@ -17,7 +17,6 @@ admin.site.register(OfficeAddress)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(Inspection)
-# admin.site.register(CapaPreparator)
 
 class CapaPreparatorInline(admin.StackedInline):
     model = CapaPreparator
@@ -39,6 +38,7 @@ class PlantAddressInline(admin.StackedInline):
     model=PlantAddress
 
 class OfficeAddressInline(PlantAddressInline):
+
     model=OfficeAddress
 
 class WarehouseAddressInline(admin.TabularInline):
