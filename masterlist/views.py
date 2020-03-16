@@ -32,6 +32,8 @@ class EstablishmentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
+        print("Somehting here..................................")
+        curr_est.lto.get_duration()
         inspections = curr_est.inspection_set.all()
         context['inspections'] = inspections
         return context

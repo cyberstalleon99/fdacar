@@ -22,7 +22,7 @@
             <a href="#">Add branch</a>
             <div class="details d-flex">
               <div class="item" data-toggle="tooltip" title="Number of Inspections"><i class="icon-info"></i><strong>{{establishment.inspection_set.all.count}}</strong></div>
-              <div class="item" data-toggle="tooltip" title="Month/s before expiration"><i class="fa fa-gg"></i><strong>420</strong></div>
+              <div class="item" data-toggle="tooltip" title="Month/s before expiration"><i class="fa fa-gg"></i><strong>{{establishment.lto.get_duration}}</strong></div>
               <div class="item" data-toggle="tooltip" title="Status"><i class="icon-flow-branch"></i><strong>{{establishment.status}}</strong></div>
             </div>
         </div>

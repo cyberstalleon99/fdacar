@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from . import constants
+from datetime import datetime
+from dateutil import relativedelta
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -101,7 +103,7 @@ class Establishment(models.Model):
     specific_activity = models.ManyToManyField(SpecificActivity)
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
-    remarks = models.CharField(max_length=100, null=True, blank=True)
+    remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
 
@@ -135,6 +137,21 @@ class Lto(models.Model):
 
     def __str__(self):
         return self.lto_number
+
+    # TODO: Fixed this. Function not working
+    def get_duration(self):
+        start_date = datetime.now().date()
+        end_date = self.expiry.date()
+        # start_date = datetime(1985,1,1)
+        # end_date = datetime(2000,1,28)
+        print(start_date)
+        print(end_date)
+        difference = relativedelta.relativedelta(end_date, start_date)
+        month = difference.years * 12 + difference.months
+        days = difference.days
+        print(days)
+        print(month)
+        return month
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
