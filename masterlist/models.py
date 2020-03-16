@@ -144,14 +144,14 @@ class Lto(models.Model):
         end_date = self.expiry.date()
         # start_date = datetime(1985,1,1)
         # end_date = datetime(2000,1,28)
-        print(start_date)
-        print(end_date)
+        # print(start_date)
+        # print(end_date)
         difference = relativedelta.relativedelta(end_date, start_date)
         month = difference.years * 12 + difference.months
-        days = difference.days
-        print(days)
-        print(month)
-        return month
+        # days = difference.days
+        # print(days)
+        # print(month)
+        return str(month) + " mo./s"
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)

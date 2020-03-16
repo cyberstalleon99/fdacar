@@ -14,10 +14,15 @@
     </div>
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled">
-        <li><a href="index.html"> <i class="icon-home"></i>PLI </a></li>
+        <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>PLI </a>
+            <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                <li class="{{ pli_checklist_active }}"><a href="{% url 'pli:index' %}">Checklist</a></li>
+                <li><a href="#">Recent</a></li>
+            </ul>
+        </li>
         <li><a href="tables.html"> <i class="icon-grid"></i>PMS </a></li>
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>
-        <li class="active"><a href="{% url 'masterlist:index' %}"> <i class="icon-padnote"></i>Master List </a></li>
+        <li class="{{masterlist_active}}"><a href="{% url 'masterlist:index' %}"> <i class="icon-padnote"></i>Master List </a></li>
         <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Example dropdown </a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                 <li><a href="#">Page</a></li>

@@ -1,0 +1,58 @@
+{% extends 'masterlist/partial/base.html' %}
+{% block title %} PLI Checklist  {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="block">
+            <div class="title">
+                <strong>PLI Checklist</strong>
+                <span class="d-block">Displayed is the list of establishments for inspection</span>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-5">
+                    <input type="text" class="form-control " placeholder="Enter keyword...">
+                </div>
+            </div>
+            <div class="block-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name of Establishment</th>
+                            <th>Address</th>
+                            <th>Product Type</th>
+                            <th>Primary Activity</th>
+                            <th>Specific Activity</th>
+                            <th>LTO No.</th>
+                            <th>Expiry</th>
+                            <th>Duration</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for inspection in plichecklist %}
+                        <tr>
+                            <td><a href="{% url 'admin:masterlist_inspection_add' %}" target="_blank">{{inspection.establishment.name}}</a></td>
+                            <td>{{inspection.establishment.plantaddress.full_address}}</td>
+                            <td>{{inspection.establishment.product_type}}</td>
+                            <td>{{inspection.establishment.primary_activity}}</td>
+                            {% if inspection.specific_activity %}
+                            <td>{{inspection.establishment.specific_activity}}</td>
+                            {% else %}
+                            <td>None</td>
+                            {% endif %}
+                            <td>{{inspection.establishment.lto.lto_number}}</td>
+                            <td>{{inspection.establishment.lto.expiry.date}}</td>
+                            <td>{{inspection.establishment.lto.get_duration}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
