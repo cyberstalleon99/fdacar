@@ -214,16 +214,3 @@ class Inspection(models.Model):
 
 def capa_attachments_directory_path(instance, filename):
     return 'masterlist/inspection/attachments/report_{0}/{1}'.format(instance.capa.id, filename)
-
-class CapaDeficiency(models.Model):
-    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.CharField(max_length=200)
-    action = models.CharField(max_length=200)
-    evidence = models.FileField(upload_to=capa_attachments_directory_path, blank=True)
-    type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
-    proposed_comletion_date = models.DateTimeField()
-    inspector_comment = models.CharField(max_length=200, blank=True)
-    accepted = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.pk)

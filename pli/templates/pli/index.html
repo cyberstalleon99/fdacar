@@ -23,8 +23,8 @@
                         <tr>
                             <th>Name of Establishment</th>
                             <th>Address</th>
-                            <th>Product Type</th>
-                            <th>Primary Activity</th>
+                            <th>Date Last Inspected</th>
+                            <th>Activity</th>
                             <th>Specific Activity</th>
                             <th>LTO No.</th>
                             <th>Expiry</th>
@@ -36,8 +36,8 @@
                         <tr>
                             <td><a href="{% url 'admin:masterlist_inspection_add' %}" target="_blank">{{inspection.establishment.name}}</a></td>
                             <td>{{inspection.establishment.plantaddress.full_address}}</td>
-                            <td>{{inspection.establishment.product_type}}</td>
-                            <td>{{inspection.establishment.primary_activity}}</td>
+                            <td>{{inspection.date_inspected.date}}</td>
+                            <td>{{inspection.establishment.product_type}} {{inspection.establishment.primary_activity}}</td>
                             {% if inspection.specific_activity %}
                             <td>{{inspection.establishment.specific_activity}}</td>
                             {% else %}
