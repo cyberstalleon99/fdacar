@@ -32,21 +32,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for inspection in plichecklist %}
+                        {% for establishment in plichecklist %}
+                        {% if establishment.lto.get_duration <= 6 %}
                         <tr>
-                            <td><a href="{% url 'admin:masterlist_inspection_add' %}" target="_blank">{{inspection.establishment.name}}</a></td>
-                            <td>{{inspection.establishment.plantaddress.full_address}}</td>
-                            <td>{{inspection.date_inspected.date}}</td>
-                            <td>{{inspection.establishment.product_type}} {{inspection.establishment.primary_activity}}</td>
-                            {% if inspection.establishment.specificactivity %}
-                            <td>{{inspection.establishment.specificactivity}}</td>
+                            <td><a href="{% url 'admin:masterlist_inspection_add' %}" target="_blank">{{establishment.name}}</a></td>
+                            <td>{{establishment.plantaddress.full_address}}</td>
+                            <td>{{establishment.date_inspected.date}}</td>
+                            <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
+                            {% if establishment.specificactivity %}
+                            <td>{{establishment.specificactivity}}</td>
                             {% else %}
                             <td>N/A</td>
                             {% endif %}
-                            <td>{{inspection.establishment.lto.lto_number}}</td>
-                            <td>{{inspection.establishment.lto.expiry.date}}</td>
-                            <td>{{inspection.establishment.lto.get_duration}}</td>
+                            <td>{{establishment.lto.lto_number}}</td>
+                            <td>{{establishment.lto.expiry.date}}</td>
+                            <td>{{establishment.lto.get_duration}}</td>
                         </tr>
+                        {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

@@ -130,7 +130,7 @@ class AuthorizedOfficer(Person):
         return self.full_name()
 
 class Lto(models.Model):
-    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    establishment = models.OneToOneField(Establishment, related_name = 'est', on_delete=models.CASCADE, null=True)
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
@@ -143,10 +143,7 @@ class Lto(models.Model):
         end_date = self.expiry.date()
         difference = relativedelta.relativedelta(end_date, start_date)
         month = difference.years * 12 + difference.months
-        # days = difference.days
-        # print(days)
-        # print(month)
-        return str(month) + " mo./s"
+        return month
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
