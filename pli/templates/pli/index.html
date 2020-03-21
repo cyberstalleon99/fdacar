@@ -38,10 +38,10 @@
                             <td>{{inspection.establishment.plantaddress.full_address}}</td>
                             <td>{{inspection.date_inspected.date}}</td>
                             <td>{{inspection.establishment.product_type}} {{inspection.establishment.primary_activity}}</td>
-                            {% if inspection.specific_activity %}
-                            <td>{{inspection.establishment.specific_activity}}</td>
+                            {% if inspection.establishment.specificactivity %}
+                            <td>{{inspection.establishment.specificactivity}}</td>
                             {% else %}
-                            <td>None</td>
+                            <td>N/A</td>
                             {% endif %}
                             <td>{{inspection.establishment.lto.lto_number}}</td>
                             <td>{{inspection.establishment.lto.expiry.date}}</td>
