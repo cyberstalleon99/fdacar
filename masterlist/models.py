@@ -138,14 +138,9 @@ class Lto(models.Model):
     def __str__(self):
         return self.lto_number
 
-    # TODO: Fixed this. Function not working
     def get_duration(self):
         start_date = datetime.now().date()
         end_date = self.expiry.date()
-        # start_date = datetime(1985,1,1)
-        # end_date = datetime(2000,1,28)
-        # print(start_date)
-        # print(end_date)
         difference = relativedelta.relativedelta(end_date, start_date)
         month = difference.years * 12 + difference.months
         # days = difference.days
@@ -192,7 +187,6 @@ class CapaDeficiency(models.Model):
         return str(self.pk)
 
 def report_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/inspection reports/report_<inspection_id>/<filename>
     return 'masterlist/inspection/ir_{0}/{1}'.format(instance.establishment.id, filename)
 
 class Inspection(models.Model):

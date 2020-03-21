@@ -23,10 +23,10 @@
                         <tr>
                             <th>Name of Establishment</th>
                             <th>Address</th>
-                            <th>LTO No.</th>
-                            <th>Expiry</th>
                             <th>Activity</th>
                             <th>Specific Activity</th>
+                            <th>LTO No.</th>
+                            <th>Expiry</th>
                             <th>Folder No.</th>
                         </tr>
                         </thead>
@@ -35,14 +35,14 @@
                         <tr>
                             <td><a href="{% url 'masterlist:est-detail' est.id %}">{{est.name}}</a></td>
                             <td>{{est.plantaddress.full_address}}</td>
-                            <td>{{est.lto.lto_number}}</td>
-                            <td>{{est.lto.expiry.date}}</td>
                             <td>{{est.product_type}} {{est.primary_activity}}</td>
                             {% if est.specificactivity %}
                             <td>{{est.specificactivity}}</td>
                             {% else %}
                             <td>N/A</td>
                             {% endif %}
+                            <td>{{est.lto.lto_number}}</td>
+                            <td>{{est.lto.expiry.date}}</td>
                             <td>{{est.folder_id}}</td>
                         </tr>
                         {% endfor %}
