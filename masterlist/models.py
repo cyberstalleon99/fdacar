@@ -166,7 +166,6 @@ class QualifiedPerson(Person):
 
 class Capa(models.Model):
     start_date = models.DateTimeField('start_date')
-    # prepared_by = models.ForeignKey(CapaPreparator, on_delete=models.SET_NULL, null=True, blank=True)
     approved_by = models.CharField(max_length=10, choices=constants.INSPECTORS)
     date_submitted = models.DateTimeField('date_submitted')
     date_approved = models.DateTimeField('date_approved')
@@ -178,8 +177,10 @@ class Capa(models.Model):
 
 class CapaPreparator(Person):
     capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
-    pass
 
+    class Meta:
+        verbose_name = 'Preparedy by'
+        verbose_name_plural = 'Prepared by'
 
 class CapaDeficiency(models.Model):
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
@@ -194,6 +195,10 @@ class CapaDeficiency(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+    class Meta:
+        verbose_name = 'CAPA Deficiencies'
+        verbose_name_plural = 'CAPA Deficiencies'
 
 def report_directory_path(instance, filename):
     return 'masterlist/inspection/ir_{0}/{1}'.format(instance.establishment.id, filename)
