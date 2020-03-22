@@ -130,7 +130,7 @@ class AuthorizedOfficer(Person):
         return self.full_name()
 
 class Lto(models.Model):
-    establishment = models.OneToOneField(Establishment, related_name = 'est', on_delete=models.CASCADE, null=True)
+    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
