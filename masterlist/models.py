@@ -93,6 +93,16 @@ class Address(models.Model):
     def full_address(self):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
+class PLIChecklistManager(models.Manager):
+
+    def get_list(self):
+        establishments = super().get_queryset()
+        checklist = []
+        for est in establishments:
+            if est.lto.get_duration() <= 6:
+                checklist.append(est)
+        return checklist
+
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
     application = models.CharField(max_length=1, choices=constants.APPLICATIONS)
@@ -106,6 +116,8 @@ class Establishment(models.Model):
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
+    plichecklist = PLIChecklistManager()
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -202,6 +214,9 @@ class Inspection(models.Model):
     def __str__(self):
         dateStr = self.date_inspected.strftime("%d %b %Y ")
         return dateStr
+
+    class Meta:
+        ordering = ['-date_inspected']
 
 def capa_attachments_directory_path(instance, filename):
     return 'masterlist/inspection/attachments/report_{0}/{1}'.format(instance.capa.id, filename)

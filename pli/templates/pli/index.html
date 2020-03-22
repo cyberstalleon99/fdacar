@@ -32,14 +32,13 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!-- TODO: Optimize this for loop statement in the view level so that filtered
+                      establishments are  directly displayed -->
                         {% for establishment in plichecklist %}
-                        {% if establishment.lto.get_duration <= 6 %}
                         <tr>
-                            <td><a href="{% url 'admin:masterlist_inspection_add' %}" target="_blank">{{establishment.name}}</a></td>
+                            <td><a href="{% url 'masterlist:est-detail' establishment.id %}" target="_blank">{{establishment.name}}</a></td>
                             <td>{{establishment.plantaddress.full_address}}</td>
-                            {% for inspection in  establishment.inspection_set.all %}
-                            <td>{{inspection.date_inspected.date}}</td>
-                            {% endfor %}
+                            <td>{{establishment.inspection_set.first.date_inspected.date}}</td>
                             <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
                             {% if establishment.specificactivity %}
                             <td>{{establishment.specificactivity}}</td>
@@ -50,7 +49,6 @@
                             <td>{{establishment.lto.expiry.date}}</td>
                             <td>{{establishment.lto.get_duration}} (mo./s)</td>
                         </tr>
-                        {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>

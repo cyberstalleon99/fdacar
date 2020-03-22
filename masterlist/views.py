@@ -39,6 +39,7 @@ class EstablishmentDetailView(DetailView):
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
         curr_est.lto.get_duration()
         inspections = curr_est.inspection_set.all()
+        context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context
 
