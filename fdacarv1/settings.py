@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'masterlist.apps.MasterlistConfig',
     'pli.apps.PliConfig',
+    'listsummary.apps.ListsummaryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

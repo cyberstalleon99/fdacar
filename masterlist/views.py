@@ -3,15 +3,15 @@ from django.views.generic import (
     CreateView,
     DetailView
 )
+from django.views import View
 from django.views.generic.edit import FormView
 from .models import Establishment, Lto, ProductType, PrimaryActivity, SpecificActivity, AdditionalActivity, ProductLine, \
     PlantAddress, WarehouseAddress, OfficeAddress, \
     Region, Province, CityOrMunicipality, AuthorizedOfficer, AuthorizedOfficerDesignation, QualifiedPerson, QualifiedPersonDesignation
 from .forms import StepOneForm, StepTwoAForm, StepTwoBForm, StepTwoCForm, StepThreeForm
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse, HttpResponseRedirect
-import logging
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 class EstablishmentListView(ListView):
     template_name = 'masterlist/index.html'

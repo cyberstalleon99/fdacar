@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import reverse
 from django.views.generic import (
     ListView
 )
+from django.http import HttpResponseRedirect
 from masterlist.models import Establishment
 
 class PLIChekListView(ListView):
