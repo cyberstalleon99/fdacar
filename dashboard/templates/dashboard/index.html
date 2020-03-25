@@ -10,7 +10,7 @@
         <div class="title">
           <div class="icon"><i class="icon-user-1"></i></div><strong>CFRR</strong>
         </div>
-        <div class="number dashtext-1">27</div>
+        <div class="number dashtext-1">{{cfrr.total}}</div>
       </div>
       <div class="progress progress-template">
         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
@@ -24,7 +24,7 @@
         <div class="title">
           <div class="icon"><i class="icon-user-1"></i></div><strong>CDRR</strong>
         </div>
-        <div class="number dashtext-2">27</div>
+        <div class="number dashtext-2">{{cdrr.total}}</div>
       </div>
       <div class="progress progress-template">
         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
@@ -72,19 +72,19 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">4.124</strong><span class="d-block span-sm">FM</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong><span class="d-block span-sm">FM</span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">FT</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong><span class="d-block span-sm">FT</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">FW</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_wholesaler}}</strong><span class="d-block span-sm">FW</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">FI</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_importer}}</strong><span class="d-block span-sm">FI</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">FE</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_exporter}}</strong><span class="d-block span-sm">FE</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
@@ -101,25 +101,25 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">4.124</strong><span class="d-block span-sm">HP</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_hp}}</strong><span class="d-block span-sm">HP</span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">4.124</strong><span class="d-block span-sm">DS</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_ds}}</strong><span class="d-block span-sm">DS</span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">4.124</strong><span class="d-block span-sm">DM</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_mfg}}</strong><span class="d-block span-sm">DM</span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">DT</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_trader}}</strong><span class="d-block span-sm">DT</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">DW</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_wholesaler}}</strong><span class="d-block span-sm">DW</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">DI</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong><span class="d-block span-sm">DI</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">2.147</strong><span class="d-block span-sm">DE</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong><span class="d-block span-sm">DE</span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
