@@ -17,7 +17,9 @@
         <li  class="{{masterlist_dashboard_active}}"><a href="{% url 'dashboard:index' %}"> <i class="icon-grid"></i>Dashboard </a></li>
         <li><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Inspection Checklist </a>
             <ul class="list-unstyled ">
-                <li class="{{ pli_checklist_active }}"><a href="{% url 'pli:index' %}">Checklist</a></li>
+                <li class="{{ ren_checklist_active }}"><a href="{% url 'checklist:index' %}">Renewal</a></li>
+                <li class="{{ pli_checklist_active }}"><a href="{% url 'checklist:pli' %}">PLI</a></li>
+                <li class=""><a href="#">Routine</a></li>
                 <li><a href="#">Recent</a></li>
             </ul>
         </li>

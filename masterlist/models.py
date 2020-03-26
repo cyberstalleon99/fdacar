@@ -93,13 +93,23 @@ class Address(models.Model):
     def full_address(self):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
-class PLIChecklistManager(models.Manager):
+class RenewalChecklistManager(models.Manager):
 
     def get_list(self):
         establishments = super().get_queryset()
         checklist = []
         for est in establishments:
             if est.lto.get_duration() <= 6:
+                checklist.append(est)
+        return checklist
+
+class PLIChecklistManager(models.Manager):
+
+    def get_list(self):
+        establishments = super().get_queryset()
+        checklist = []
+        for est in establishments:
+            if est.inspection_set.all().count() == 0:
                 checklist.append(est)
         return checklist
 
@@ -110,12 +120,13 @@ class Establishment(models.Model):
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
-    specific_activity = models.ManyToManyField(SpecificActivity)
+    specific_activity = models.ManyToManyField(SpecificActivity, verbose_name='Specific Activity/s')
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
+    renchecklist = RenewalChecklistManager()
     plichecklist = PLIChecklistManager()
     objects = models.Manager()
 
