@@ -1,0 +1,10 @@
+{% block searchinput %}
+<div class="form-group">
+    <div class="input-group">
+        <input name="q" value="{{ request.GET.q }}" type="text" class="form-control" placeholder="Enter keyword here...">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" ><i class="icon-magnifying-glass-browser"></i></button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -12,19 +12,30 @@ from .forms import StepOneForm, StepTwoAForm, StepTwoBForm, StepTwoCForm, StepTh
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 class EstablishmentListView(ListView):
+    paginate_by = 10
     template_name = 'masterlist/index.html'
     context_object_name = 'est_list'
 
     def get_queryset(self):
-        return Establishment.objects.all()
+        return self.get_establishments()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['masterlist_active'] = "active"
         return context
 
+    def get_establishments(self):
+        query = self.request.GET.get('q', None)
+        if query is not None:
+            establishments = Establishment.objects.filter(
+                Q(name__icontains=query) |
+                Q(center__icontains=query)
+            )
+
+            return establishments
 
 class EstablishmentDetailView(DetailView):
     template_name = 'masterlist/establishment-detail.html'
