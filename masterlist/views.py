@@ -13,29 +13,33 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from . import mypaginator
 
 class EstablishmentListView(ListView):
-    paginate_by = 10
+    model = Establishment
+    items_per_page = 10
     template_name = 'masterlist/index.html'
-    context_object_name = 'est_list'
-
-    def get_queryset(self):
-        return self.get_establishments()
+    context_object_name = 'test'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['masterlist_active'] = "active"
+        page = self.request.GET.get('page')
+        paginator = mypaginator.MyPaginator(self.get_establishments(), self.items_per_page, page)
+        establishments = paginator.get_paginated_result()
+        context['paginated_result'] = establishments
         return context
 
+    # TODO: Add additional filters
     def get_establishments(self):
+        establishments = Establishment.objects.all()
         query = self.request.GET.get('q', None)
         if query is not None:
             establishments = Establishment.objects.filter(
                 Q(name__icontains=query) |
                 Q(center__icontains=query)
             )
-
-            return establishments
+        return establishments
 
 class EstablishmentDetailView(DetailView):
     template_name = 'masterlist/establishment-detail.html'

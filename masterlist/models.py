@@ -3,6 +3,7 @@ from django.utils import timezone
 from . import constants
 from datetime import datetime
 from dateutil import relativedelta
+from django.db.models import Q
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -94,6 +95,19 @@ class Address(models.Model):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
 class RenewalChecklistManager(models.Manager):
+
+    # TODO: Add additional filters
+    def get_filtered_list(self, query):
+        establishments = super().get_queryset().filter(
+            Q(name__icontains=query) |
+            Q(product_type__name__icontains=query)
+        )
+        checklist = []
+        for est in establishments:
+            print(test)
+            if est.lto.get_duration() <= 6:
+                checklist.append(est)
+        return checklist
 
     def get_list(self):
         establishments = super().get_queryset()

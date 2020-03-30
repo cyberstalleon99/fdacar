@@ -14,7 +14,10 @@
                 <div class="col-md-7">
                 </div>
                 <div class="col-md-5">
-                    <input type="text" class="form-control " placeholder="Enter keyword...">
+                  <form action="" method='get'>
+                    {% csrf_token %}
+                    {% include 'masterlist/partial/search_input.html' %}
+                  </form>
                 </div>
             </div>
             <div class="block-body">
@@ -32,16 +35,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for establishment in plichecklist %}
+                        {% for establishment in paginated_result %}
                         <tr>
                             <td><a href="{% url 'masterlist:est-detail' establishment.id %}" target="_blank">{{establishment.name}}</a></td>
                             <td>{{establishment.plantaddress.full_address}}</td>
                             <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
                             <td>
                             {% for spec_act in establishment.specific_activity.all %}
-                            {{spec_act.name}} <br>
-                            </td>
+                            {{spec_act.name}},
                             {% endfor %}
+                            </td>
                             <td>{{establishment.lto.lto_number}}</td>
                             <td>{{establishment.lto.expiry.date}}</td>
                             <td>{{establishment.lto.get_duration}} (mo./s)</td>
@@ -51,27 +54,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="pagination">
-                      <span class="step-links">
-                        {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                        {% endif %}
-
-                        <span class="current">
-                          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                        </span>
-
-                        {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                        {% endif %}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                {% include 'masterlist/partial/pagination.html' %}
             </div>
         </div>
     </div>
