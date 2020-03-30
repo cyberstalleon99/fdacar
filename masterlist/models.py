@@ -104,7 +104,6 @@ class RenewalChecklistManager(models.Manager):
         )
         checklist = []
         for est in establishments:
-            print(test)
             if est.lto.get_duration() <= 6:
                 checklist.append(est)
         return checklist

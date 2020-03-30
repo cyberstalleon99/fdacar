@@ -41,9 +41,13 @@
                             <td>{{establishment.plantaddress.full_address}}</td>
                             <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
                             <td>
-                            {% for spec_act in establishment.specific_activity.all %}
-                            {{spec_act.name}},
-                            {% endfor %}
+                              {% for spec_act in establishment.specific_activity.all %}
+                                {% if forloop.last %}
+                                  {{spec_act.name}}
+                                {% else %}
+                                  {{spec_act.name}},
+                                {% endif %}
+                              {% endfor %}
                             </td>
                             <td>{{establishment.lto.lto_number}}</td>
                             <td>{{establishment.lto.expiry.date}}</td>
