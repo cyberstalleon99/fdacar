@@ -36,7 +36,7 @@ class PliChekListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(Establishment.plichecklist.get_list(), self.items_per_page, page)
+        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         context['paginated_result'] = paginator.get_paginated_result()
         context['pli_checklist_active'] = "active"
         print('PliChekListView(ListView)')

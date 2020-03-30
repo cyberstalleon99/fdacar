@@ -100,7 +100,14 @@ class RenewalChecklistManager(models.Manager):
     def get_filtered_list(self, query):
         establishments = super().get_queryset().filter(
             Q(name__icontains=query) |
-            Q(product_type__name__icontains=query)
+            Q(plantaddress__address__icontains=query) |
+            Q(plantaddress__municipality_or_city__name__icontains=query) |
+            Q(plantaddress__region__name__icontains=query) |
+            Q(plantaddress__province__name__icontains=query) |
+            Q(product_type__name__icontains=query) |
+            Q(primary_activity__name__icontains=query) |
+            Q(specific_activity__name__icontains=query) |
+            Q(lto__lto_number__icontains=query)
         )
         checklist = []
         for est in establishments:
@@ -117,6 +124,25 @@ class RenewalChecklistManager(models.Manager):
         return checklist
 
 class PLIChecklistManager(models.Manager):
+
+    def get_filtered_list(self, query):
+        establishments = super().get_queryset().filter(
+            Q(name__icontains=query) |
+            Q(plantaddress__address__icontains=query) |
+            Q(plantaddress__municipality_or_city__name__icontains=query) |
+            Q(plantaddress__region__name__icontains=query) |
+            Q(plantaddress__province__name__icontains=query) |
+            Q(product_type__name__icontains=query) |
+            Q(primary_activity__name__icontains=query) |
+            Q(specific_activity__name__icontains=query) |
+            Q(lto__lto_number__icontains=query)
+        )
+        checklist = []
+        for est in establishments:
+            if est.inspection_set.all().count() == 0:
+                checklist.append(est)
+        return checklist
+
 
     def get_list(self):
         establishments = super().get_queryset()
