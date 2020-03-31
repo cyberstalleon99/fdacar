@@ -23,7 +23,7 @@ class RenewalChekListView(ListView):
     def get_list(self):
         renewal_checklist = Establishment.renchecklist.get_list()
         query = self.request.GET.get('q', None)
-        if query is not None:
+        if query:
             renewal_checklist = Establishment.renchecklist.get_filtered_list(query=query)
         return renewal_checklist
 
@@ -45,6 +45,6 @@ class PliChekListView(ListView):
     def get_list(self):
         pli_checklist = Establishment.plichecklist.get_list()
         query = self.request.GET.get('q', None)
-        if query is not None:
+        if query:
             pli_checklist = Establishment.plichecklist.get_filtered_list(query=query)
         return pli_checklist
