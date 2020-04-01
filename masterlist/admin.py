@@ -62,7 +62,9 @@ class EstablishmentAdmin(admin.ModelAdmin):
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
     ]
 
-    list_display = ('name', 'plantaddress', 'municipality_or_city', 'province', 'product_type', 'primary_activity', 'specific_activities', 'additional_activity', 'product_line', 'remarks')
+    list_display = ('name', 'plantaddress', 'municipality_or_city', 'province',
+     'product_type', 'primary_activity', 'specific_activities', 'additional_activity', 'product_line', 'remarks',
+     'lto_number', 'expiry')
     list_filter = (
         ('name', DropdownFilter),
         ('product_type', RelatedDropdownFilter),
@@ -80,5 +82,11 @@ class EstablishmentAdmin(admin.ModelAdmin):
 
     def municipality_or_city(self, obj):
         return obj.plantaddress.municipality_or_city.name
+
+    def lto_number(self, obj):
+        return obj.lto.lto_number
+
+    def expiry(self, obj):
+        return obj.lto.expiry.date()
 
 admin.site.register(Establishment, EstablishmentAdmin)
