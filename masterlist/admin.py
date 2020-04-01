@@ -1,3 +1,4 @@
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, \
@@ -61,6 +62,23 @@ class EstablishmentAdmin(admin.ModelAdmin):
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
     ]
 
+    list_display = ('name', 'plantaddress', 'municipality_or_city', 'province', 'product_type', 'primary_activity', 'specific_activities', 'additional_activity', 'product_line', 'remarks')
+    list_filter = (
+        ('name', DropdownFilter),
+        ('product_type', RelatedDropdownFilter),
+        ('primary_activity', RelatedDropdownFilter),
+        ('specific_activity', RelatedDropdownFilter),
+        ('plantaddress__province', RelatedDropdownFilter),
+        ('plantaddress__municipality_or_city', RelatedDropdownFilter),
+        ('status', ChoiceDropdownFilter),
+    )
+
     inlines = [LtoInline, AuthorizedOfficerInline, QualifiedPersonInline, PlantAddressInline, WarehouseAddressInline, OfficeAddressInline]
+
+    def province(self, obj):
+        return obj.plantaddress.province.name
+
+    def municipality_or_city(self, obj):
+        return obj.plantaddress.municipality_or_city.name
 
 admin.site.register(Establishment, EstablishmentAdmin)

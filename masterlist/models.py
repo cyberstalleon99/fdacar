@@ -96,7 +96,6 @@ class Address(models.Model):
 
 class RenewalChecklistManager(models.Manager):
 
-    # TODO: Add additional filters
     def get_filtered_list(self, query):
         establishments = super().get_queryset().filter(
             Q(name__icontains=query) |
@@ -171,6 +170,9 @@ class Establishment(models.Model):
 
     def __str__(self):
         return self.name
+
+    def specific_activities(self):
+        return ",\n".join(s.name for s in self.specific_activity.all())
 
 class PlantAddress(Address):
     establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
