@@ -58,6 +58,13 @@ class EstablishmentDetailView(DetailView):
         context['inspections'] = inspections
         return context
 
+class ExpiredEstablishmentsListView(ListView):
+        model = Establishment
+        # items_per_page = 10
+        template_name = 'masterlist/expired-list.html'
+        context_object_name = 'paginated_result'
+
+
 class StepOneView(FormView):
     template_name = 'masterlist/stepone.html'
     form_class = StepOneForm

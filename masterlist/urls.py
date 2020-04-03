@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import EstablishmentListView, StepOneView, StepTwoAView, StepTwoBView, StepTwoCView, StepThreeView, EstablishmentDetailView
+from .views import EstablishmentListView, StepOneView, StepTwoAView, StepTwoBView, StepTwoCView, StepThreeView, EstablishmentDetailView, ExpiredEstablishmentsListView
 from . import views
 
 app_name='masterlist'
 urlpatterns = [
     path('', EstablishmentListView.as_view(), name='index'),
     path('<int:id>/', EstablishmentDetailView.as_view(), name='est-detail'),
+    path('expired-list', ExpiredEstablishmentsListView.as_view(), name='est-expired'), 
 
     path('add-stepone/', StepOneView.as_view(), name='stepone'),
     path('add-steptwo-a/', StepTwoAView.as_view(), name='steptwo-a'),
