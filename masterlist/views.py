@@ -62,8 +62,12 @@ class ExpiredEstablishmentsListView(ListView):
         model = Establishment
         # items_per_page = 10
         template_name = 'masterlist/expired-list.html'
-        context_object_name = 'paginated_result'
+        context_object_name = 'test'
 
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context['expiredlist_active'] = "active"
+            context['paginated_result'] = Establishment.objects.filter()
 
 class StepOneView(FormView):
     template_name = 'masterlist/stepone.html'
