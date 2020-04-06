@@ -41,8 +41,8 @@
                             <td>{{est.plantaddress.full_address}}</td>
                             <td>{{est.product_type}} {{est.primary_activity}}</td>
                             <td>{{est.specific_activities}}</td>
-                            <td>{{est.lto.lto_number}}</td>
-                            <td>{{est.lto.expiry.date}}</td>
+                            <td>{{est.ltos.first.lto_number}}</td>
+                            <td>{{est.ltos.first.expiry.date}}</td>
                             <td>{{est.folder_id}}</td>
                         </tr>
                         {% endfor %}

@@ -48,6 +48,7 @@ class WarehouseAddressInline(admin.TabularInline):
 
 class LtoInline(admin.StackedInline):
     model=Lto
+    extra=1
 
 class AuthorizedOfficerInline(admin.StackedInline):
     model=AuthorizedOfficer

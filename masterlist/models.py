@@ -110,7 +110,7 @@ class RenewalChecklistManager(models.Manager):
         )
         checklist = []
         for est in establishments:
-            if est.lto.get_duration() <= 6:
+            if est.ltos.first().get_duration() <= 6:
                 checklist.append(est)
         return checklist
 
@@ -118,7 +118,7 @@ class RenewalChecklistManager(models.Manager):
         establishments = super().get_queryset()
         checklist = []
         for est in establishments:
-            if est.lto.get_duration() <= 6:
+            if est.ltos.first().get_duration() <= 6:
                 checklist.append(est)
         return checklist
 
@@ -194,7 +194,7 @@ class AuthorizedOfficer(Person):
         return self.full_name()
 
 class Lto(models.Model):
-    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
@@ -208,6 +208,9 @@ class Lto(models.Model):
         difference = relativedelta.relativedelta(end_date, start_date)
         month = difference.years * 12 + difference.months
         return month
+
+    class Meta:
+        ordering = ['-expiry']
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)

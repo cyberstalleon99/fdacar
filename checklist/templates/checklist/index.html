@@ -51,9 +51,9 @@
                               {% endif %}
                             {% endfor %}
                             </td>
-                            <td>{{establishment.lto.lto_number}}</td>
-                            <td>{{establishment.lto.expiry.date}}</td>
-                            <td>{{establishment.lto.get_duration}} (mo./s)</td>
+                            <td>{{establishment.ltos.first.lto_number}}</td>
+                            <td>{{establishment.ltos.first.expiry.date}}</td>
+                            <td>{{establishment.ltos.first.get_duration}} (mo./s)</td>
                         </tr>
                         {% endfor %}
                         </tbody>
