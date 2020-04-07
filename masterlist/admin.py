@@ -1,21 +1,29 @@
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
-    AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, \
+    AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Inspection, Capa, CapaDeficiency, CapaPreparator, Lto
 from django_reverse_admin import ReverseModelAdmin
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
 admin.site.register(Region)
-admin.site.register(Province)
-admin.site.register(CityOrMunicipality)
 admin.site.register(SpecificActivity)
 admin.site.register(PrimaryActivity)
 admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(Inspection)
+admin.site.register(ProductType)
+
+class CityOrMunicipalityInline(admin.TabularInline):
+    model=CityOrMunicipality
+    extra=5
+
+class ProvinceAdmin(admin.ModelAdmin):
+    inlines = [CityOrMunicipalityInline]
+
+admin.site.register(Province, ProvinceAdmin)
 
 class CapaPreparatorInline(admin.StackedInline):
     model = CapaPreparator
@@ -59,8 +67,8 @@ class EstablishmentAdmin(ReverseModelAdmin):
         ('product_type', RelatedDropdownFilter),
         ('primary_activity', RelatedDropdownFilter),
         ('specific_activity', RelatedDropdownFilter),
-        ('plantaddress__province', RelatedDropdownFilter),
-        ('plantaddress__municipality_or_city', RelatedDropdownFilter),
+        ('plant_address__province', RelatedDropdownFilter),
+        ('plant_address__municipality_or_city', RelatedDropdownFilter),
         ('status', ChoiceDropdownFilter),
     )
 
@@ -70,10 +78,10 @@ class EstablishmentAdmin(ReverseModelAdmin):
     inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
 
     def province(self, obj):
-        return obj.plantaddress.province.name
+        return obj.plant_address.province.name
 
     def municipality_or_city(self, obj):
-        return obj.plantaddress.municipality_or_city.name
+        return obj.plant_address.municipality_or_city.name
 
     def lto_number(self, obj):
         return obj.lto.lto_number

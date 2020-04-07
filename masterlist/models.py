@@ -66,7 +66,12 @@ class Region(models.Model):
     description = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return self.name
+        str = ''
+        if self.description:
+            str = self.name + ' (' + self.description + ' )'
+        else:
+            str = self.name
+        return str
 
 class Province(models.Model):
     name = models.CharField(max_length=30)
@@ -77,10 +82,16 @@ class Province(models.Model):
 
 class CityOrMunicipality(models.Model):
     name = models.CharField(max_length=30)
+    description = models.CharField(max_length=50, null=True, blank=True)
     province = models.ForeignKey(Province, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        str = ''
+        if self.description:
+            str = self.name + ' (' + self.description + ' )'
+        else:
+            str = self.name
+        return str
 
 class Address(models.Model):
     address = models.CharField(max_length=50)
@@ -99,10 +110,10 @@ class RenewalChecklistManager(models.Manager):
     def get_filtered_list(self, query):
         establishments = super().get_queryset().filter(
             Q(name__icontains=query) |
-            Q(plantaddress__address__icontains=query) |
-            Q(plantaddress__municipality_or_city__name__icontains=query) |
-            Q(plantaddress__region__name__icontains=query) |
-            Q(plantaddress__province__name__icontains=query) |
+            Q(plant_address__address__icontains=query) |
+            Q(plant_address__municipality_or_city__name__icontains=query) |
+            Q(plant_address__region__name__icontains=query) |
+            Q(plant_address__province__name__icontains=query) |
             Q(product_type__name__icontains=query) |
             Q(primary_activity__name__icontains=query) |
             Q(specific_activity__name__icontains=query) |
@@ -127,10 +138,10 @@ class PLIChecklistManager(models.Manager):
     def get_filtered_list(self, query):
         establishments = super().get_queryset().filter(
             Q(name__icontains=query) |
-            Q(plantaddress__address__icontains=query) |
-            Q(plantaddress__municipality_or_city__name__icontains=query) |
-            Q(plantaddress__region__name__icontains=query) |
-            Q(plantaddress__province__name__icontains=query) |
+            Q(plant_address__address__icontains=query) |
+            Q(plant_address__municipality_or_city__name__icontains=query) |
+            Q(plant_address__region__name__icontains=query) |
+            Q(plant_address__province__name__icontains=query) |
             Q(product_type__name__icontains=query) |
             Q(primary_activity__name__icontains=query) |
             Q(specific_activity__name__icontains=query) |
