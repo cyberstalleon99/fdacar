@@ -63,7 +63,7 @@ class EstablishmentAdmin(admin.ModelAdmin):
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
     ]
 
-    list_display = ('name', 'plantaddress', 'municipality_or_city', 'province',
+    list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
      'product_type', 'primary_activity', 'specific_activities', 'additional_activity', 'product_line', 'remarks',
      'lto_number', 'expiry')
     list_filter = (
@@ -76,7 +76,7 @@ class EstablishmentAdmin(admin.ModelAdmin):
         ('status', ChoiceDropdownFilter),
     )
 
-    inlines = [LtoInline, AuthorizedOfficerInline, QualifiedPersonInline, PlantAddressInline, WarehouseAddressInline, OfficeAddressInline]
+    inlines = [LtoInline, AuthorizedOfficerInline, QualifiedPersonInline, WarehouseAddressInline]
 
     def province(self, obj):
         return obj.plantaddress.province.name

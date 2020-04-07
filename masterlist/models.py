@@ -151,6 +151,14 @@ class PLIChecklistManager(models.Manager):
                 checklist.append(est)
         return checklist
 
+class PlantAddress(Address):
+    # establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
+    pass
+
+class OfficeAddress(Address):
+    # establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
+    pass
+
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
     application = models.CharField(max_length=1, choices=constants.APPLICATIONS)
@@ -161,6 +169,8 @@ class Establishment(models.Model):
     specific_activity = models.ManyToManyField(SpecificActivity, verbose_name='Specific Activity/s')
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
+    plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)
+    office_address = models.OneToOneField(OfficeAddress, on_delete=models.SET_NULL, null=True)
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
@@ -174,16 +184,8 @@ class Establishment(models.Model):
     def specific_activities(self):
         return ",\n".join(s.name for s in self.specific_activity.all())
 
-class PlantAddress(Address):
-    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
-    pass
-
 class WarehouseAddress(Address):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    pass
-
-class OfficeAddress(Address):
-    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
     pass
 
 class AuthorizedOfficer(Person):
