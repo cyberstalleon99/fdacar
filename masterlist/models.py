@@ -94,7 +94,7 @@ class CityOrMunicipality(models.Model):
         return str
 
 class Address(models.Model):
-    address = models.CharField(max_length=50)
+    address = models.CharField(max_length=250)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
     municipality_or_city = models.ForeignKey(CityOrMunicipality, on_delete=models.SET_NULL, null=True)

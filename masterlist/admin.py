@@ -4,6 +4,7 @@ from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Inspection, Capa, CapaDeficiency, CapaPreparator, Lto
 from django_reverse_admin import ReverseModelAdmin
+from django.shortcuts import redirect
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -84,9 +85,12 @@ class EstablishmentAdmin(ReverseModelAdmin):
         return obj.plant_address.municipality_or_city.name
 
     def lto_number(self, obj):
-        return obj.lto.lto_number
+        return obj.ltos.first().lto_number
 
     def expiry(self, obj):
-        return obj.lto.expiry.date()
+        return obj.ltos.first().expiry.date()
+
+    def response_change(self, request, obj):
+        return redirect('/admin/masterlist/establishment')
 
 admin.site.register(Establishment, EstablishmentAdmin)
