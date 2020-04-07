@@ -159,6 +159,13 @@ class OfficeAddress(Address):
     # establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
     pass
 
+class AuthorizedOfficer(Person):
+    # establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.full_name()
+
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
     application = models.CharField(max_length=1, choices=constants.APPLICATIONS)
@@ -171,6 +178,7 @@ class Establishment(models.Model):
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)
     office_address = models.OneToOneField(OfficeAddress, on_delete=models.SET_NULL, null=True)
+    authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
@@ -187,13 +195,6 @@ class Establishment(models.Model):
 class WarehouseAddress(Address):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
     pass
-
-class AuthorizedOfficer(Person):
-    establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
-    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
-
-    def __str__(self):
-        return self.full_name()
 
 class Lto(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
