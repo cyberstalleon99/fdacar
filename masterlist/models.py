@@ -201,7 +201,7 @@ class Establishment(models.Model):
         return ",\n".join(s.name for s in self.specific_activity.all())
 
 class WarehouseAddress(Address):
-    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
+    establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True, related_name='warehouses')
     pass
 
 class Lto(models.Model):

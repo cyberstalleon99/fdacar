@@ -17,7 +17,7 @@
                 <span>{{spec_act.name}}</span><br>
                 {% endfor %}
             </a>
-            <div class="contributions">{{establishment.lto.lto_number}} <br> {{establishment.lto.expiry.date}}</div> <br><br/>
+            <div class="contributions">{{establishment.ltos.first.lto_number}} <br> {{establishment.ltos.first.expiry.date}}</div> <br><br/>
             <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">Update</a><br/>
             <a href="#">Add branch</a>
             <div class="details d-flex">
@@ -57,23 +57,23 @@
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Plant Address</th>
-                        <td class="text-left">{{establishment.plantaddress.full_address}}</td>
+                        <td class="text-left">{{establishment.plant_address.full_address}}</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Warehouse Address</th>
                         <td class="text-left">
-                          {% for warehouse in establishment.warehouseaddress_set.all %}
+                          {% for warehouse in establishment.warehouses.all %}
                           {{warehouse.full_address}} <br/>
                           {% endfor %}
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Office Address</th>
-                        <td class="text-left">{{establishment.officeaddress.full_address}}</td>
+                        <td class="text-left">{{establishment.office_address.full_address}}</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Authorized Officer</th>
-                        <td class="text-left">{{establishment.authorizedofficer.full_name}} ({{establishment.authorizedofficer.email}}, {{establishment.authorizedofficer.mobile}})</td>
+                        <td class="text-left">{{establishment.authorized_officer.full_name}} ({{establishment.authorized_officer.email}}, {{establishment.authorized_officer.mobile}})</td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-left">Qualified Personnel</th>
