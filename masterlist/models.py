@@ -152,15 +152,12 @@ class PLIChecklistManager(models.Manager):
         return checklist
 
 class PlantAddress(Address):
-    # establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
     pass
 
 class OfficeAddress(Address):
-    # establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True)
     pass
 
 class AuthorizedOfficer(Person):
-    # establishment = models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
     designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -263,7 +260,7 @@ def report_directory_path(instance, filename):
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
+    capa = models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected')
     frequency_of_inspection = models.IntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True)

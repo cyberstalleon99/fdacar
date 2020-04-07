@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Inspection, Capa, CapaDeficiency, CapaPreparator, Lto
+from django_reverse_admin import ReverseModelAdmin
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -12,9 +13,6 @@ admin.site.register(CityOrMunicipality)
 admin.site.register(SpecificActivity)
 admin.site.register(PrimaryActivity)
 admin.site.register(ProductLine)
-admin.site.register(PlantAddress)
-admin.site.register(WarehouseAddress)
-admin.site.register(OfficeAddress)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(Inspection)
@@ -35,13 +33,6 @@ class CapaAdmin(admin.ModelAdmin):
 
 admin.site.register(Capa, CapaAdmin)
 
-class PlantAddressInline(admin.StackedInline):
-    model=PlantAddress
-
-class OfficeAddressInline(PlantAddressInline):
-
-    model=OfficeAddress
-
 class WarehouseAddressInline(admin.TabularInline):
     model=WarehouseAddress
     extra=1
@@ -50,14 +41,11 @@ class LtoInline(admin.StackedInline):
     model=Lto
     extra=1
 
-class AuthorizedOfficerInline(admin.StackedInline):
-    model=AuthorizedOfficer
-
 class QualifiedPersonInline(admin.TabularInline):
     model=QualifiedPerson
     extra=1
 
-class EstablishmentAdmin(admin.ModelAdmin):
+class EstablishmentAdmin(ReverseModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['folder_id', 'status', 'application', 'name', 'center', 'product_type', 'primary_activity',
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
@@ -76,7 +64,10 @@ class EstablishmentAdmin(admin.ModelAdmin):
         ('status', ChoiceDropdownFilter),
     )
 
-    inlines = [LtoInline, AuthorizedOfficerInline, QualifiedPersonInline, WarehouseAddressInline]
+    inlines = [QualifiedPersonInline, WarehouseAddressInline, LtoInline]
+
+    inline_type = 'stacked'
+    inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
 
     def province(self, obj):
         return obj.plantaddress.province.name
