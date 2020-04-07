@@ -38,7 +38,7 @@
                         {% for est in paginated_result %}
                         <tr>
                             <td><a href="{% url 'masterlist:est-detail' est.id %}">{{est.name}}</a></td>
-                            <td>{{est.plantaddress.full_address}}</td>
+                            <td>{{est.plant_address.full_address}}</td>
                             <td>{{est.product_type}} {{est.primary_activity}}</td>
                             <td>{{est.specific_activities}}</td>
                             <td>{{est.ltos.first.lto_number}}</td>
