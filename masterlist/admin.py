@@ -14,8 +14,18 @@ admin.site.register(PrimaryActivity)
 admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
-admin.site.register(Inspection)
 admin.site.register(ProductType)
+
+class InspectionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('General Information', {'fields': ['establishment', 'type_of_inspection', 'date_inspected', 'inspector', 'remarks']}),
+        ('Risk Rating', {'fields': ['frequency_of_inspection', 'risk_rating', 'date_of_followup_inspection']}),
+        ('CAPA', {'fields': ['capa']}),
+        ('Inspection Report', {'fields': ['inspection_report']}),
+    ]
+
+admin.site.register(Inspection, InspectionAdmin)
+
 
 class CityOrMunicipalityInline(admin.TabularInline):
     model=CityOrMunicipality

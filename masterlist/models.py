@@ -105,6 +105,35 @@ class Address(models.Model):
     def full_address(self):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
+class ExpiredListManager(models.Manager):
+
+    def get_filtered_list(self, query):
+        establishments = super().get_queryset().filter(
+            Q(name__icontains=query) |
+            Q(plant_address__address__icontains=query) |
+            Q(plant_address__municipality_or_city__name__icontains=query) |
+            Q(plant_address__region__name__icontains=query) |
+            Q(plant_address__province__name__icontains=query) |
+            Q(product_type__name__icontains=query) |
+            Q(primary_activity__name__icontains=query) |
+            Q(specific_activity__name__icontains=query) |
+            Q(ltos__lto_number__icontains=query)
+        )
+        checklist = []
+        for est in establishments:
+            if est.ltos.first().expiry.date() < datetime.now().date():
+                checklist.append(est)
+        return checklist
+
+
+    def get_list(self):
+        establishments = super().get_queryset()
+        checklist = []
+        for est in establishments:
+            if est.ltos.first().expiry.date() < datetime.now().date():
+                checklist.append(est)
+        return checklist
+
 class RenewalChecklistManager(models.Manager):
 
     def get_filtered_list(self, query):
@@ -117,7 +146,7 @@ class RenewalChecklistManager(models.Manager):
             Q(product_type__name__icontains=query) |
             Q(primary_activity__name__icontains=query) |
             Q(specific_activity__name__icontains=query) |
-            Q(lto__lto_number__icontains=query)
+            Q(ltos__lto_number__icontains=query)
         )
         checklist = []
         for est in establishments:
@@ -145,14 +174,13 @@ class PLIChecklistManager(models.Manager):
             Q(product_type__name__icontains=query) |
             Q(primary_activity__name__icontains=query) |
             Q(specific_activity__name__icontains=query) |
-            Q(lto__lto_number__icontains=query)
+            Q(ltos__lto_number__icontains=query)
         )
         checklist = []
         for est in establishments:
             if est.inspection_set.all().count() == 0:
                 checklist.append(est)
         return checklist
-
 
     def get_list(self):
         establishments = super().get_queryset()
@@ -192,6 +220,7 @@ class Establishment(models.Model):
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
     renchecklist = RenewalChecklistManager()
     plichecklist = PLIChecklistManager()
+    expiredlist = ExpiredListManager()
     objects = models.Manager()
 
     def __str__(self):

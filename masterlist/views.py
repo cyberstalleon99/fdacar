@@ -34,7 +34,7 @@ class EstablishmentListView(ListView):
     def get_establishments(self):
         establishments = Establishment.objects.all()
         query = self.request.GET.get('q', None)
-        if query is not None:
+        if query:
             establishments = Establishment.objects.filter(
                 Q(name__icontains=query) |
                 Q(center__icontains=query)
@@ -58,16 +58,27 @@ class EstablishmentDetailView(DetailView):
         context['inspections'] = inspections
         return context
 
-class ExpiredEstablishmentsListView(ListView):
-        model = Establishment
-        # items_per_page = 10
-        template_name = 'masterlist/expired-list.html'
-        context_object_name = 'test'
+class ExpiredListView(ListView):
+    model = Establishment
+    items_per_page = 10
+    template_name = 'masterlist/expired-list.html'
+    context_object_name = 'test'
 
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            context['expiredlist_active'] = "active"
-            context['paginated_result'] = Establishment.objects.filter()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['expiredlist_active'] = "active"
+        page = self.request.GET.get('page')
+        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
+        establishments = paginator.get_paginated_result()
+        context['paginated_result'] = establishments
+        return context
+
+    def get_list(self):
+        checklist = Establishment.expiredlist.get_list()
+        query = self.request.GET.get('q', None)
+        if query:
+            checklist = Establishment.expiredlist.get_filtered_list(query=query)
+        return checklist
 
 class StepOneView(FormView):
     template_name = 'masterlist/stepone.html'
