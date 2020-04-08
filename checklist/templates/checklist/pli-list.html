@@ -38,7 +38,7 @@
                         {% for establishment in paginated_result %}
                         <tr>
                             <td><a href="{% url 'masterlist:est-detail' establishment.id %}" target="_blank">{{establishment.name}}</a></td>
-                            <td>{{establishment.plantaddress.full_address}}</td>
+                            <td>{{establishment.plant_address.full_address}}</td>
                             <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
                             <td>
                               {% for spec_act in establishment.specific_activity.all %}
