@@ -300,7 +300,7 @@ def report_directory_path(instance, filename):
 
 class Inspection(models.Model):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    tracking_number = models.CharField(max_length=14)
+    tracking_number = models.CharField(max_length=14, null=True, verbose_name="DTN or Case #")
     capa = models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected')
@@ -308,7 +308,7 @@ class Inspection(models.Model):
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True)
     date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection', null=True, blank=True)
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
-    remarks = models.CharField(max_length=200)
+    remarks = models.CharField(max_length=200, null=True)
     inspection_report = models.FileField(null=True, blank=False, upload_to=report_directory_path, verbose_name='Inspection Report')
 
     def __str__(self):

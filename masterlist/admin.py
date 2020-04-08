@@ -18,11 +18,19 @@ admin.site.register(ProductType)
 
 class InspectionAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('General Information', {'fields': ['establishment', 'type_of_inspection', 'date_inspected', 'inspector', 'remarks']}),
-        ('Risk Rating', {'fields': ['frequency_of_inspection', 'risk_rating', 'date_of_followup_inspection']}),
+        ('General Information', {'fields': ['establishment', 'tracking_number', 'type_of_inspection', 'date_inspected', 'inspector', 'remarks']}),
+        ('Risk Rating', {'fields': ['frequency_of_inspection', 'risk_rating']}),
         ('CAPA', {'fields': ['capa']}),
         ('Inspection Report', {'fields': ['inspection_report']}),
     ]
+
+    def save_model(self, request, obj, form, change):
+        frequency_of_inspection = request.POST['frequency_of_inspection']
+        print("Request here.............................")
+        print(request.POST)
+        # obj.date_of_followup_inspection += int(frequency_of_inspection)
+        print(obj.date_of_followup_inspection)
+        super().save_model(request, obj, form, change)
 
 admin.site.register(Inspection, InspectionAdmin)
 
