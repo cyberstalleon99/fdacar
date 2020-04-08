@@ -5,6 +5,8 @@ from .models import Establishment, ProductType, PrimaryActivity, Person, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Inspection, Capa, CapaDeficiency, CapaPreparator, Lto
 from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -25,15 +27,19 @@ class InspectionAdmin(admin.ModelAdmin):
     ]
 
     def save_model(self, request, obj, form, change):
-        frequency_of_inspection = request.POST['frequency_of_inspection']
-        print("Request here.............................")
-        print(request.POST)
-        # obj.date_of_followup_inspection += int(frequency_of_inspection)
-        print(obj.date_of_followup_inspection)
-        super().save_model(request, obj, form, change)
+        frequency_of_inspection = request.POST.get('frequency_of_inspection')
+
+        # the date from date_inspected field
+        date_inspec = request.POST.get('date_inspected_0')
+
+        # the time from date_inspected field
+        time_inspec = request.POST.get('date_inspected_1')
+
+        date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
+        obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+        return super().save_model(request, obj, form, change)
 
 admin.site.register(Inspection, InspectionAdmin)
-
 
 class CityOrMunicipalityInline(admin.TabularInline):
     model=CityOrMunicipality
@@ -88,7 +94,7 @@ class EstablishmentAdmin(ReverseModelAdmin):
         ('specific_activity', RelatedDropdownFilter),
         ('plant_address__province', RelatedDropdownFilter),
         ('plant_address__municipality_or_city', RelatedDropdownFilter),
-        ('status', ChoiceDropdownFilter),
+        ('status', ChoiceDropdownFilter)
     )
 
     inlines = [QualifiedPersonInline, WarehouseAddressInline, LtoInline]
