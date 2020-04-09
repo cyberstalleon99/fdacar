@@ -39,7 +39,6 @@ class PliChekListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         context['paginated_result'] = paginator.get_paginated_result()
         context['pli_checklist_active'] = "active"
-        print('PliChekListView(ListView)')
         return context
 
     def get_list(self):
@@ -48,3 +47,24 @@ class PliChekListView(ListView):
         if query:
             pli_checklist = Establishment.plichecklist.get_filtered_list(query=query)
         return pli_checklist
+
+class RoutineChekListView(ListView):
+    items_per_page = 10
+    model = Establishment
+    template_name = 'checklist/routine-list.html'
+    context_object_name = 'list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page = self.request.GET.get('page')
+        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
+        context['paginated_result'] = paginator.get_paginated_result()
+        context['routine_checklist_active'] = "active"
+        return context
+
+    def get_list(self):
+        routine_checklist = Establishment.routinelist.get_list()
+        query = self.request.GET.get('q', None)
+        if query:
+            routine_checklist = Establishment.routinelist.get_filtered_list(query=query)
+        return routine_checklist

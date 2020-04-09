@@ -3,7 +3,7 @@ from django.utils import timezone
 from . import constants
 from datetime import datetime
 from dateutil import relativedelta
-from django.db.models import Q
+from . import mymanagers
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -105,91 +105,6 @@ class Address(models.Model):
     def full_address(self):
         return self.address + ', ' + self.municipality_or_city.name + ', ' + self.province.name
 
-class ExpiredListManager(models.Manager):
-
-    def get_filtered_list(self, query):
-        establishments = super().get_queryset().filter(
-            Q(name__icontains=query) |
-            Q(plant_address__address__icontains=query) |
-            Q(plant_address__municipality_or_city__name__icontains=query) |
-            Q(plant_address__region__name__icontains=query) |
-            Q(plant_address__province__name__icontains=query) |
-            Q(product_type__name__icontains=query) |
-            Q(primary_activity__name__icontains=query) |
-            Q(specific_activity__name__icontains=query) |
-            Q(ltos__lto_number__icontains=query)
-        )
-        checklist = []
-        for est in establishments:
-            if est.ltos.first().expiry.date() < datetime.now().date():
-                checklist.append(est)
-        return checklist
-
-
-    def get_list(self):
-        establishments = super().get_queryset()
-        checklist = []
-        for est in establishments:
-            if est.ltos.first().expiry.date() < datetime.now().date():
-                checklist.append(est)
-        return checklist
-
-class RenewalChecklistManager(models.Manager):
-
-    def get_filtered_list(self, query):
-        establishments = super().get_queryset().filter(
-            Q(name__icontains=query) |
-            Q(plant_address__address__icontains=query) |
-            Q(plant_address__municipality_or_city__name__icontains=query) |
-            Q(plant_address__region__name__icontains=query) |
-            Q(plant_address__province__name__icontains=query) |
-            Q(product_type__name__icontains=query) |
-            Q(primary_activity__name__icontains=query) |
-            Q(specific_activity__name__icontains=query) |
-            Q(ltos__lto_number__icontains=query)
-        )
-        checklist = []
-        for est in establishments:
-            if est.ltos.first().get_duration() <= 6:
-                checklist.append(est)
-        return checklist
-
-    def get_list(self):
-        establishments = super().get_queryset()
-        checklist = []
-        for est in establishments:
-            if est.ltos.first().get_duration() <= 6:
-                checklist.append(est)
-        return checklist
-
-class PLIChecklistManager(models.Manager):
-
-    def get_filtered_list(self, query):
-        establishments = super().get_queryset().filter(
-            Q(name__icontains=query) |
-            Q(plant_address__address__icontains=query) |
-            Q(plant_address__municipality_or_city__name__icontains=query) |
-            Q(plant_address__region__name__icontains=query) |
-            Q(plant_address__province__name__icontains=query) |
-            Q(product_type__name__icontains=query) |
-            Q(primary_activity__name__icontains=query) |
-            Q(specific_activity__name__icontains=query) |
-            Q(ltos__lto_number__icontains=query)
-        )
-        checklist = []
-        for est in establishments:
-            if est.inspection_set.all().count() == 0:
-                checklist.append(est)
-        return checklist
-
-    def get_list(self):
-        establishments = super().get_queryset()
-        checklist = []
-        for est in establishments:
-            if est.inspection_set.all().count() == 0:
-                checklist.append(est)
-        return checklist
-
 class PlantAddress(Address):
     pass
 
@@ -218,9 +133,10 @@ class Establishment(models.Model):
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
-    renchecklist = RenewalChecklistManager()
-    plichecklist = PLIChecklistManager()
-    expiredlist = ExpiredListManager()
+    renchecklist = mymanagers.RenewalChecklistManager()
+    plichecklist = mymanagers.PLIChecklistManager()
+    expiredlist = mymanagers.ExpiredListManager()
+    routinelist = mymanagers.RoutineListManager()
     objects = models.Manager()
 
     def __str__(self):
@@ -314,6 +230,13 @@ class Inspection(models.Model):
     def __str__(self):
         dateStr = self.date_inspected.strftime("%d %b %Y ")
         return dateStr
+
+    def get_followup_duration(self):
+        start_date = datetime.now().date()
+        end_date = self.date_of_followup_inspection.date()
+        difference = relativedelta.relativedelta(end_date, start_date)
+        month = difference.years * 12 + difference.months
+        return month
 
     class Meta:
         ordering = ['-date_inspected']
