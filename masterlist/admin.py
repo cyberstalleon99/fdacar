@@ -7,6 +7,7 @@ from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from . import constants
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -18,6 +19,7 @@ admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(ProductType)
 
+@admin.register(Inspection)
 class InspectionAdmin(admin.ModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['establishment', 'tracking_number', 'type_of_inspection', 'date_inspected', 'inspector', 'remarks']}),
@@ -37,18 +39,19 @@ class InspectionAdmin(admin.ModelAdmin):
 
         date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
         obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+        obj.establishment.inspection_status = constants.INSPECTION_STATUS[0]
+        obj.establishment.checklist_status = constants.CHECKLIST_STATUS[1]
+        obj.establishment.save()
         return super().save_model(request, obj, form, change)
 
-admin.site.register(Inspection, InspectionAdmin)
 
 class CityOrMunicipalityInline(admin.TabularInline):
     model=CityOrMunicipality
     extra=5
 
+@admin.register(Province)
 class ProvinceAdmin(admin.ModelAdmin):
     inlines = [CityOrMunicipalityInline]
-
-admin.site.register(Province, ProvinceAdmin)
 
 class CapaPreparatorInline(admin.StackedInline):
     model = CapaPreparator
@@ -57,14 +60,13 @@ class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency
     extra=1
 
+@admin.register(Capa)
 class CapaAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Start', {'fields': ['start_date']}),
         ('End', {'fields': ['date_submitted', 'date_approved', 'approved_by', 'remarks']})
     ]
     inlines = [CapaPreparatorInline, CapaDeficiencyInline]
-
-admin.site.register(Capa, CapaAdmin)
 
 class WarehouseAddressInline(admin.TabularInline):
     model=WarehouseAddress
@@ -78,6 +80,7 @@ class QualifiedPersonInline(admin.TabularInline):
     model=QualifiedPerson
     extra=1
 
+@admin.register(Establishment)
 class EstablishmentAdmin(ReverseModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['folder_id', 'status', 'application', 'name', 'center', 'product_type', 'primary_activity',
@@ -94,7 +97,7 @@ class EstablishmentAdmin(ReverseModelAdmin):
         ('specific_activity', RelatedDropdownFilter),
         ('plant_address__province', RelatedDropdownFilter),
         ('plant_address__municipality_or_city', RelatedDropdownFilter),
-        ('status', ChoiceDropdownFilter)
+        ('status', ChoiceDropdownFilter),
     )
 
     inlines = [QualifiedPersonInline, WarehouseAddressInline, LtoInline]
@@ -116,5 +119,3 @@ class EstablishmentAdmin(ReverseModelAdmin):
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')
-
-admin.site.register(Establishment, EstablishmentAdmin)

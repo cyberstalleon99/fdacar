@@ -41,3 +41,6 @@ RISK_RATINGS = [
     ('Medium', 'Medium'),
     ('High', 'High')
 ]
+
+INSPECTION_STATUS = [ 'inspected', 'uninspected']
+CHECKLIST_STATUS = ['ok', 'notok']

@@ -3,7 +3,7 @@ from django.views.generic import (
     ListView
 )
 from django.http import HttpResponseRedirect
-from masterlist.models import Establishment
+from masterlist.models import Establishment, SpecificActivity
 from masterlist import mypaginator
 
 class RenewalChekListView(ListView):
