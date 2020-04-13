@@ -58,7 +58,6 @@ class EstablishmentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
-        # curr_est.lto.get_duration()
         inspections = curr_est.inspection_set.all()
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
@@ -80,7 +79,7 @@ class ExpiredListView(ListView):
         return context
 
     def get_list(self):
-        checklist = Establishment.expiredlist.all()
+        checklist = Establishment.expiredlist.get_list()
         query = self.request.GET.get('q', None)
         if query:
             checklist = Establishment.expiredlist.get_filtered_list(query=query)

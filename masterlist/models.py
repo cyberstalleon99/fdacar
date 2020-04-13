@@ -134,7 +134,7 @@ class Establishment(models.Model):
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
-    expiredlist = mymanagers.ActiveManager(from_date=timezone.now, to_date='establishment.lto.expiry')
+    expiredlist = mymanagers.ExpiredListManager()
     objects = models.Manager()
 
     def __str__(self):
@@ -221,7 +221,7 @@ class Inspection(models.Model):
     capa = models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected')
-    frequency_of_inspection = models.IntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True)
+    frequency_of_inspection = models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True)
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True)
     date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection', null=True, blank=True)
     inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
