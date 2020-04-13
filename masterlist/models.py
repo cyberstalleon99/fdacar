@@ -134,10 +134,7 @@ class Establishment(models.Model):
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
-    renchecklist = mymanagers.RenewalChecklistManager()
-    plichecklist = mymanagers.PLIChecklistManager()
-    expiredlist = mymanagers.ExpiredListManager()
-    routinelist = mymanagers.RoutineListManager()
+    expiredlist = mymanagers.ActiveManager(from_date=timezone.now, to_date='establishment.lto.expiry')
     objects = models.Manager()
 
     def __str__(self):

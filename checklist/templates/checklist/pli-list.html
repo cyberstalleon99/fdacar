@@ -35,13 +35,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for establishment in paginated_result %}
+                        {% for job in paginated_result %}
                         <tr>
-                            <td><a href="{% url 'masterlist:est-detail' establishment.id %}" target="_blank">{{establishment.name}}</a></td>
-                            <td>{{establishment.plant_address.full_address}}</td>
-                            <td>{{establishment.product_type}} {{establishment.primary_activity}}</td>
+                            <td><a href="{% url 'masterlist:est-detail' job.establishment.id %}" target="_blank">{{job.establishment.name}}</a></td>
+                            <td>{{job.establishment.plant_address.full_address}}</td>
+                            <td>{{job.establishment.product_type}} {{job.establishment.primary_activity}}</td>
                             <td>
-                              {% for spec_act in establishment.specific_activity.all %}
+                              {% for spec_act in job.establishment.specific_activity.all %}
                                 {% if forloop.last %}
                                   {{spec_act.name}}
                                 {% else %}
@@ -49,9 +49,9 @@
                                 {% endif %}
                               {% endfor %}
                             </td>
-                            <td>{{establishment.ltos.first.lto_number}}</td>
-                            <td>{{establishment.ltos.first.expiry.date}}</td>
-                            <td>{{establishment.ltos.first.get_duration}} (mo./s)</td>
+                            <td>{{job.establishment.ltos.first.lto_number}}</td>
+                            <td>{{job.establishment.ltos.first.expiry.date}}</td>
+                            <td>{{job.establishment.ltos.first.get_duration}} (mo./s)</td>
                         </tr>
                         {% endfor %}
                         </tbody>

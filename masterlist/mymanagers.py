@@ -3,53 +3,64 @@ from datetime import datetime
 from django.db import models
 from . import myhelpers
 from . import constants
-
+from django.db.models import Q
 
 class ExpiredListManager(myhelpers.MyModelManager):
 
-    def get(self, establishments):
+    def get_list(self):
+        establishments = super().get_queryset().all()
         checklist = []
         for est in establishments:
             if est.ltos.first().expiry.date() < datetime.now().date():
                 checklist.append(est)
         return checklist
 
-class RenewalChecklistManager(myhelpers.MyModelManager):
-
-    except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
-
-    def get(self, establishments):
-        checklist = []
-        from checklist.models import Job
-        print(establishments)
-        for est in establishments:
-            # inspection status = {'0': inspected, '1': pending}
-            # checklist status = {'0': hidden, '1': visible}
-
-            if est.ltos.first().get_duration() <= 6 and est.specific_activity.filter(name__in=self.except_activities).exists()==False and est.inspection_set.all().count() != 0:
-                print(est)
-                if Job.objects.filter(establishment_id=est.id).exists()==False: # create a job object if est is not existing in Job model
-                    print('.............................')
-                    Job.objects.create(establishment=est, inspection_type=constants.INSPECTION_TYPES[1][0])
-
-
-        return Job.objects.filter(inspection_type=constants.INSPECTION_TYPES[1][0])
-
-class PLIChecklistManager(myhelpers.MyModelManager):
-
-    def get(self, establishments):
+    def get_filtered_list(self, query):
+        establishments = self.get_list().filter(
+            Q(name__icontains=query) |
+            Q(plant_address__address__icontains=query) |
+            Q(plant_address__municipality_or_city__name__icontains=query) |
+            Q(plant_address__region__name__icontains=query) |
+            Q(plant_address__province__name__icontains=query) |
+            Q(product_type__name__icontains=query) |
+            Q(primary_activity__name__icontains=query) |
+            Q(specific_activity__name__icontains=query) |
+            Q(ltos__lto_number__icontains=query)
+        )
         checklist = []
         for est in establishments:
-            if est.inspection_set.all().count() == 0:
+            if est.ltos.first().expiry.date() < datetime.now().date():
                 checklist.append(est)
         return checklist
 
-class RoutineListManager(myhelpers.MyModelManager):
+from datetime import datetime
 
-    def get(self):
-        checklist = []
-        for est in establishments:
-            if est.inspection_set.first(): # check if establishment has inspections
-                if est.inspection_set.first().get_followup_duration() <= 6:
-                    checklist.append(est)
-        return checklist
+from django.db import models
+
+class ActiveManager(models.Manager):
+
+    def __init__(self, from_date=None, to_date=None):
+        super(ActiveManager, self).__init__()
+        print(to_date)
+        self.from_date = from_date
+        self.to_date = to_date
+        now = datetime.now
+        if from_date and to_date:
+            self.date_filters = (models.Q(**{'%s__isnull' % self.to_date: True}) |
+                                 models.Q(**{'%s__gte' % self.to_date: now}),
+                                 models.Q(**{'%s__isnull' % self.from_date: True}) |
+                                 models.Q(**{'%s__lte' % self.from_date: now}))
+
+        elif from_date:
+            self.date_filters = (models.Q(**{'%s__isnull' % self.from_date: True}) |
+                                 models.Q(**{'%s__lte' % self.from_date: now}),)
+        elif to_date:
+            self.date_filters = (models.Q(**{'%s__isnull' % self.to_date: True}) |
+                                 models.Q(**{'%s__gte' % self.to_date: now}),)
+        else:
+            raise ValueError
+
+    def get_query_set(self):
+        """Retrieves items with publication dates according to self.date_filters
+        """
+        return super(ActiveManager, self).get_query_set().filter(*self.date_filters)

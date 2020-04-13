@@ -5,6 +5,7 @@ from django.views.generic import (
 from django.http import HttpResponseRedirect
 from masterlist.models import Establishment, SpecificActivity
 from masterlist import mypaginator
+from .models import Job
 
 class RenewalChekListView(ListView):
     items_per_page = 10
@@ -21,10 +22,10 @@ class RenewalChekListView(ListView):
         return context
 
     def get_list(self):
-        renewal_checklist = Establishment.renchecklist.get_list()
+        renewal_checklist = Job.renchecklist.get_list()
         query = self.request.GET.get('q', None)
         if query:
-            renewal_checklist = Establishment.renchecklist.get_filtered_list(query=query)
+            renewal_checklist = Job.renchecklist.get_filtered_list(query=query)
         return renewal_checklist
 
 class PliChekListView(ListView):
@@ -42,10 +43,11 @@ class PliChekListView(ListView):
         return context
 
     def get_list(self):
-        pli_checklist = Establishment.plichecklist.get_list()
+        pli_checklist = Job.plichecklist.get_list()
         query = self.request.GET.get('q', None)
         if query:
-            pli_checklist = Establishment.plichecklist.get_filtered_list(query=query)
+            pli_checklist = Job.plichecklist.get_filtered_list(query=query)
+
         return pli_checklist
 
 class RoutineChekListView(ListView):
@@ -63,8 +65,8 @@ class RoutineChekListView(ListView):
         return context
 
     def get_list(self):
-        routine_checklist = Establishment.routinelist.get_list()
+        routine_checklist = Job.routinelist.get_list()
         query = self.request.GET.get('q', None)
         if query:
-            routine_checklist = Establishment.routinelist.get_filtered_list(query=query)
+            routine_checklist = Job.routinelist.get_filtered_list(query=query)
         return routine_checklist

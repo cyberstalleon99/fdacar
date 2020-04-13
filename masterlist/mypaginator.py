@@ -22,3 +22,6 @@ class MyPaginator:
             paginated_result = paginator.page(paginator.num_pages)
 
         return paginated_result
+
+    class Meta:
+        ordering = ['-date_modified']

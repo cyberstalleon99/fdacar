@@ -80,7 +80,7 @@ class ExpiredListView(ListView):
         return context
 
     def get_list(self):
-        checklist = Establishment.expiredlist.get_list()
+        checklist = Establishment.expiredlist.all()
         query = self.request.GET.get('q', None)
         if query:
             checklist = Establishment.expiredlist.get_filtered_list(query=query)
