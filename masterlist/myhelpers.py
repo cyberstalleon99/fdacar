@@ -19,11 +19,11 @@ class MyModelManager(models.Manager):
 
     def get_filtered_list(self, query):
         establishments = self.get_filtered_establishments(query=query)
-        return self.get(establishments)
+        return self.get(establishments=establishments)
 
     def get_list(self):
         establishments = super().get_queryset()
-        return self.get(establishments=establishments, q=q)
+        return self.get(establishments=establishments)
 
     def get(self, establishments):
         pass

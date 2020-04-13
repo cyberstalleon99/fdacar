@@ -4,6 +4,7 @@ from django.db import models
 from . import myhelpers
 from . import constants
 
+
 class ExpiredListManager(myhelpers.MyModelManager):
 
     def get(self, establishments):
@@ -15,29 +16,24 @@ class ExpiredListManager(myhelpers.MyModelManager):
 
 class RenewalChecklistManager(myhelpers.MyModelManager):
 
+    except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
+
     def get(self, establishments):
         checklist = []
+        from checklist.models import Job
+        print(establishments)
         for est in establishments:
-            # # if establishment's LTO's duration is less than 6mos. and inspection status = inspected and checklist status = notok
-            # if est.ltos.first().get_duration() <= 6 and  est.inspection_status == constants.INSPECTION_STATUS[0] and est.checklist_status == constants.CHECKLIST_STATUS[0]:
-            #     est.inspection_status == constants.INSPECTION_STATUS[1]
-            #
-            # # if establishment's LTO's duration is less than 6mos. and inspection status = uninspected
-            # if est.ltos.first().get_duration() <= 6 and  est.inspection_status == constants.INSPECTION_STATUS[1]:
-            #     checklist.append(est)
+            # inspection status = {'0': inspected, '1': pending}
+            # checklist status = {'0': hidden, '1': visible}
 
-            except_activities = est.specific_activity.objects.get(pk=4)
-
-            if est.ltos.first().get_duration() <= 6:
-                # print(est.specific_activity.all())
-                if except_activities in est.specific_activity.all():
-                    print('Andito po siya............')
-                else:
-                    print('Not in the specific_activity............')
+            if est.ltos.first().get_duration() <= 6 and est.specific_activity.filter(name__in=self.except_activities).exists()==False and est.inspection_set.all().count() != 0:
+                print(est)
+                if Job.objects.filter(establishment_id=est.id).exists()==False: # create a job object if est is not existing in Job model
+                    print('.............................')
+                    Job.objects.create(establishment=est, inspection_type=constants.INSPECTION_TYPES[1][0])
 
 
-
-        return checklist
+        return Job.objects.filter(inspection_type=constants.INSPECTION_TYPES[1][0])
 
 class PLIChecklistManager(myhelpers.MyModelManager):
 

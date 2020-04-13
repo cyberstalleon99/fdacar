@@ -42,5 +42,5 @@ RISK_RATINGS = [
     ('High', 'High')
 ]
 
-INSPECTION_STATUS = [ 'inspected', 'uninspected']
-CHECKLIST_STATUS = ['ok', 'notok']
+INSPECTION_STATUS = [ 'inspected', 'pending']
+CHECKLIST_STATUS = ['hidden', 'visible']

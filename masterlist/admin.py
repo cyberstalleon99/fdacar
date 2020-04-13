@@ -30,17 +30,16 @@ class InspectionAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         frequency_of_inspection = request.POST.get('frequency_of_inspection')
-
         # the date from date_inspected field
         date_inspec = request.POST.get('date_inspected_0')
-
         # the time from date_inspected field
         time_inspec = request.POST.get('date_inspected_1')
 
         date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
         obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+        # inspection status = {'0': inspected, '1': pending}
+        # checklist status = {'0': hidden, '1': visible}
         obj.establishment.inspection_status = constants.INSPECTION_STATUS[0]
-        obj.establishment.checklist_status = constants.CHECKLIST_STATUS[1]
         obj.establishment.save()
         return super().save_model(request, obj, form, change)
 

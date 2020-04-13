@@ -4,6 +4,7 @@ from . import constants
 from datetime import datetime
 from dateutil import relativedelta
 from . import mymanagers
+from . import constants
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -133,8 +134,6 @@ class Establishment(models.Model):
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
-    inspection_status = models.CharField(max_length=11, null=True, default='hidden')
-    checklist_status = models.CharField(max_length=9, null=True)
     renchecklist = mymanagers.RenewalChecklistManager()
     plichecklist = mymanagers.PLIChecklistManager()
     expiredlist = mymanagers.ExpiredListManager()
