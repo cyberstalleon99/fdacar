@@ -26,10 +26,13 @@ class RenewalChecklistManager(myhelpers.MyModelManager):
 
 class PLIChecklistManager(myhelpers.MyModelManager):
 
+    included_activities = ['Drugstore']
+
     def check_for_inspection(self):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
-            if est.specific_activity.filter(name__in='Drugstore').exists()==True and \
+
+            if est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
             est.primary_activity == 'Distributor' and \
             est.inspection_set.all().count() == 0:
 

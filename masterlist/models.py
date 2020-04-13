@@ -125,7 +125,7 @@ class Establishment(models.Model):
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
-    specific_activity = models.ManyToManyField(SpecificActivity, verbose_name='Specific Activity/s')
+    specific_activity = models.ManyToManyField(SpecificActivity)
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
     product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)

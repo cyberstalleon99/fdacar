@@ -47,7 +47,6 @@ class PliChekListView(ListView):
         query = self.request.GET.get('q', None)
         if query:
             pli_checklist = Job.plichecklist.get_filtered_list(query=query)
-
         return pli_checklist
 
 class RoutineChekListView(ListView):
