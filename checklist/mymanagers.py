@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from django.db import models
 from masterlist import myhelpers
@@ -12,7 +11,7 @@ class RenewalChecklistManager(myhelpers.MyModelManager):
     def check_for_inspection(self):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
-            if est.ltos.first().get_duration() <= 6 and \
+            if est.ltos.latest().get_duration() <= 6 and \
             est.specific_activity.filter(name__in=self.except_activities).exists()==False and \
             est.inspection_set.all().count() != 0:
 
@@ -33,10 +32,10 @@ class PLIChecklistManager(myhelpers.MyModelManager):
         for est in Establishment.objects.all():
 
             if (est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
-                est.primary_activity == 'Distributor') and est.inspection_set.all().count() == 0:
-
-                if super().filter(establishment_id=est.id).exists()==False:
-                    super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])
+                est.primary_activity == 'Distributor'):
+                if  est.inspection_set.all().count() == 0:
+                    if super().filter(establishment_id=est.id).exists()==False:
+                        super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])
 
     def get_list(self):
         self.check_for_inspection()
@@ -49,8 +48,7 @@ class RoutineListManager(myhelpers.MyModelManager):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
             if est.inspection_set.first(): # check if establishment has inspections
-                if est.inspection_set.first().get_followup_duration() <= 6:
-
+                if est.inspection_set.latest().get_followup_duration() <= 6:
                     if super().filter(establishment_id=est.id).exists()==False:
                         super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[3][0])
 

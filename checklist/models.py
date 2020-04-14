@@ -12,6 +12,7 @@ class Job(models.Model):
     renchecklist = RenewalChecklistManager()
     plichecklist = PLIChecklistManager()
     routinelist = RoutineListManager()
+    objects = models.Manager()
 
     def __str__(self):
         return self.establishment.name

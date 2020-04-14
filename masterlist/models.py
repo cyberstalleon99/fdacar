@@ -234,14 +234,17 @@ class Inspection(models.Model):
         return dateStr
 
     def get_followup_duration(self):
-        start_date = datetime.now().date()
-        end_date = self.date_of_followup_inspection.date()
-        difference = relativedelta.relativedelta(end_date, start_date)
-        month = difference.years * 12 + difference.months
+        month = 0
+        if self.date_of_followup_inspection:
+            start_date = datetime.now().date()
+            end_date = self.date_of_followup_inspection.date()
+            difference = relativedelta.relativedelta(end_date, start_date)
+            month = difference.years * 12 + difference.months
         return month
 
     class Meta:
         ordering = ['-date_inspected']
+        get_latest_by = 'date_inspected'
 
 def capa_attachments_directory_path(instance, filename):
     return 'masterlist/inspection/attachments/report_{0}/{1}'.format(instance.capa.id, filename)
