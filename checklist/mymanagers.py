@@ -32,9 +32,8 @@ class PLIChecklistManager(myhelpers.MyModelManager):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
 
-            if est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
-            est.primary_activity == 'Distributor' and \
-            est.inspection_set.all().count() == 0:
+            if (est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
+                est.primary_activity == 'Distributor') and est.inspection_set.all().count() == 0:
 
                 if super().filter(establishment_id=est.id).exists()==False:
                     super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])

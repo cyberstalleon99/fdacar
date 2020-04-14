@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Inspection, Capa, CapaDeficiency, CapaPreparator, Lto
+from checklist.models import Job
 from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
 from datetime import datetime
@@ -29,18 +30,23 @@ class InspectionAdmin(admin.ModelAdmin):
     ]
 
     def save_model(self, request, obj, form, change):
-        frequency_of_inspection = request.POST.get('frequency_of_inspection')
-        # the date from date_inspected field
-        date_inspec = request.POST.get('date_inspected_0')
-        # the time from date_inspected field
-        time_inspec = request.POST.get('date_inspected_1')
+        if change==True:
+            frequency_of_inspection = request.POST.get('frequency_of_inspection')
+            # the date from date_inspected field
+            date_inspec = request.POST.get('date_inspected_0')
+            # the time from date_inspected field
+            time_inspec = request.POST.get('date_inspected_1')
 
-        date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
-        obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
-        # inspection status = {'0': inspected, '1': pending}
-        # checklist status = {'0': hidden, '1': visible}
-        obj.establishment.inspection_status = constants.INSPECTION_STATUS[0]
-        obj.establishment.save()
+            date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
+            obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+            # obj.establishment.inspection_status = constants.INSPECTION_STATUS[0]
+            # obj.establishment.save()
+
+        elif change==False:
+            est = obj.establishment
+            if est in Job.objects.all():
+                print('establishment is in the checklist')
+
         return super().save_model(request, obj, form, change)
 
 
