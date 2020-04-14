@@ -3,6 +3,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class MyPaginator:
     query_set = ''
     items_per_page = 0
+    page = 0
+    count = 0
 
     def __init__(self, query_set, items_per_page, page):
         self.query_set = query_set
@@ -21,7 +23,11 @@ class MyPaginator:
         except EmptyPage:
             paginated_result = paginator.page(paginator.num_pages)
 
+        self.count = paginator.count
         return paginated_result
+
+    def get_result_count(self):
+        return self.count
 
     class Meta:
         ordering = ['-date_modified']

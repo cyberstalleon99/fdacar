@@ -9,8 +9,13 @@ from django.db.models import Q
 class ExpiredListManager(myhelpers.MyModelManager):
 
     def get_list(self):
-        establishments = super().get_queryset().filter(ltos__expiry__lt=timezone.now()).distinct()
-        return establishments
+        # establishments = super().get_queryset().filter(ltos__expiry__lt=timezone.now()).distinct()
+        establishments = set()
+        for est in super().get_queryset():
+            if est.ltos.latest().expiry < timezone.now():
+                establishments.add(est.id)
+
+        return super().get_queryset().filter(pk__in=establishments)
 
     def get_filtered_list(self, query):
         establishments = self.get_list().filter(

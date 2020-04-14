@@ -28,6 +28,7 @@ class EstablishmentListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_establishments(), self.items_per_page, page)
         establishments = paginator.get_paginated_result()
         context['paginated_result'] = establishments
+        context['result_count'] = paginator.get_result_count()
         return context
 
     def get_establishments(self):
@@ -76,6 +77,7 @@ class ExpiredListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         establishments = paginator.get_paginated_result()
         context['paginated_result'] = establishments
+        context['result_count'] = paginator.get_result_count()
         return context
 
     def get_list(self):

@@ -1,6 +1,6 @@
 {% extends 'masterlist/partial/base.html' %}
 {% block title %} PLI Checklist  {% endblock %}
-{% block subtitle %} PLI {% endblock %}
+{% block subtitle %} PLI CHECKLIST {% endblock %}
 
 {% block content %}
 <div class="row">
@@ -8,7 +8,7 @@
         <div class="block">
             <div class="title">
                 <strong>PLI Checklist</strong>
-                <span class="d-block">Displayed is the list of establishments for inspection</span>
+                <span class="d-block">Displayed is the list of establishments for PLI Inspection</span>
             </div>
             <div class="row">
                 <div class="col-md-7">
@@ -35,6 +35,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% include 'checklist/partial/search_result_count.html' %}
                         {% for job in paginated_result %}
                         <tr>
                             <td><a href="{% url 'masterlist:est-detail' job.establishment.id %}" target="_blank">{{job.establishment.name}}</a></td>

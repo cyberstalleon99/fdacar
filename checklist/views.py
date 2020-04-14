@@ -19,6 +19,7 @@ class RenewalChekListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         context['paginated_result'] = paginator.get_paginated_result()
         context['ren_checklist_active'] = "active"
+        context['result_count'] = paginator.get_result_count()
         return context
 
     def get_list(self):
@@ -40,6 +41,7 @@ class PliChekListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         context['paginated_result'] = paginator.get_paginated_result()
         context['pli_checklist_active'] = "active"
+        context['result_count'] = paginator.get_result_count()
         return context
 
     def get_list(self):
@@ -61,6 +63,7 @@ class RoutineChekListView(ListView):
         paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
         context['paginated_result'] = paginator.get_paginated_result()
         context['routine_checklist_active'] = "active"
+        context['result_count'] = paginator.get_result_count()
         return context
 
     def get_list(self):

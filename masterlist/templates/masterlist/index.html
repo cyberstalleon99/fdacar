@@ -21,6 +21,7 @@
                 </div>
             </div>
             <div class="block-body">
+                {% include 'checklist/partial/search_result_count.html' %}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -42,8 +43,8 @@
                             <td>{{est.plant_address.full_address}}</td>
                             <td>{{est.product_type}} {{est.primary_activity}}</td>
                             <td>{{est.specific_activities}}</td>
-                            <td>{{est.ltos.first.lto_number}}</td>
-                            <td>{{est.ltos.first.expiry.date}}</td>
+                            <td>{{est.ltos.latest.lto_number}}</td>
+                            <td>{{est.ltos.latest.expiry.date}}</td>
                             <td>{{est.folder_id}}</td>
                             <td>{{est.ltos.first.get_duration}} mo./s</td>
                         </tr>

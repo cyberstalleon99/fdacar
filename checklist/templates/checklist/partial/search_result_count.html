@@ -1,0 +1,7 @@
+{% block searchresultcount %}
+{% if paginated_result %}
+<p>Search Results: <strong>{{result_count}}</strong> found</p>
+{% else %}
+<p>No results found</p>
+{% endif %}
+{% endblock %}

@@ -38,9 +38,9 @@ class ProductLine(models.Model):
         return self.name
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=30, null=True, blank=True)
-    last_name = models.CharField(max_length=30, null=True, blank=True)
-    middle_initial = models.CharField(max_length=1, null=True, blank=True)
+    first_name = models.CharField(max_length=250, null=True, blank=True)
+    last_name = models.CharField(max_length=250, null=True, blank=True)
+    middle_initial = models.CharField(max_length=3, null=True, blank=True)
     email = models.EmailField(max_length=250, null=True)
     mobile = models.CharField(max_length=11, null=True, blank=True)
 
@@ -168,6 +168,7 @@ class Lto(models.Model):
 
     class Meta:
         ordering = ['-expiry']
+        get_latest_by = 'expiry'
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
