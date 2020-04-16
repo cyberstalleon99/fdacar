@@ -38,8 +38,13 @@ class InspectionAdmin(admin.ModelAdmin):
         obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
 
         est = obj.establishment
+        print('Outside if...................')
         if Job.objects.filter(establishment=est).exists():
-            Job.objects.get(establishment=est).delete()
+            print('Inside if...................')
+            curr_job = Job.objects.get(establishment=est)
+            # Set the Job object's inspection status to 'inspected'
+            curr_job.inspection_status = constants.INSPECTION_STATUS[0]
+            curr_job.save()
 
         return super().save_model(request, obj, form, change)
 

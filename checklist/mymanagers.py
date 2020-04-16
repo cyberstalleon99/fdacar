@@ -5,7 +5,6 @@ from masterlist import constants
 from django.db.models import Q
 
 class RenewalChecklistManager(myhelpers.MyModelManager):
-
     except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
 
     def check_for_inspection(self):
@@ -18,24 +17,27 @@ class RenewalChecklistManager(myhelpers.MyModelManager):
                 if super().filter(establishment_id=est.id).exists()==False:
                     super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[1][0])
 
+            # check if est.lto.duration is not expired and establishment is still in the Job Checklist
+            if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
+                # check if it's REN Type
+                if super().get_queryset().get(establishment=est).inspection_type==constants.INSPECTION_TYPES[1][0]:
+                    super().get_queryset().get(establishment=est).delete()
+
     def get_list(self):
         self.check_for_inspection()
-        jobs = super().get_queryset().filter(inspection_type=constants.INSPECTION_TYPES[1][0])
+        jobs = super().get_queryset().filter(inspection_type=constants.INSPECTION_TYPES[1][0], inspection_status=constants.INSPECTION_STATUS[1])
         return jobs
 
 class PLIChecklistManager(myhelpers.MyModelManager):
-
     included_activities = ['Drugstore']
 
     def check_for_inspection(self):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
-
-            if (est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
-                est.primary_activity == 'Distributor'):
-                if  est.inspection_set.all().count() == 0:
-                    if super().filter(establishment_id=est.id).exists()==False:
-                        super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])
+            if est.specific_activity.filter(name__in=self.included_activities).exists()==True or \
+                est.primary_activity == 'Distributor':
+                if  est.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
+                    super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])
 
     def get_list(self):
         self.check_for_inspection()
