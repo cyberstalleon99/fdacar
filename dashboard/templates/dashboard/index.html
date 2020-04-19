@@ -8,7 +8,7 @@
     <div class="statistic-block block">
       <div class="progress-details d-flex align-items-end justify-content-between">
         <div class="title">
-          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="#">CFRR</a></strong>
+          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:food-list' %}" target="_blank">CFRR</a></strong>
         </div>
         <div class="number dashtext-1">{{cfrr.total}}</div>
       </div>
@@ -22,7 +22,7 @@
     <div class="statistic-block block">
       <div class="progress-details d-flex align-items-end justify-content-between">
         <div class="title">
-          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="#">CDRR</a></strong>
+          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:drug-list' %}" target="_blank">CDRR</a></strong>
         </div>
         <div class="number dashtext-2">{{cdrr.total}}</div>
       </div>
@@ -36,7 +36,7 @@
     <div class="statistic-block block">
       <div class="progress-details d-flex align-items-end justify-content-between">
         <div class="title">
-          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="#">CCRR</a></strong>
+          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">CCRR</a></strong>
         </div>
         <div class="number dashtext-3">{{ccrr.total}}</div>
       </div>
@@ -50,7 +50,7 @@
     <div class="statistic-block block">
       <div class="progress-details d-flex align-items-end justify-content-between">
         <div class="title">
-          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="#">CDRRHR</a></strong>
+          <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">CDRRHR</a></strong>
         </div>
         <div class="number dashtext-4">{{cdrrhr.total}}</div>
       </div>
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong><span class="d-block span-sm">FM</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong><span class="d-block span-sm"><a href="#">FM</a></span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
             <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong><span class="d-block span-sm">FT</span>
