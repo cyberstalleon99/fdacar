@@ -14,55 +14,59 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Q
 from . import mypaginator
+from . import masterlistview
 
-class EstablishmentListView(ListView):
-    model = Establishment
-    items_per_page = 10
+class AllListView(masterlistview.MasterListView):
     template_name = 'masterlist/index.html'
-    context_object_name = 'test'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['masterlist_active'] = "active"
-        page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(self.get_establishments(), self.items_per_page, page)
-        establishments = paginator.get_paginated_result()
-        context['paginated_result'] = establishments
-        context['result_count'] = paginator.get_result_count()
-        return context
-
-    def get_establishments(self):
         establishments = Establishment.objects.all()
-        query = self.request.GET.get('q', None)
-        if query:
-            establishments = Establishment.objects.filter(
-                Q(name__icontains=query) |
-                Q(plant_address__address__icontains=query) |
-                Q(plant_address__municipality_or_city__name__icontains=query) |
-                Q(plant_address__region__name__icontains=query) |
-                Q(plant_address__province__name__icontains=query) |
-                Q(product_type__name__icontains=query) |
-                Q(primary_activity__name__icontains=query) |
-                Q(specific_activity__name__icontains=query) |
-                Q(ltos__lto_number__icontains=query)
-            )
-        return establishments
+        super().init_establishments(establishments)
+        context = super().get_context_data()
+        context['alllist_active'] = "active"
+        return context
 
-class EstablishmentDetailView(DetailView):
-    template_name = 'masterlist/establishment-detail.html'
-    context_object_name = 'establishment'
-
-    def get_object(self):
-        est_id =self.kwargs.get("id")
-        return get_object_or_404(Establishment, id=est_id)
+class FoodListView(masterlistview.MasterListView):
+    template_name = 'masterlist/food-list.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
-        inspections = curr_est.inspection_set.all()
-        context['masterlist_active'] = "active"
-        context['inspections'] = inspections
+        establishments = Establishment.objects.filter(product_type__name='Food')
+        super().init_establishments(establishments)
+        context = super().get_context_data()
+        context['foodlist_active'] = "active"
         return context
+
+class DrugListView(masterlistview.MasterListView):
+    template_name = 'masterlist/drug-list.html'
+
+    def get_context_data(self, **kwargs):
+        establishments = Establishment.objects.filter(product_type__name='Drug')
+        super().init_establishments(establishments)
+        context = super().get_context_data()
+        context['druglist_active'] = "active"
+        return context
+
+class CosmeticListView(masterlistview.MasterListView):
+    template_name = 'masterlist/cosmetic-list.html'
+
+    def get_context_data(self, **kwargs):
+        establishments = Establishment.objects.filter(product_type__name='Cosmetic')
+        super().init_establishments(establishments)
+        context = super().get_context_data()
+        context['cosmeticlist_active'] = "active"
+        return context
+
+class MedicalDeviceListView(masterlistview.MasterListView):
+    template_name = 'masterlist/medicaldevice-list.html'
+
+    def get_context_data(self, **kwargs):
+        establishments = Establishment.objects.filter(product_type__name='Medical Device')
+        super().init_establishments(establishments)
+        context = super().get_context_data()
+        context['medicaldevice_active'] = "active"
+        return context
+
+
 
 class ExpiredListView(ListView):
     model = Establishment
@@ -86,6 +90,56 @@ class ExpiredListView(ListView):
         if query:
             checklist = Establishment.expiredlist.get_filtered_list(query=query)
         return checklist
+
+# Important: DO NOT DELETE THIS YET
+# class EstablishmentListView(ListView):
+#     model = Establishment
+#     items_per_page = 10
+#     template_name = 'masterlist/index.html'
+#     context_object_name = 'establishments'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['alllist_active'] = "active"
+#         page = self.request.GET.get('page')
+#         paginator = mypaginator.MyPaginator(self.get_establishments(), self.items_per_page, page)
+#         establishments = paginator.get_paginated_result()
+#         context['paginated_result'] = establishments
+#         context['result_count'] = paginator.get_result_count()
+#         return context
+#
+#     def get_establishments(self):
+#         establishments = Establishment.objects.all()
+#         query = self.request.GET.get('q', None)
+#         if query:
+#             establishments = Establishment.objects.filter(
+#                 Q(name__icontains=query) |
+#                 Q(plant_address__address__icontains=query) |
+#                 Q(plant_address__municipality_or_city__name__icontains=query) |
+#                 Q(plant_address__region__name__icontains=query) |
+#                 Q(plant_address__province__name__icontains=query) |
+#                 Q(product_type__name__icontains=query) |
+#                 Q(primary_activity__name__icontains=query) |
+#                 Q(specific_activity__name__icontains=query) |
+#                 Q(ltos__lto_number__icontains=query)
+#             )
+#         return establishments
+
+class EstablishmentDetailView(DetailView):
+    template_name = 'masterlist/establishment-detail.html'
+    context_object_name = 'establishment'
+
+    def get_object(self):
+        est_id =self.kwargs.get("id")
+        return get_object_or_404(Establishment, id=est_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
+        inspections = curr_est.inspection_set.all()
+        context['masterlist_active'] = "active"
+        context['inspections'] = inspections
+        return context
 
 class StepOneView(FormView):
     template_name = 'masterlist/stepone.html'

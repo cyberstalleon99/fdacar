@@ -1,14 +1,20 @@
 from django.urls import path
-from .views import ( EstablishmentListView,
+from .views import ( AllListView, FoodListView, DrugListView, CosmeticListView, MedicalDeviceListView,
                      StepOneView, StepTwoAView, StepTwoBView, StepTwoCView, StepThreeView,
                      EstablishmentDetailView, ExpiredListView )
 from . import views
 
 app_name='masterlist'
 urlpatterns = [
-    path('', EstablishmentListView.as_view(), name='index'),
+    path('', AllListView.as_view(), name='index'),
+    path('all/', AllListView.as_view(), name='index'),
+    path('food/', FoodListView.as_view(), name='food-list'),
+    path('drug/', DrugListView.as_view(), name='drug-list'),
+    path('cosmetic/', CosmeticListView.as_view(), name='cosmetic-list'),
+    path('medical-device/', MedicalDeviceListView.as_view(), name='medicaldevice-list'),
+    path('expired/', ExpiredListView.as_view(), name='expired-list'),
+
     path('<int:id>/', EstablishmentDetailView.as_view(), name='est-detail'),
-    path('expired-list', ExpiredListView.as_view(), name='est-expired'),
 
     path('add-stepone/', StepOneView.as_view(), name='stepone'),
     path('add-steptwo-a/', StepTwoAView.as_view(), name='steptwo-a'),

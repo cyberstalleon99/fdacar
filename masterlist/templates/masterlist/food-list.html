@@ -1,6 +1,6 @@
 {% extends 'masterlist/partial/base.html' %}
-{% block title %} Establishment List  {% endblock %}
-{% block subtitle %} MASTER LIST {% endblock %}
+{% block title %} Food Establishments  {% endblock %}
+{% block subtitle %} FOOD ESTABLISHMENTS {% endblock %}
 
 {% block content %}
 <div class="row">
@@ -9,8 +9,8 @@
             <div class="title">
               <div class="row">
                 <div class="col-md-6">
-                  <strong>List of Establishments</strong>
-                  <span class="d-block">Displayed is the list of active establishments</span>
+                  <strong>List of Food Establishments</strong>
+                  <span class="d-block">Displayed is the list of active food establishments</span>
                 </div>
                 <div class="col-md-6 text-right">
                   <a class="btn btn-primary" href="{% url 'admin:masterlist_establishment_add' %}" target="_blank">Add an Establishment</a>
