@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django_admin_listfilter_dropdown',
+    'import_export',
 ]
 
 MIDDLEWARE = [

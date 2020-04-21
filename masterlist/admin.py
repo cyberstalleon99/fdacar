@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from . import constants
+from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin
+from .myresources import EstablishmentResource
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -84,7 +86,7 @@ class QualifiedPersonInline(admin.TabularInline):
     extra=1
 
 @admin.register(Establishment)
-class EstablishmentAdmin(ReverseModelAdmin):
+class EstablishmentAdmin(ReverseModelAdmin, ImportExportActionModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['folder_id', 'status', 'application', 'name', 'center', 'product_type', 'primary_activity',
         'specific_activity', 'additional_activity', 'product_line', 'remarks']})
@@ -107,6 +109,8 @@ class EstablishmentAdmin(ReverseModelAdmin):
 
     inline_type = 'stacked'
     inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
+
+    resource_class = EstablishmentResource
 
     def province(self, obj):
         return obj.plant_address.province.name
