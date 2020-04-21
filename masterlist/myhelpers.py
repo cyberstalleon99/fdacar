@@ -2,6 +2,9 @@ from django.db.models import Q
 from django.db import models
 from masterlist import constants
 
+from django.http import HttpResponse
+
+
 class MyModelManager(models.Manager):
 
     def check_for_inspection(self):
@@ -27,3 +30,12 @@ class MyModelManager(models.Manager):
 
     def get(self, establishments):
         pass
+
+class MyExporter:
+
+    # TODO: Add other export types refer to this link: https://simpleisbetterthancomplex.com/packages/2016/08/11/django-import-export.html
+    def export_to_xslx(resource, filename, queryset):
+        dataset = resource.export(queryset)
+        response = HttpResponse(dataset.xlsx, content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename={}.xlsx'.format(filename)
+        return response

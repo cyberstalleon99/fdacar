@@ -1,13 +1,25 @@
-from import_export import resources, fields
-from .models import Establishment, SpecificActivity, Lto
-from import_export.widgets import ManyToManyWidget, ForeignKeyWidget
+from import_export import resources
+from import_export.fields import Field
+from .models import Establishment, SpecificActivity, Lto, ProductType
 
 class EstablishmentResource(resources.ModelResource):
-    specific_activities = fields.Field(column_name="Specific Activity/s")
-    lto = fields.Field(column_name="LTO Number")
-    lto_expiry = fields.Field(column_name="Expiry")
+    name = Field(attribute="name", column_name="Establishment Name")
+    product_type = Field(attribute="product_type__name", column_name="Product Type")
+    primary_activity = Field(attribute="primary_activity__name", column_name="Primary Activity")
+    specific_activity = Field(column_name="Specific Activity/s")
+    product_line = Field(attribute="product_line__name", column_name="Product Line")
+    remarks = Field(attribute="remarks", column_name="Product Remarks")
+    lto = Field(column_name="LTO Number")
+    lto_expiry = Field(column_name="Expiry")
+    plant_address = Field(attribute="plant_address__address", column_name="Address")
+    province = Field(attribute="plant_address__province__name", column_name="Province")
+    municipality_or_city = Field(attribute="plant_address__municipality_or_city__name", column_name="City or Municipality")
+    contact_number = Field(attribute="authorized_officer__mobile", column_name="Contact Number")
+    email = Field(attribute="authorized_officer__email", column_name="Email Address")
+    status = Field(attribute="status", column_name="Status")
+    folder_id = Field(attribute="folder_id", column_name="Folder Number")
 
-    def dehydrate_specific_activities(self, establishment):
+    def dehydrate_specific_activity(self, establishment):
         specific_activities = ''
         for spec_act in establishment.specific_activity.all():
             specific_activities += spec_act.name + ", "
@@ -17,12 +29,8 @@ class EstablishmentResource(resources.ModelResource):
         return establishment.ltos.latest()
 
     def dehydrate_lto_expiry(self, establishment):
-        return establishment.ltos.latest().expiry
+        return establishment.ltos.latest().expiry.date()
 
     class Meta:
         model=Establishment
-        fields = ('name', 'lto', 'lto_expiry', 'primary_activity__name', 'plant_address__address',
-        'plant_address__province__name', 'plant_address__municipality_or_city__name', 'specific_activities', )
-
-        # def dehydrate_specific_activity(self, establishment):
-        #     return '%s by %s' % (establishment.)
+        exclude = ('id', 'date_modified', 'application', 'center', 'additional_activity', 'office_address', 'authorized_officer',)

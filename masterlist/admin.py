@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from . import constants
-from import_export.admin import ImportExportModelAdmin, ImportExportActionModelAdmin, ExportActionModelAdmin
+from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 
 admin.site.register(Person)

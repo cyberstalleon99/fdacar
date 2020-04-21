@@ -28,5 +28,5 @@ class ExpiredListManager(myhelpers.MyModelManager):
             Q(primary_activity__name__icontains=query) |
             Q(specific_activity__name__icontains=query) |
             Q(ltos__lto_number__icontains=query)
-        )
+        ).distinct()
         return establishments

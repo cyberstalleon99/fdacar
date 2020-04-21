@@ -12,11 +12,14 @@ from .forms import StepOneForm, StepTwoAForm, StepTwoBForm, StepTwoCForm, StepTh
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 from django.db.models import Q
 from . import mypaginator
-from . import masterlistview
+from .masterlistview import MasterListView
+from .myhelpers import MyExporter
+from .myresources import EstablishmentResource
 
-class AllListView(masterlistview.MasterListView):
+class AllListView(MasterListView):
     template_name = 'masterlist/index.html'
 
     def get_context_data(self, **kwargs):
@@ -26,7 +29,12 @@ class AllListView(masterlistview.MasterListView):
         context['alllist_active'] = "active"
         return context
 
-class FoodListView(masterlistview.MasterListView):
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Masterlist Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.all())
+        return response
+
+class FoodListView(MasterListView):
     template_name = 'masterlist/food-list.html'
 
     def get_context_data(self, **kwargs):
@@ -36,7 +44,12 @@ class FoodListView(masterlistview.MasterListView):
         context['foodlist_active'] = "active"
         return context
 
-class DrugListView(masterlistview.MasterListView):
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Food List Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.filter(product_type__name='Food'))
+        return response
+
+class DrugListView(MasterListView):
     template_name = 'masterlist/drug-list.html'
 
     def get_context_data(self, **kwargs):
@@ -46,7 +59,12 @@ class DrugListView(masterlistview.MasterListView):
         context['druglist_active'] = "active"
         return context
 
-class CosmeticListView(masterlistview.MasterListView):
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Drug List Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.filter(product_type__name='Drug'))
+        return response
+
+class CosmeticListView(MasterListView):
     template_name = 'masterlist/cosmetic-list.html'
 
     def get_context_data(self, **kwargs):
@@ -56,7 +74,12 @@ class CosmeticListView(masterlistview.MasterListView):
         context['cosmeticlist_active'] = "active"
         return context
 
-class MedicalDeviceListView(masterlistview.MasterListView):
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Cosmetic List Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.filter(product_type__name='Cosmetic'))
+        return response
+
+class MedicalDeviceListView(MasterListView):
     template_name = 'masterlist/medicaldevice-list.html'
 
     def get_context_data(self, **kwargs):
@@ -66,7 +89,10 @@ class MedicalDeviceListView(masterlistview.MasterListView):
         context['medicaldevice_active'] = "active"
         return context
 
-
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="MedicalDevices List Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.filter(product_type__name='Medical Device'))
+        return response
 
 class ExpiredListView(ListView):
     model = Establishment
@@ -84,12 +110,32 @@ class ExpiredListView(ListView):
         context['result_count'] = paginator.get_result_count()
         return context
 
+    def export(self):
+        checklist = Establishment.expiredlist.get_list()
+        query = self.request.GET.get('q', None)
+        if query:
+            checklist = Establishment.expiredlist.get_filtered_list(query=query)
+
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Expired List Pullout as of {}".format(timezone.now().date()),
+        queryset=checklist)
+        return response
+
     def get_list(self):
         checklist = Establishment.expiredlist.get_list()
         query = self.request.GET.get('q', None)
         if query:
             checklist = Establishment.expiredlist.get_filtered_list(query=query)
         return checklist
+
+def export_expired(request):
+    checklist = Establishment.expiredlist.get_list()
+    query = request.GET.get('q', None)
+    if query:
+        checklist = Establishment.expiredlist.get_filtered_list(query=query)
+
+    response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Expired List Pullout as of {}".format(timezone.now().date()),
+    queryset=checklist)
+    return response
 
 # Important: DO NOT DELETE THIS YET
 # class EstablishmentListView(ListView):
