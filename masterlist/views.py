@@ -110,16 +110,6 @@ class ExpiredListView(ListView):
         context['result_count'] = paginator.get_result_count()
         return context
 
-    def export(self):
-        checklist = Establishment.expiredlist.get_list()
-        query = self.request.GET.get('q', None)
-        if query:
-            checklist = Establishment.expiredlist.get_filtered_list(query=query)
-
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Expired List Pullout as of {}".format(timezone.now().date()),
-        queryset=checklist)
-        return response
-
     def get_list(self):
         checklist = Establishment.expiredlist.get_list()
         query = self.request.GET.get('q', None)

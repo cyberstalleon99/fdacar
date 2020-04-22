@@ -6,6 +6,9 @@ from django.http import HttpResponseRedirect
 from masterlist.models import Establishment, SpecificActivity
 from masterlist import mypaginator
 from .models import Job
+from masterlist.myhelpers import MyExporter
+from .myresources import JobResource
+from django.utils import timezone
 
 class RenewalChekListView(ListView):
     items_per_page = 10
@@ -29,6 +32,18 @@ class RenewalChekListView(ListView):
             renewal_checklist = Job.renchecklist.get_filtered_list(query=query)
         return renewal_checklist
 
+def export_renewal(request):
+    renewal_checklist = Job.renchecklist.get_list()
+    query = request.GET.get('q', None)
+    if query:
+        renewal_checklist = Job.renchecklist.get_filtered_list(query=query)
+    response = MyExporter.export_to_xslx(
+                                        resource=JobResource(),
+                                        filename="Renewal Checklist Pullout as of {}".format(timezone.now().date()),
+                                        queryset=renewal_checklist
+    )
+    return response
+
 class PliChekListView(ListView):
     items_per_page = 10
     model = Establishment
@@ -51,6 +66,18 @@ class PliChekListView(ListView):
             pli_checklist = Job.plichecklist.get_filtered_list(query=query)
         return pli_checklist
 
+def export_pli(request):
+    pli_checklist = Job.plichecklist.get_list()
+    query = request.GET.get('q', None)
+    if query:
+        pli_checklist = Job.plichecklist.get_filtered_list(query=query)
+    response = MyExporter.export_to_xslx(
+                                        resource=JobResource(),
+                                        filename="PLI List Pullout as of {}".format(timezone.now().date()),
+                                        queryset=pli_checklist
+    )
+    return response
+
 class RoutineChekListView(ListView):
     items_per_page = 10
     model = Establishment
@@ -72,3 +99,16 @@ class RoutineChekListView(ListView):
         if query:
             routine_checklist = Job.routinelist.get_filtered_list(query=query)
         return routine_checklist
+
+def export_routine(request):
+    routine_checklist = Job.routinelist.get_list()
+    query = request.GET.get('q', None)
+    if query:
+        routine_checklist = Job.routinelist.get_filtered_list(query=query)
+    response = MyExporter.export_to_xslx(
+                                        resource=JobResource(),
+                                        filename="Routine List Pullout as of {}".format(timezone.now().date()),
+                                        queryset=routine_checklist
+    )
+
+    return response
