@@ -1,10 +1,10 @@
 from datetime import datetime
 from django.db import models
-from masterlist import myhelpers
+from masterlist.myhelpers import MyModelManager
 from masterlist import constants
 from django.db.models import Q
 
-class RenewalChecklistManager(myhelpers.MyModelManager):
+class RenewalChecklistManager(MyModelManager):
     except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
 
     def check_for_inspection(self):
@@ -15,20 +15,20 @@ class RenewalChecklistManager(myhelpers.MyModelManager):
             est.inspection_set.all().count() != 0:
 
                 if super().filter(establishment_id=est.id).exists()==False:
-                    super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[1][0])
+                    super().create(establishment=est, inspection_type=constants.JOB_TYPES[1])
 
             # check if est.lto.duration is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
                 # check if it's REN Type
-                if super().get_queryset().get(establishment=est).inspection_type==constants.INSPECTION_TYPES[1][0]:
+                if super().get_queryset().get(establishment=est).inspection_type==constants.JOB_TYPES[1]:
                     super().get_queryset().get(establishment=est).delete()
 
     def get_list(self):
         self.check_for_inspection()
-        jobs = super().get_queryset().filter(inspection_type=constants.INSPECTION_TYPES[1][0], inspection_status=constants.INSPECTION_STATUS[1])
+        jobs = super().get_queryset().filter(inspection_type=constants.JOB_TYPES[1], inspection_status=constants.INSPECTION_STATUS)
         return jobs
 
-class PLIChecklistManager(myhelpers.MyModelManager):
+class PLIChecklistManager(MyModelManager):
     included_activities = ['Drugstore']
 
     def check_for_inspection(self):
@@ -36,20 +36,20 @@ class PLIChecklistManager(myhelpers.MyModelManager):
         for est in Establishment.objects.all():
             if est.specific_activity.filter(name__in=self.included_activities).exists()==True or est.primary_activity == 'Distributor':
                 if  est.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
-                    super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[0][0])
+                    super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
 
             # check if est.lto.duration is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
                 # check if it's PLI Type
-                if super().get_queryset().get(establishment=est).inspection_type==constants.INSPECTION_TYPES[0][0]:
+                if super().get_queryset().get(establishment=est).inspection_type==constants.JOB_TYPES[0]:
                     super().get_queryset().get(establishment=est).delete()
 
     def get_list(self):
         self.check_for_inspection()
-        jobs = super().get_queryset().filter(inspection_type=constants.INSPECTION_TYPES[0][0], inspection_status=constants.INSPECTION_STATUS[1])
+        jobs = super().get_queryset().filter(inspection_type=constants.JOB_TYPES[0], inspection_status=constants.INSPECTION_STATUS[1])
         return jobs
 
-class RoutineListManager(myhelpers.MyModelManager):
+class RoutineListManager(MyModelManager):
 
     def check_for_inspection(self):
         from masterlist.models import Establishment
@@ -57,15 +57,25 @@ class RoutineListManager(myhelpers.MyModelManager):
             if est.inspection_set.first(): # check if establishment has inspections
                 if est.inspection_set.latest().get_followup_duration() <= 6:
                     if super().filter(establishment_id=est.id).exists()==False:
-                        super().create(establishment=est, inspection_type=constants.INSPECTION_TYPES[3][0])
+                        super().create(establishment=est, inspection_type=constants.JOB_TYPES[3])
 
             # check if est.lto.duration is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
                 # check if it's RTN Type
-                if super().get_queryset().get(establishment=est).inspection_type==constants.INSPECTION_TYPES[3][0]:
+                if super().get_queryset().get(establishment=est).inspection_type==constants.JOB_TYPES[3]:
                     super().get_queryset().get(establishment=est).delete()
 
     def get_list(self):
         self.check_for_inspection()
-        jobs = super().get_queryset().filter(inspection_type=constants.INSPECTION_TYPES[3][0])
+        jobs = super().get_queryset().filter(inspection_type=constants.JOB_TYPES[3])
         return jobs
+
+class FollowupListManager(MyModelManager):
+
+    def check_for_inspection(self):
+        from masterlist.models import CapaDeficiency
+        followup_list = CapaDeficiency.objects.filter(accepted=False)
+        for capa_def in followup_list:
+            est = capa_def.capa.inspection.establishment
+            if super().filter(establishment_id=est.id).exists()==False:
+                super().create(establishment=est, inspection_type=constants.JOB_TYPES[2])

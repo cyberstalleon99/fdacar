@@ -36,6 +36,8 @@ INSPECTION_TYPES = [
     ('RTN', 'Routine Inspection')
 ]
 
+JOB_TYPES = ['PLI', 'REN', 'FUP', 'RTN']
+
 RISK_RATINGS = [
     ('Low', 'Low'),
     ('Medium', 'Medium'),
