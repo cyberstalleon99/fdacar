@@ -1,6 +1,6 @@
 {% extends 'masterlist/partial/base.html' %}
-{% block title %} PLI Summary  {% endblock %}
-{% block subtitle %} PLI {% endblock %}
+{% block title %} Dashboard  {% endblock %}
+{% block subtitle %} DASHBOARD {% endblock %}
 
 {% block content %}
 <div class="row">
@@ -72,20 +72,54 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong><span class="d-block span-sm"><a href="#">FM</a></span>
-            <input name="q" type="hidden" value="Manufacturer">
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:food-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Manufacturer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">FM</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong><span class="d-block span-sm">FT</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:food-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Trader">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">FT</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_wholesaler}}</strong><span class="d-block span-sm">FW</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_wholesaler}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:food-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Wholesaler">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">FW</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_importer}}</strong><span class="d-block span-sm">FI</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_importer}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:food-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Importer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">FI</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_exporter}}</strong><span class="d-block span-sm">FE</span>
+            <div class="item"><strong class="d-block strong-sm">{{cfrr.total_exporter}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:food-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Exporter">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">FE</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
@@ -102,25 +136,74 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_hp}}</strong><span class="d-block span-sm">HP</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_hp}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Hospital Pharmacy">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">HP</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_ds}}</strong><span class="d-block span-sm">DS</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_ds}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Drugstore">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DS</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_mfg}}</strong><span class="d-block span-sm">DM</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_mfg}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Manufacturer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DM</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_trader}}</strong><span class="d-block span-sm">DT</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_trader}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Trader">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DT</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_wholesaler}}</strong><span class="d-block span-sm">DW</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_wholesaler}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Wholesaler">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DW</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong><span class="d-block span-sm">DI</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Importer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DI</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong><span class="d-block span-sm">DE</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Exporter">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">DE</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
@@ -137,19 +220,54 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_mfg}}</strong><span class="d-block span-sm">CM</span>
+            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_mfg}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Manufacturer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">CM</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_trader}}</strong><span class="d-block span-sm">CT</span>
+            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_trader}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Trader">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">CT</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_wholesaler}}</strong><span class="d-block span-sm">CW</span>
+            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_wholesaler}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Wholesaler">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">CW</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_importer}}</strong><span class="d-block span-sm">CI</span>
+            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_importer}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Importer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">CI</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_exporter}}</strong><span class="d-block span-sm">CE</span>
+            <div class="item"><strong class="d-block strong-sm">{{ccrr.total_exporter}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Exporter">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">CE</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
@@ -166,22 +284,63 @@
             </div>
           </div>
           <div class="stats-3 d-flex justify-content-between text-center">
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_xray}}</strong><span class="d-block span-sm">XRAY</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_xray}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <button class="btn btn-link" type="submit" formtarget="_blank">XRAY</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_mfg}}</strong><span class="d-block span-sm">MDM</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_mfg}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Manufacturer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">MDM</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+246</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_trader}}</strong><span class="d-block span-sm">MDT</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_trader}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Trader">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">MDT</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_wholesaler}}</strong><span class="d-block span-sm">MDW</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_wholesaler}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Wholesaler">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">MDW</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_importer}}</strong><span class="d-block span-sm">MDI</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_importer}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Importer">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">MDI</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
-            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_exporter}}</strong><span class="d-block span-sm">MDE</span>
+            <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_exporter}}</strong>
+              <span class="d-block span-sm">
+                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                  {%csrf_token%}
+                  <input name="q" type="hidden" value="Exporter">
+                  <button class="btn btn-link" type="submit" formtarget="_blank">MDE</button>
+                </form>
+              </span>
               <!-- <div class="line"></div><small>+416</small> -->
             </div>
           </div>
