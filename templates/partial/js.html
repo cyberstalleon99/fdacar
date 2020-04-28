@@ -1,0 +1,57 @@
+{% load static %}
+<!-- JavaScript files-->
+<script src="{% static 'darkadmin/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'darkadmin/vendor/popper.js/umd/popper.min.js' %}"> </script>
+<script src="{% static 'darkadmin/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'darkadmin/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+<script src="{% static 'darkadmin/vendor/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'darkadmin/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'darkadmin/js/charts-custom.js' %}"></script>
+<script src="{% static 'darkadmin/js/front.js' %}"></script>
+<script>
+$("#id_region").change(function() {
+    var url = $("#plantaddressform").attr("data-provinces-url");
+    var regionId = $(this).val();
+
+    $.ajax({
+        url: url,
+        data: {
+            'region': regionId
+        },
+        success: function(data) {
+            $("#id_province").html(data);
+        }
+    });
+});
+
+$("#id_province").change(function() {
+    var url = $("#plantaddressform").attr("data-cities-url");
+    var provinceId = $(this).val();
+
+    $.ajax({
+        url: url,
+        data: {
+            'province': provinceId
+        },
+        success: function(data) {
+            $("#id_municipality_or_city").html(data);
+        }
+    });
+});
+
+
+$("#id_product_type").change(function() {
+    var url = $("#steponeform").attr("data-productlines-url");
+    var productTypeId = $(this).val();
+
+    $.ajax({
+        url: url,
+        data: {
+            'productType': productTypeId
+        },
+        success: function(data) {
+            $("#id_product_line").html(data);
+        }
+    });
+});
+</script>
