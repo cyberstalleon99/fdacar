@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	{% load static %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %} {% endblock %}</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="all,follow">
+
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Custom Font Icons CSS-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/css/font.css">
+    <!-- Google fonts - Muli-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/css/style.default.premium.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/favicon.ico">
+</head>
+
+<body>
+
+	{% block maincontent %}
+
+	{% endblock %}
+	<!-- JavaScript files-->
+	<script src="{% static 'darkadmin/vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/popper.js/umd/popper.min.js' %}"> </script>
+	<script src="{% static 'darkadmin/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+	<script src="{% static 'darkadmin/vendor/chart.js/Chart.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'darkadmin/js/charts-custom.js' %}"></script>
+	<script src="{% static 'darkadmin/js/front.js' %}"></script>
+	<script>
+	$("#id_region").change(function() {
+		var url = $("#plantaddressform").attr("data-provinces-url");
+		var regionId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'region': regionId
+			},
+			success: function(data) {
+				$("#id_province").html(data);
+			}
+		});
+	});
+
+	$("#id_province").change(function() {
+		var url = $("#plantaddressform").attr("data-cities-url");
+		var provinceId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'province': provinceId
+			},
+			success: function(data) {
+				$("#id_municipality_or_city").html(data);
+			}
+		});
+	});
+
+
+	$("#id_product_type").change(function() {
+		var url = $("#steponeform").attr("data-productlines-url");
+		var productTypeId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'productType': productTypeId
+			},
+			success: function(data) {
+				$("#id_product_line").html(data);
+			}
+		});
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	{% load static %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %} {% endblock %}</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="all,follow">
+	<!-- Bootstrap CSS-->
+	<link rel="stylesheet" href="{% static 'darkadmin/vendor/bootstrap/css/bootstrap.min.css' %}">
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="{% static 'darkadmin/vendor/font-awesome/css/font-awesome.min.css' %}">
+	<!-- Custom Font Icons CSS-->
+	<link rel="stylesheet" href="{% static 'darkadmin/css/font.css' %}">
+	<!-- Google fonts - Muli-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+	<!-- theme stylesheet-->
+	<link rel="stylesheet" href="{% static 'darkadmin/css/style.green.css' %}" id="theme-stylesheet">
+	<!-- Custom stylesheet - for your changes-->
+	<link rel="stylesheet" href="{% static 'darkadmin/css/custom.css' %}">
+	<!-- My custom stylesheet -->
+	<link rel="stylesheet" href="{% static 'masterlist/mystyle.css' %}">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="{% static 'darkadmin/img/favicon.ico' %}">
+</head>
+
+<body>
+
+	{% block maincontent %}
+
+	{% endblock %}
+
+	<button type="button" data-toggle="collapse" data-target="#style-switch" id="style-switch-button" class="btn btn-primary btn-sm d-none d-md-inline-block"><i class="fa fa-cog fa-2x"></i></button>
+	<div id="style-switch" class="collapse">
+		<h5 class="mb-3">Select theme colour</h5>
+		<form class="mb-3">
+			<select name="colour" id="colour" class="form-control">
+				<option value="">select colour variant</option>
+				<option value="default">pink</option>
+				<option value="red">red</option>
+				<option value="green">green</option>
+				<option value="violet">violet</option>
+				<option value="sea">sea</option>
+				<option value="blue">blue</option>
+			</select>
+		</form>
+		<p><img src="https://d19m59y37dris4.cloudfront.net/dark-admin/1-4-6/img/template-mac.png" alt="" class="img-fluid"></p>
+		<p class="text-muted text-small">Stylesheet switching is done via JavaScript and can cause a blink while page loads. This will not happen in your production code.</p>
+		<p>Do you want more components or SCSS sources?</p>
+		<p> <a href="https://bootstrapious.com/p/bootstrap-4-dark-admin-premium" class="btn btn-primary">Get Premium version</a></p>
+	</div>
+	<!-- JavaScript files-->
+	<script src="{% static 'darkadmin/vendor/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/popper.js/umd/popper.min.js' %}"> </script>
+	<script src="{% static 'darkadmin/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+	<script src="{% static 'darkadmin/vendor/chart.js/Chart.min.js' %}"></script>
+	<script src="{% static 'darkadmin/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'darkadmin/js/charts-custom.js' %}"></script>
+	<script src="{% static 'darkadmin/js/front.js' %}"></script>
+	<script>
+	$("#id_region").change(function() {
+		var url = $("#plantaddressform").attr("data-provinces-url");
+		var regionId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'region': regionId
+			},
+			success: function(data) {
+				$("#id_province").html(data);
+			}
+		});
+	});
+
+	$("#id_province").change(function() {
+		var url = $("#plantaddressform").attr("data-cities-url");
+		var provinceId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'province': provinceId
+			},
+			success: function(data) {
+				$("#id_municipality_or_city").html(data);
+			}
+		});
+	});
+
+
+	$("#id_product_type").change(function() {
+		var url = $("#steponeform").attr("data-productlines-url");
+		var productTypeId = $(this).val();
+
+		$.ajax({
+			url: url,
+			data: {
+				'productType': productTypeId
+			},
+			success: function(data) {
+				$("#id_product_line").html(data);
+			}
+		});
+	});
+	</script>
+</body>
+</html>

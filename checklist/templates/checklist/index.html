@@ -1,38 +1,42 @@
-{% extends 'masterlist/partial/base.html' %}
+{% extends 'base-site.html' %}
 {% block title %} Renewal Checklist  {% endblock %}
 {% block subtitle %} RENEWAL CHECKLIST {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-12">
-        <div class="block">
-            <div class="title">
-              <div class="row">
-                <div class="col-md-6">
-                  <strong>Renewal Checklist</strong>
-                  <span class="d-block">Displayed is the list of establishments for Renewal Inspection</span>
+<section class="no-padding-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Renewal Checklist</strong>
+                                <span class="d-block">Displayed is the list of establishments for Renewal Inspection</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a class="btn btn-primary" href="{% url 'checklist:export-renewal' %}" target="_blank">Export to Excel</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                        </div>
+                        <div class="col-md-5">
+                            <form action="" method='get'>
+                                {% csrf_token %}
+                                {% include 'partial/search_input.html' %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="block-body">
+                        {% include 'partial/search_result.html' %}
+                        <br>
+                        {% include 'partial/pagination.html' %}
+                    </div>
                 </div>
-                <div class="col-md-6 text-right">
-                  <a class="btn btn-primary" href="{% url 'checklist:export-renewal' %}" target="_blank">Export to Excel</a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-md-7">
-                </div>
-                <div class="col-md-5">
-                  <form action="" method='get'>
-                    {% csrf_token %}
-                    {% include 'masterlist/partial/search_input.html' %}
-                  </form>
-                </div>
-            </div>
-            <div class="block-body">
-                {% include 'checklist/partial/search_result.html' %}
-                <br>
-                {% include 'masterlist/partial/pagination.html' %}
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

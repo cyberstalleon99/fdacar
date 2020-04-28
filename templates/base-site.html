@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block maincontent %}
+
+{% include 'partial/navbar.html' %}
+
+<div class="d-flex align-items-stretch">
+    {% include 'partial/sidebar.html' %}
+    <div class="page-content">
+        <!-- Page Header-->
+        <div class="page-header no-margin-bottom">
+            <div class="container-fluid">
+                <h2 class="h5 no-margin-bottom">{% block subtitle %} {% endblock %}</h2>
+            </div>
+        </div>
+        <!-- Breadcrumb-->
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Basic forms </li>
+            </ul>
+        </div>
+        {% block content %}
+        {% endblock %}
+        <footer class="footer">
+            <div class="footer__block block no-margin-bottom">
+                <div class="container-fluid text-center">
+                    <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                    <p class="no-margin-bottom">2019 &copy; FDA. Design by <a href="https://bootstrapious.com/p/bootstrap-4-dark-admin">Bootstrapious</a>.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+{% endblock %}

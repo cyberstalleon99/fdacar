@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block maincontent %}
+<div class="login-page">
+    <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+            <div class="row">
+                <div class="col-lg-3">
+                </div>
+
+                <!-- Form Panel    -->
+                <div class="col-lg-6">
+                    <div class="form d-flex align-items-center">
+                        <div class="content">
+                            <div class="text-center"><img src="/static/masterlist/img/fda-logo-trans.png" alt="..." style="max-width: 12rem;" class="img-fluid mb-4">
+                                <h1 class="display-4 text-gray-light mb-3">Sign in</h1>
+                            </div>
+                            <form method="post" class="form-validate mb-4">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{form.email|add_label_class:"label-material"}}
+                                    {% render_field form.email class="form-control" data-msg="Please enter a valid email address" %}
+                                </div>
+                                <div class="form-group">
+                                    {{form.password|add_label_class:"label-material"}}
+                                    {% render_field form.password class="form-control" data-msg="Please enter your password" %}
+                                </div>
+                                {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                    Username or Password is incorrect.
+                                </div>
+                                {% endif %}
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+
+                            </form>
+                            <!-- <a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="register.html" class="signup">Signup</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyrights text-center">
+        <p>Design by <a href="https://bootstrapious.com/p/bootstrap-4-dark-admin" class="external">Bootstrapious</a></p>
+        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+    </div>
+</div>
+{% endblock %}
