@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'accounts.apps.AccountsConfig',
     'inspector.apps.InspectorConfig',
+    'records.apps.RecordsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
