@@ -3,11 +3,11 @@ from masterlist.models import Establishment, Person
 from masterlist import constants
 
 class Record(models.Model):
-    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True, blank=True)
+    establishment = models.OneToOneField(Establishment, on_delete=models.SET_NULL, null=True, blank=False)
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
 
     def __str__(self):
-        return self.establishment.name
+        return self.establishment.name + "(" + self.folder_id + ")"
 
 class Capa(models.Model):
     start_date = models.DateTimeField('start_date')

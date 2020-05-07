@@ -1,7 +1,21 @@
 from django.contrib import admin
 from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record
 
-admin.site.register(Record)
+@admin.register(Record)
+class RecordAdmin(admin.ModelAdmin):
+    list_display = ('folder_id', 'name', 'address', 'province', 'municipality_or_city', )
+
+    def name(self, obj):
+        return obj.establishment.name
+
+    def address(self, obj):
+        return obj.establishment.plant_address.address
+
+    def province(self, obj):
+        return obj.establishment.plant_address.province.name
+
+    def municipality_or_city(self, obj):
+        return obj.establishment.plant_address.municipality_or_city.name
 
 @admin.register(Inspection)
 class InspectionAdmin(admin.ModelAdmin):

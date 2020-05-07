@@ -120,7 +120,6 @@ class AuthorizedOfficer(Person):
 
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
-    # application = models.CharField(max_length=1, choices=constants.APPLICATIONS)
     name = models.CharField(max_length=60)
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
@@ -133,7 +132,6 @@ class Establishment(models.Model):
     authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
-    # folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
     expiredlist = mymanagers.ExpiredListManager()
     objects = models.Manager()
 
