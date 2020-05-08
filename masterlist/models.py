@@ -125,12 +125,12 @@ class Establishment(models.Model):
     center = models.CharField(max_length=6, choices=constants.CENTERS)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
     specific_activity = models.ManyToManyField(SpecificActivity)
-    additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
-    product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
+    # additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
+    # product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)
     office_address = models.OneToOneField(OfficeAddress, on_delete=models.SET_NULL, null=True)
     authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
-    remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
+    # remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     expiredlist = mymanagers.ExpiredListManager()
     objects = models.Manager()
@@ -144,15 +144,44 @@ class Establishment(models.Model):
     class Meta:
         ordering = ['-date_modified']
 
+class EstAdditionalActivity(models.Model):
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.additional_activity.name
+
+class EstProductLine(models.Model):
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    product_line = models.ForeignKey(ProductLine, on_delete=models.CASCADE)
+    remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
+
+    def __str__(self):
+        return self.product_line.name
+
 class WarehouseAddress(Address):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True, related_name='warehouses')
     pass
 
+class VariationType(models.Model):
+    name = models.CharField(max_length=255)
+    type = models.CharField(max_length=20, choices=constants.VARIATION_TYPES)
+    # primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name + " - " + self.type
+
 class Lto(models.Model):
+    type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS)
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
+
+    # type_of_variation = models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True)
+    # old = models.CharField(max_length=255, verbose_name="From", help_text="Enter old value here (if applicable)")
+    # current = models.CharField(max_length=255, verbose_name="To", help_text="Enter the new value here (if applicable)")
+    # remarks = models.CharField(max_length=255)
 
     def __str__(self):
         return self.lto_number
@@ -167,6 +196,16 @@ class Lto(models.Model):
     class Meta:
         ordering = ['-expiry']
         get_latest_by = 'expiry'
+
+class Variation(models.Model):
+    lto = models.ForeignKey(Lto, on_delete=models.CASCADE, related_name='variations')
+    type_of_variation = models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True)
+    old = models.CharField(max_length=255, verbose_name="From", help_text="Enter old value here (if applicable)")
+    current = models.CharField(max_length=255, verbose_name="To", help_text="Enter the new value here (if applicable)")
+    remarks = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.lto_number
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)

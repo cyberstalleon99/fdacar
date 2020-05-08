@@ -13,9 +13,9 @@ CENTERS = [
 ]
 
 APPLICATIONS = [
-    ('I', 'Initial'),
-    ('R', 'Renewal'),
-    ('V', 'Variation')
+    ('Initial', 'Initial'),
+    ('Renewal', 'Renewal'),
+    ('Variation', 'Variation')
 ]
 
 EST_STATUS = [
@@ -34,6 +34,11 @@ INSPECTION_TYPES = [
     ('REN', 'Renewal of LTO'),
     ('INI', 'Initial Inspection'),
     ('RTN', 'Routine Inspection')
+]
+
+VARIATION_TYPES = [
+    ('Minor', 'Minor'),
+    ('Major', 'Major')
 ]
 
 JOB_TYPES = ['PLI', 'REN', 'FUP', 'RTN']

@@ -128,7 +128,7 @@ def export_expired(request):
     return response
 
 class EstablishmentDetailView(DetailView):
-    template_name = 'masterlist/establishment-detail.html'
+    template_name = 'masterlist/establishment-detail/establishment-detail.html'
     context_object_name = 'establishment'
 
     def get_object(self):

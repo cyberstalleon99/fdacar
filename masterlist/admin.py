@@ -2,7 +2,8 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
-    PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto
+    PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
+    EstAdditionalActivity, EstProductLine
 from checklist.models import Job
 from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
@@ -21,6 +22,27 @@ admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(ProductType)
+# admin.site.register(Lto)
+
+@admin.register(VariationType)
+class VariationTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type')
+
+class AdditionalActivityInline(admin.StackedInline):
+    model = EstAdditionalActivity
+    extra = 1
+    insert_after = 'specific_activity'
+
+class ProductLineInline(admin.TabularInline):
+    model = EstProductLine
+    extra = 1
+    insert_after = 'specific_activity'
+
+
+
+# @admin.register(Lto)
+# class LtoAdmin(admin.ModelAdmin):
+
 
 # @admin.register(Inspection)
 # class InspectionAdmin(admin.ModelAdmin):
@@ -74,10 +96,12 @@ class ProvinceAdmin(admin.ModelAdmin):
 class WarehouseAddressInline(admin.TabularInline):
     model=WarehouseAddress
     extra=1
+    insert_after = 'specific_activity'
 
-class LtoInline(admin.StackedInline):
+class LtoInline(admin.TabularInline):
     model=Lto
     extra=1
+    classes = ['collapse']
 
 class QualifiedPersonInline(admin.TabularInline):
     model=QualifiedPerson
@@ -87,12 +111,13 @@ class QualifiedPersonInline(admin.TabularInline):
 class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
     fieldsets = [
         ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
-        'specific_activity', 'additional_activity', 'product_line', 'remarks']})
+        'specific_activity'], 'classes': ['collapse']}),
     ]
 
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
-     'product_type', 'primary_activity', 'specific_activities', 'additional_activity', 'product_line', 'remarks',
+     'product_type', 'primary_activity', 'specific_activities',
      'lto_number', 'expiry')
+
     list_filter = (
         ('name', DropdownFilter),
         ('product_type', RelatedDropdownFilter),
@@ -103,11 +128,11 @@ class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
         ('status', ChoiceDropdownFilter),
     )
 
-    inlines = [QualifiedPersonInline, WarehouseAddressInline, LtoInline]
+    inlines = [QualifiedPersonInline, AdditionalActivityInline, ProductLineInline, WarehouseAddressInline, LtoInline]
 
     inline_type = 'stacked'
     inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
-
+    change_form_template = 'admin/custom/change_form.html'
     resource_class = EstablishmentResource
 
     def province(self, obj):
@@ -124,3 +149,10 @@ class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')
+
+    class Media:
+        css = {
+            'all': (
+                'css/admin.css',
+            )
+        }
