@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_admin_listfilter_dropdown',
     'import_export',
+    'tabbed_admin',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+TABBED_ADMIN_USE_JQUERY_UI = True

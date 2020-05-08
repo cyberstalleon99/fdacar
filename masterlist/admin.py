@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 from . import constants
 from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
+from tabbed_admin import TabbedModelAdmin
 
 admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -108,11 +109,13 @@ class QualifiedPersonInline(admin.TabularInline):
     extra=1
 
 @admin.register(Establishment)
-class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
-    fieldsets = [
-        ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
-        'specific_activity'], 'classes': ['collapse']}),
-    ]
+# class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin, TabbedModelAdmin):
+class EstablishmentAdmin(ExportActionModelAdmin, TabbedModelAdmin):
+    model = Establishment
+    # fieldsets = [
+    #     ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
+    #     'specific_activity'], 'classes': ['collapse']}),
+    # ]
 
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
      'product_type', 'primary_activity', 'specific_activities',
@@ -127,13 +130,30 @@ class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
         ('plant_address__municipality_or_city', RelatedDropdownFilter),
         ('status', ChoiceDropdownFilter),
     )
-
-    inlines = [QualifiedPersonInline, AdditionalActivityInline, ProductLineInline, WarehouseAddressInline, LtoInline]
-
+    #
+    # inlines = [QualifiedPersonInline, AdditionalActivityInline, ProductLineInline, WarehouseAddressInline, LtoInline]
+    #
     inline_type = 'stacked'
     inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
-    change_form_template = 'admin/custom/change_form.html'
-    resource_class = EstablishmentResource
+    # change_form_template = 'admin/custom/change_form.html'
+    # resource_class = EstablishmentResource
+
+    tab_general_info = (
+        ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
+            'specific_activity']}),
+        AdditionalActivityInline,
+        ProductLineInline
+    )
+
+    tab_address = (
+        ('Office Address', {'fields': ['office_address']}),
+        # inline_reverse
+    )
+
+    tabs = [
+        ('General Information', tab_general_info),
+        ('Address', tab_address)
+    ]
 
     def province(self, obj):
         return obj.plant_address.province.name
@@ -149,10 +169,3 @@ class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin):
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')
-
-    class Media:
-        css = {
-            'all': (
-                'css/admin.css',
-            )
-        }
