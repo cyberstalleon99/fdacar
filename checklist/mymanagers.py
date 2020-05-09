@@ -12,7 +12,7 @@ class RenewalChecklistManager(MyModelManager):
         for est in Establishment.objects.all():
             if est.ltos.latest().get_duration() <= 6 and \
             est.specific_activity.filter(name__in=self.except_activities).exists()==False and \
-            est.inspection_set.all().count() != 0:
+            est.record.inspection_set.all().count() != 0:
 
                 if super().filter(establishment_id=est.id).exists()==False:
                     super().create(establishment=est, inspection_type=constants.JOB_TYPES[1])
@@ -35,7 +35,7 @@ class PLIChecklistManager(MyModelManager):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
             if est.specific_activity.filter(name__in=self.included_activities).exists()==True or est.primary_activity == 'Distributor':
-                if  est.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
+                if  est.record.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
                     super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
 
             # check if est.lto.duration is renewed and establishment is still in the Job Checklist
@@ -54,8 +54,8 @@ class RoutineListManager(MyModelManager):
     def check_for_inspection(self):
         from masterlist.models import Establishment
         for est in Establishment.objects.all():
-            if est.inspection_set.first(): # check if establishment has inspections
-                if est.inspection_set.latest().get_followup_duration() <= 6:
+            if est.record.inspection_set.first(): # check if establishment has inspections
+                if est.record.inspection_set.latest().get_followup_duration() <= 6:
                     if super().filter(establishment_id=est.id).exists()==False:
                         super().create(establishment=est, inspection_type=constants.JOB_TYPES[3])
 
