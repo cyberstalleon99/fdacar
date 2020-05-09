@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Establishment, ProductType, PrimaryActivity, Person, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
-    EstAdditionalActivity, EstProductLine
+    EstAdditionalActivity, EstProductLine, Variation
 from checklist.models import Job
 from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
@@ -14,7 +14,7 @@ from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 from tabbed_admin import TabbedModelAdmin
 
-admin.site.register(Person)
+# admin.site.register(Person)
 admin.site.register(AdditionalActivity)
 admin.site.register(Region)
 admin.site.register(SpecificActivity)
@@ -23,7 +23,8 @@ admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(ProductType)
-# admin.site.register(Lto)
+admin.site.register(OfficeAddress)
+admin.site.register(PlantAddress)
 
 @admin.register(VariationType)
 class VariationTypeAdmin(admin.ModelAdmin):
@@ -38,6 +39,10 @@ class ProductLineInline(admin.TabularInline):
     model = EstProductLine
     extra = 1
     insert_after = 'specific_activity'
+
+class VariationInline(admin.TabularInline):
+    model = Variation
+    extra = 1
 
 
 
@@ -102,7 +107,7 @@ class WarehouseAddressInline(admin.TabularInline):
 class LtoInline(admin.TabularInline):
     model=Lto
     extra=1
-    classes = ['collapse']
+    # classes = ['collapse']
 
 class QualifiedPersonInline(admin.TabularInline):
     model=QualifiedPerson
@@ -133,10 +138,10 @@ class EstablishmentAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     #
     # inlines = [QualifiedPersonInline, AdditionalActivityInline, ProductLineInline, WarehouseAddressInline, LtoInline]
     #
-    inline_type = 'stacked'
-    inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
+    # inline_type = 'stacked'
+    # inline_reverse = ['office_address', 'plant_address', 'authorized_officer']
     # change_form_template = 'admin/custom/change_form.html'
-    # resource_class = EstablishmentResource
+    resource_class = EstablishmentResource
 
     tab_general_info = (
         ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
@@ -147,12 +152,25 @@ class EstablishmentAdmin(ExportActionModelAdmin, TabbedModelAdmin):
 
     tab_address = (
         ('Office Address', {'fields': ['office_address']}),
-        # inline_reverse
+        ('Plant Address',  {'fields': ['plant_address']}),
+        WarehouseAddressInline
+    )
+
+    tab_personnel = (
+        ('Authorized Officer', {'fields': ['authorized_officer']}),
+        QualifiedPersonInline
+    )
+
+    tab_applications = (
+        LtoInline,
+        VariationInline
     )
 
     tabs = [
         ('General Information', tab_general_info),
-        ('Address', tab_address)
+        ('Address', tab_address),
+        ('Personnel', tab_personnel),
+        ('Applications', tab_applications)
     ]
 
     def province(self, obj):
