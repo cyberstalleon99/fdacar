@@ -13,6 +13,7 @@ from . import constants
 from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 from tabbed_admin import TabbedModelAdmin
+from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAdmin
 
 # admin.site.register(Person)
 admin.site.register(AdditionalActivity)
@@ -25,25 +26,7 @@ admin.site.register(QualifiedPerson)
 admin.site.register(ProductType)
 admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
-
-@admin.register(VariationType)
-class VariationTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type')
-
-class AdditionalActivityInline(admin.StackedInline):
-    model = EstAdditionalActivity
-    extra = 1
-    insert_after = 'specific_activity'
-
-class ProductLineInline(admin.TabularInline):
-    model = EstProductLine
-    extra = 1
-    insert_after = 'specific_activity'
-
-class VariationInline(admin.TabularInline):
-    model = Variation
-    extra = 1
-
+admin.site.register(Variation)
 
 
 # @admin.register(Lto)
@@ -76,13 +59,7 @@ class VariationInline(admin.TabularInline):
 #
 #         return super().save_model(request, obj, form, change)
 
-class CityOrMunicipalityInline(admin.TabularInline):
-    model=CityOrMunicipality
-    extra=5
 
-@admin.register(Province)
-class ProvinceAdmin(admin.ModelAdmin):
-    inlines = [CityOrMunicipalityInline]
 
 # class CapaPreparatorInline(admin.StackedInline):
 #     model = CapaPreparator
@@ -99,23 +76,51 @@ class ProvinceAdmin(admin.ModelAdmin):
 #     ]
 #     inlines = [CapaPreparatorInline, CapaDeficiencyInline]
 
-class WarehouseAddressInline(admin.TabularInline):
+
+@admin.register(VariationType)
+class VariationTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type')
+
+class AdditionalActivityInline(NestedStackedInline):
+    model = EstAdditionalActivity
+    extra = 1
+    insert_after = 'specific_activity'
+
+class ProductLineInline(NestedTabularInline):
+    model = EstProductLine
+    extra = 1
+    insert_after = 'specific_activity'
+
+class CityOrMunicipalityInline(NestedTabularInline):
+    model=CityOrMunicipality
+    extra=5
+
+@admin.register(Province)
+class ProvinceAdmin(admin.ModelAdmin):
+    inlines = [CityOrMunicipalityInline]
+
+class WarehouseAddressInline(NestedTabularInline):
     model=WarehouseAddress
     extra=1
     insert_after = 'specific_activity'
 
-class LtoInline(admin.TabularInline):
+class VariationInline(NestedTabularInline):
+    model = Variation
+    extra = 1
+
+class LtoInline(NestedStackedInline):
     model=Lto
     extra=1
     # classes = ['collapse']
+    inlines = [VariationInline]
 
-class QualifiedPersonInline(admin.TabularInline):
+class QualifiedPersonInline(NestedTabularInline):
     model=QualifiedPerson
     extra=1
 
 @admin.register(Establishment)
 # class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin, TabbedModelAdmin):
-class EstablishmentAdmin(ExportActionModelAdmin, TabbedModelAdmin):
+class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAdmin):
     model = Establishment
     # fieldsets = [
     #     ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
@@ -163,14 +168,13 @@ class EstablishmentAdmin(ExportActionModelAdmin, TabbedModelAdmin):
 
     tab_applications = (
         LtoInline,
-        VariationInline
     )
 
     tabs = [
         ('General Information', tab_general_info),
         ('Address', tab_address),
         ('Personnel', tab_personnel),
-        ('Applications', tab_applications)
+        ('Applications', tab_applications),
     ]
 
     def province(self, obj):

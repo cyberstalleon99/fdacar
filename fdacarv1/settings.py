@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'import_export',
     'tabbed_admin',
+	'nested_admin',
 ]
 
 MIDDLEWARE = [

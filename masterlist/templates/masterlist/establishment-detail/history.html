@@ -20,7 +20,8 @@
                                 <th>LTO Number</th>
                                 <th>Expiry</th>
                                 <th>Type of Application</th>
-                                <th>Variation Type (if any)</th>
+                                <th>Type of Variation</th>
+                                <th>Variations</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Remarks</th>
@@ -28,19 +29,61 @@
                         </thead>
                         <tbody>
                             {% if establishment.ltos.first %}
-                            {% for lto in establishment.ltos.all %}
-                            <tr>
-                                <td><a href="#" target="_blank">{{lto.lto_number}}</a></td>
-                                <td>{{lto.expiry.date}}</td>
-                                <td>{{lto.type_of_application}}</td>
-                                <td>{{lto.type_of_variation}}</td>
-                                <td>{{lto.old}}</td>
-                                <td>{{lto.current}}</td>
-                                <td>{{lto.remarks}}</td>
-                            </tr>
-                            {% endfor %}
-                            {% else %}
-                            No history
+                                {% for lto in establishment.ltos.all %}
+
+                                <tr>
+                                    <td><a href="#" target="_blank">{{lto.lto_number}}</a></td>
+                                    <td>{{lto.expiry.date}}</td>
+                                    <td>{{lto.type_of_application}}</td>
+                                    <td>
+                                        {% for variation in lto.variations.all %}
+                                            {% if forloop.last %}
+                                                {{forloop.counter}}. {{variation.type_of_variation.type}}
+                                            {% else %}
+                                                {{forloop.counter}}. {{variation.type_of_variation.type}} <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for variation in lto.variations.all %}
+                                            {% if forloop.last %}
+                                                {{forloop.counter}}. {{variation.type_of_variation.name}}
+                                            {% else %}
+                                                {{forloop.counter}}. {{variation.type_of_variation.name}} <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for variation in lto.variations.all %}
+                                            {% if forloop.last %}
+                                                {{forloop.counter}}. {{variation.old}}
+                                            {% else %}
+                                                {{forloop.counter}}. {{variation.old}} <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for variation in lto.variations.all %}
+                                            {% if forloop.last %}
+                                                {{forloop.counter}}. {{variation.current}}
+                                            {% else %}
+                                                {{forloop.counter}}. {{variation.current}} <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for variation in lto.variations.all %}
+                                            {% if forloop.last %}
+                                                {{forloop.counter}}. {{variation.remarks}}
+                                            {% else %}
+                                                {{forloop.counter}}. {{variation.remarks}} <br>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                No history
                             {% endif %}
                         </tbody>
                     </table>

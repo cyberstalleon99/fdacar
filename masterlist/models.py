@@ -177,6 +177,7 @@ class Lto(models.Model):
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
+    # Variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
 
     # type_of_variation = models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True)
     # old = models.CharField(max_length=255, verbose_name="From", help_text="Enter old value here (if applicable)")
@@ -205,7 +206,12 @@ class Variation(models.Model):
     remarks = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.lto_number
+        if self.type_of_variation:
+            return self.type_of_variation.name
+        else:
+            return self.lto.lto_number
+    def test(self):
+        return self.objects.first()
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
