@@ -145,14 +145,14 @@ class Establishment(models.Model):
         ordering = ['-date_modified']
 
 class EstAdditionalActivity(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, related_name='additional_activities')
     additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.additional_activity.name
 
 class EstProductLine(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, related_name='product_lines')
     product_line = models.ForeignKey(ProductLine, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
 

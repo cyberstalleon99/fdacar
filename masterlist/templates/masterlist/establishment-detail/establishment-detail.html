@@ -57,15 +57,28 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Product Line</th>
-                                            <td class="text-left">{{establishment.product_line}}</td>
+                                            <td class="text-left">
+                                                {% for product_line in  establishment.product_lines.all %}
+                                                {% if forloop.last %}
+                                                    {{product_line.product_line.name}} ({{product_line.remarks}})
+                                                {% else %}
+                                                    {{product_line.product_line.name}} ({{product_line.remarks}}),
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row" class="text-left">Remarks</th>
-                                            <td class="text-left">{{establishment.remarks}}</td>
-                                        </tr>
+
                                         <tr>
                                             <th scope="row" class="text-left">Additional Activity</th>
-                                            <td class="text-left">{{establishment.additional_activity}}</td>
+                                            <td class="text-left">
+                                                {% for additional_activity in  establishment.additional_activities.all %}
+                                                {% if forloop.last %}
+                                                    {{additional_activity.additional_activity.name}}
+                                                {% else %}
+                                                    {{additional_activity.additional_activity.name}},
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Plant Address</th>
@@ -96,6 +109,10 @@
                                             {% else %}
                                             <td class="text-left">None</td>
                                             {% endif %}
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="text-left">Folder Number</th>
+                                            <td class="text-left">{{establishment.record.folder_id}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

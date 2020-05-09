@@ -1,9 +1,11 @@
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import admin
-from .models import Establishment, ProductType, PrimaryActivity, Person, \
+from .models import Establishment, ProductType, PrimaryActivity, \
     AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
     EstAdditionalActivity, EstProductLine, Variation
+
+from records.models import Record
 from checklist.models import Job
 from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
@@ -14,20 +16,6 @@ from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 from tabbed_admin import TabbedModelAdmin
 from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAdmin
-
-# admin.site.register(Person)
-admin.site.register(AdditionalActivity)
-admin.site.register(Region)
-admin.site.register(SpecificActivity)
-admin.site.register(PrimaryActivity)
-admin.site.register(ProductLine)
-admin.site.register(AuthorizedOfficer)
-admin.site.register(QualifiedPerson)
-admin.site.register(ProductType)
-admin.site.register(OfficeAddress)
-admin.site.register(PlantAddress)
-admin.site.register(Variation)
-
 
 # @admin.register(Lto)
 # class LtoAdmin(admin.ModelAdmin):
@@ -76,6 +64,20 @@ admin.site.register(Variation)
 #     ]
 #     inlines = [CapaPreparatorInline, CapaDeficiencyInline]
 
+admin.site.register(AdditionalActivity)
+admin.site.register(Region)
+admin.site.register(SpecificActivity)
+admin.site.register(PrimaryActivity)
+admin.site.register(ProductLine)
+admin.site.register(AuthorizedOfficer)
+admin.site.register(QualifiedPerson)
+admin.site.register(ProductType)
+admin.site.register(OfficeAddress)
+admin.site.register(PlantAddress)
+admin.site.register(Variation)
+
+class RecordInline(NestedStackedInline):
+    model = Record
 
 @admin.register(VariationType)
 class VariationTypeAdmin(admin.ModelAdmin):
@@ -170,11 +172,16 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         LtoInline,
     )
 
+    tab_record = (
+        RecordInline,
+    )
+
     tabs = [
         ('General Information', tab_general_info),
         ('Address', tab_address),
         ('Personnel', tab_personnel),
         ('Applications', tab_applications),
+        ('Records', tab_record),
     ]
 
     def province(self, obj):
