@@ -201,8 +201,8 @@ class Lto(models.Model):
 class Variation(models.Model):
     lto = models.ForeignKey(Lto, on_delete=models.CASCADE, related_name='variations')
     type_of_variation = models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True)
-    old = models.CharField(max_length=255, verbose_name="From", help_text="Enter old value here (if applicable)")
-    current = models.CharField(max_length=255, verbose_name="To", help_text="Enter the new value here (if applicable)")
+    old = models.CharField(max_length=255, verbose_name="From", help_text="Applicable only to variations whose old values will be replaced with new values. Put N/A if not applicable")
+    current = models.CharField(max_length=255, verbose_name="To", help_text="Applicable only to variations whose old values will be replaced with new values. Put N/A if not applicable.")
     remarks = models.CharField(max_length=255)
 
     def __str__(self):
