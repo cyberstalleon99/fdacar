@@ -174,15 +174,9 @@ class VariationType(models.Model):
 class Lto(models.Model):
     type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS)
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
-    issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued')
+    issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued', help_text='Format: YYYY/MM/DD')
     lto_number = models.CharField(max_length=20)
     expiry = models.DateTimeField('expiry date')
-    # Variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
-
-    # type_of_variation = models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True)
-    # old = models.CharField(max_length=255, verbose_name="From", help_text="Enter old value here (if applicable)")
-    # current = models.CharField(max_length=255, verbose_name="To", help_text="Enter the new value here (if applicable)")
-    # remarks = models.CharField(max_length=255)
 
     def __str__(self):
         return self.lto_number

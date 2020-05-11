@@ -76,24 +76,24 @@ admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
 
-class RecordInline(NestedStackedInline):
+class RecordInline(admin.StackedInline, NestedStackedInline):
     model = Record
 
 @admin.register(VariationType)
 class VariationTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'type')
 
-class AdditionalActivityInline(NestedStackedInline):
+class AdditionalActivityInline(admin.TabularInline, NestedStackedInline):
     model = EstAdditionalActivity
     extra = 1
-    insert_after = 'specific_activity'
+    # insert_after = 'specific_activity'
 
-class ProductLineInline(NestedTabularInline):
+class ProductLineInline(admin.TabularInline, NestedTabularInline):
     model = EstProductLine
     extra = 1
-    insert_after = 'specific_activity'
+    # insert_after = 'specific_activity'
 
-class CityOrMunicipalityInline(NestedTabularInline):
+class CityOrMunicipalityInline(admin.TabularInline, NestedTabularInline):
     model=CityOrMunicipality
     extra=5
 
@@ -101,22 +101,22 @@ class CityOrMunicipalityInline(NestedTabularInline):
 class ProvinceAdmin(admin.ModelAdmin):
     inlines = [CityOrMunicipalityInline]
 
-class WarehouseAddressInline(NestedTabularInline):
+class WarehouseAddressInline(admin.TabularInline, NestedTabularInline):
     model=WarehouseAddress
     extra=1
-    insert_after = 'specific_activity'
+    # insert_after = 'specific_activity'
 
 class VariationInline(NestedTabularInline):
     model = Variation
     extra = 1
 
 class LtoInline(NestedStackedInline):
-    model=Lto
-    extra=1
+    model = Lto
+    extra = 1
     # classes = ['collapse']
     inlines = [VariationInline]
 
-class QualifiedPersonInline(NestedTabularInline):
+class QualifiedPersonInline(admin.TabularInline, NestedTabularInline):
     model=QualifiedPerson
     extra=1
 

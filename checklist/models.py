@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from datetime import datetime
 from masterlist import constants
 from masterlist.models import Establishment
 from .mymanagers import RenewalChecklistManager, PLIChecklistManager, RoutineListManager
@@ -12,7 +13,7 @@ class Job(models.Model):
     renchecklist = RenewalChecklistManager()
     plichecklist = PLIChecklistManager()
     routinelist = RoutineListManager()
-    # followuplist = 
+    # followuplist =
     objects = models.Manager()
 
     def __str__(self):

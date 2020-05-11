@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from checklist.models import Job
 
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
@@ -34,7 +37,7 @@ class InspectionAdmin(admin.ModelAdmin):
         date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
         obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
 
-        est = obj.establishment
+        est = obj.record.establishment
         if Job.objects.filter(establishment=est).exists():
             curr_job = Job.objects.get(establishment=est)
             # Set the Job object's inspection status to 'inspected'

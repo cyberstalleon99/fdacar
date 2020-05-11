@@ -41,7 +41,7 @@
                                             <th>Specific Activity</th>
                                             <th>LTO No.</th>
                                             <th>Expiry</th>
-                                            <th>Folder No. {{df}}</th>
+                                            <th>Folder No.</th>
 
                                         </tr>
                                     </thead>
@@ -54,7 +54,7 @@
                                             <td>{{est.specific_activities}}</td>
                                             <td>{{est.ltos.first.lto_number}}</td>
                                             <td>{{est.ltos.first.expiry.date}}</td>
-                                            <td>{{est.folder_id}}</td>
+                                            <td>{{est.record.folder_id}}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
