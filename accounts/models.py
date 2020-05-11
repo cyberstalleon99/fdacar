@@ -82,7 +82,7 @@ class  User(AbstractBaseUser):
         return initials
 
     def __str__(self):              # __unicode__ on Python 2
-        return self.get_initials()
+        return self.get_short_name()
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

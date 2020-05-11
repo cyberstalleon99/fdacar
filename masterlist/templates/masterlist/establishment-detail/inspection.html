@@ -24,15 +24,16 @@
                                 <th>Frequency</th>
                                 <th>Followup</th>
                                 <th>Remarks</th>
+                                <th>Inspection Report</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% if inspections %}
                             {% for inspection in inspections %}
                             <tr>
-                                <td><a href="{% url 'admin:masterlist_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
+                                <td><a href="{% url 'admin:records_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
                                 {% if inspection.capa %}
-                                <td><a href="{% url 'admin:masterlist_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
+                                <td><a href="{% url 'admin:records_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
                                 {% else %}
                                 <td>None</td>
                                 {% endif %}
@@ -41,6 +42,7 @@
                                 <td>{{inspection.frequency_of_inspection}}</td>
                                 <td>{{inspection.date_of_followup_inspection.date}}</td>
                                 <td>{{inspection.remarks}}</td>
+                                <td><a href={{inspection.inspection_report.url}} target="_blank">{{inspection.inspection_report}}</a></td>
                             </tr>
                             {% endfor %}
                             {% else %}

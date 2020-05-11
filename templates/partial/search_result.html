@@ -19,7 +19,7 @@
         <tr>
             <td><a href="{% url 'masterlist:est-detail' job.establishment.id %}" target="_blank">{{job.establishment.name}}</a></td>
             <td>{{job.establishment.plant_address.full_address}}</td>
-            <td>{{job.establishment.inspection_set.first.date_inspected.date}}</td>
+            <td>{{job.establishment.record.inspection_set.first.date_inspected.date}}</td>
             <td>{{job.establishment.product_type}} {{job.establishment.primary_activity}}</td>
             <td>
             {% for spec_act in job.establishment.specific_activity.all %}

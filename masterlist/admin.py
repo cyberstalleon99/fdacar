@@ -76,8 +76,8 @@ admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
 
-class RecordInline(admin.StackedInline, NestedStackedInline):
-    model = Record
+# class RecordInline(admin.StackedInline, NestedStackedInline):
+#     model = Record
 
 @admin.register(VariationType)
 class VariationTypeAdmin(admin.ModelAdmin):
@@ -106,11 +106,11 @@ class WarehouseAddressInline(admin.TabularInline, NestedTabularInline):
     extra=1
     # insert_after = 'specific_activity'
 
-class VariationInline(NestedTabularInline):
+class VariationInline(NestedTabularInline, admin.TabularInline):
     model = Variation
     extra = 1
 
-class LtoInline(NestedStackedInline):
+class LtoInline(NestedStackedInline, admin.StackedInline):
     model = Lto
     extra = 1
     # classes = ['collapse']
@@ -172,16 +172,16 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         LtoInline,
     )
 
-    tab_record = (
-        RecordInline,
-    )
+    # tab_record = (
+    #     RecordInline,
+    # )
 
     tabs = [
         ('General Information', tab_general_info),
         ('Address', tab_address),
         ('Personnel', tab_personnel),
         ('Applications', tab_applications),
-        ('Records', tab_record),
+        # ('Records', tab_record),
     ]
 
     def province(self, obj):

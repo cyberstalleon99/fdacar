@@ -8,7 +8,7 @@
                         <span class="d-block">Displayed is the application history of the establishment</span>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a class="btn btn-primary" href="{% url 'admin:records_inspection_add' %}" target="_blank">Add</a>
+                        <a class="btn btn-primary" href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">Add</a>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                                 {% for lto in establishment.ltos.all %}
 
                                 <tr>
-                                    <td><a href="#" target="_blank">{{lto.lto_number}}</a></td>
+                                    <td><a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">{{lto.lto_number}}</a></td>
                                     <td>{{lto.expiry.date}}</td>
                                     <td>{{lto.type_of_application}}</td>
                                     <td>

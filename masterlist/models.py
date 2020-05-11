@@ -38,10 +38,10 @@ class ProductLine(models.Model):
         return self.name
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=250, null=True, blank=True)
-    last_name = models.CharField(max_length=250, null=True, blank=True)
-    middle_initial = models.CharField(max_length=3, null=True, blank=True)
-    email = models.EmailField(max_length=250, null=True)
+    first_name = models.CharField(max_length=250)
+    last_name = models.CharField(max_length=250)
+    middle_initial = models.CharField(max_length=3)
+    email = models.EmailField(max_length=250, blank=True, null=True)
     mobile = models.CharField(max_length=11, null=True, blank=True)
 
     def __str__(self):
@@ -96,9 +96,9 @@ class CityOrMunicipality(models.Model):
 
 class Address(models.Model):
     address = models.CharField(max_length=250)
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
-    province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
-    municipality_or_city = models.ForeignKey(CityOrMunicipality, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    municipality_or_city = models.ForeignKey(CityOrMunicipality, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.address
@@ -113,7 +113,7 @@ class OfficeAddress(Address):
     pass
 
 class AuthorizedOfficer(Person):
-    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.SET_NULL, null=True, blank=True)
+    designation = models.ForeignKey(AuthorizedOfficerDesignation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.full_name()
@@ -121,16 +121,13 @@ class AuthorizedOfficer(Person):
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
     name = models.CharField(max_length=60)
-    product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
+    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
-    primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE, null=True)
+    primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
     specific_activity = models.ManyToManyField(SpecificActivity)
-    # additional_activity = models.ForeignKey(AdditionalActivity, on_delete=models.SET_NULL, null=True)
-    # product_line = models.ForeignKey(ProductLine, on_delete=models.SET_NULL, null=True, blank=True)
     plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)
     office_address = models.OneToOneField(OfficeAddress, on_delete=models.SET_NULL, null=True)
     authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
-    # remarks = models.CharField(max_length=100, null=True, blank=True, verbose_name='Product Remarks')
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     expiredlist = mymanagers.ExpiredListManager()
     objects = models.Manager()
@@ -175,8 +172,8 @@ class Lto(models.Model):
     type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS)
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
     issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued', help_text='Format: YYYY/MM/DD')
-    lto_number = models.CharField(max_length=20)
-    expiry = models.DateTimeField('expiry date')
+    lto_number = models.CharField(max_length=255)
+    expiry = models.DateTimeField('expiry date', help_text='Format: YYYY/MM/DD')
 
     def __str__(self):
         return self.lto_number
@@ -209,7 +206,7 @@ class Variation(models.Model):
 
 class QualifiedPerson(Person):
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
-    designation = models.ForeignKey(QualifiedPersonDesignation, on_delete=models.SET_NULL, null=True, blank=True)
+    designation = models.ForeignKey(QualifiedPersonDesignation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.full_name()

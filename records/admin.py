@@ -59,4 +59,5 @@ class CapaAdmin(admin.ModelAdmin):
         ('Start', {'fields': ['start_date']}),
         ('End', {'fields': ['date_submitted', 'date_approved', 'approved_by', 'remarks']})
     ]
+
     inlines = [CapaPreparatorInline, CapaDeficiencyInline]

@@ -13,8 +13,8 @@ class Record(models.Model):
         return self.establishment.name + "(" + self.folder_id + ")"
 
 class Capa(models.Model):
-    start_date = models.DateTimeField('start_date')
-    approved_by = models.CharField(max_length=10, choices=constants.INSPECTORS)
+    start_date = models.DateTimeField('start_date', help_text='Format: YYYY/MM/DD')
+    approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_submitted = models.DateTimeField('date_submitted', help_text='Format: YYYY/MM/DD')
     date_approved = models.DateTimeField('date_approved', help_text='Format: YYYY/MM/DD')
     remarks = models.CharField(max_length=200)
@@ -53,17 +53,16 @@ def report_directory_path(instance, filename):
 
 class Inspection(models.Model):
     record = models.ForeignKey(Record, on_delete=models.SET_NULL, null=True, verbose_name="Record")
-    tracking_number = models.CharField(max_length=14, null=True, verbose_name="DTN or Case #")
+    tracking_number = models.CharField(max_length=14, null=True, verbose_name="DTN or Case #", help_text="Put N/I if no DTN")
     capa = models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
     date_inspected = models.DateTimeField('Date Inspected', help_text='Format: YYYY/MM/DD')
-    frequency_of_inspection = models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True)
-    risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True)
+    frequency_of_inspection = models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True, help_text="Leave blank if not applicable")
+    risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True, help_text="Leave blank if not applicable")
     date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
-    # inspector = models.CharField(max_length=3, choices=constants.INSPECTORS)
     inspector = models.ForeignKey(User, on_delete=models.CASCADE)
-    remarks = models.CharField(max_length=200, null=True)
-    inspection_report = models.FileField(null=True, blank=False, upload_to=report_directory_path, verbose_name='Inspection Report')
+    remarks = models.CharField(max_length=200, null=True, help_text="Put inspection remarks here. Number each remark.")
+    inspection_report = models.FileField(null=True, blank=True, upload_to=report_directory_path, verbose_name='Inspection Report')
 
     def __str__(self):
         dateStr = self.date_inspected.strftime("%d %b %Y ")

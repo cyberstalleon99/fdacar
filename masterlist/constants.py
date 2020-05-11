@@ -33,7 +33,8 @@ INSPECTION_TYPES = [
     ('PLI', 'Post Licensing Inspection'),
     ('REN', 'Renewal of LTO'),
     ('INI', 'Initial Inspection'),
-    ('RTN', 'Routine Inspection')
+    ('RTN', 'Routine Inspection'),
+    ('SPA', 'Special Assignment')
 ]
 
 VARIATION_TYPES = [

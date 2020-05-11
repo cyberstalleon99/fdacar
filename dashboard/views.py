@@ -8,6 +8,7 @@ class DashboardView(View):
 
     def get(self, request):
         context = {}
+        context['masterlist_dashboard_active'] = "active"
 
         if Establishment.objects.all():
             cfrr_summary = dashboard.MasterlistSummary.CFRR('CFRR')
