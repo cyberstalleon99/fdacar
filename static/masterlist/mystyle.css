@@ -1,0 +1,10 @@
+ul
+{
+    list-style-type: none;
+}
+
+.login-page .form-holder .info, .login-page .form-holder .form {
+    min-height: 70vh;
+    padding: 80px;
+    height: 100%;
+}

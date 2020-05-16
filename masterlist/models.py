@@ -4,7 +4,7 @@ from . import constants
 from datetime import datetime
 from dateutil import relativedelta
 from . import mymanagers
-from . import constants
+from django.conf import settings
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -120,6 +120,7 @@ class AuthorizedOfficer(Person):
 
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=60)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     center = models.CharField(max_length=6, choices=constants.CENTERS)
@@ -130,6 +131,7 @@ class Establishment(models.Model):
     authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     expiredlist = mymanagers.ExpiredListManager()
+    inactivelist = mymanagers.InactiveListManager()
     objects = models.Manager()
 
     def __str__(self):

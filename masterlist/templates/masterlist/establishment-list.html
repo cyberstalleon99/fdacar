@@ -1,0 +1,16 @@
+{% extends 'masterlist/index.html' %}
+{% block title %} Test  {% endblock %}
+{% block subtitle %} Test {% endblock %}
+
+{% block content-title %}
+<div class="row">
+    <div class="col-md-6">
+        <strong>List of Establishments</strong>
+        <span class="d-block">Displayed is the list of active establishments</span>
+    </div>
+    <div class="col-md-6 text-right">
+        <a class="btn btn-primary" href={{export_link}} target="_blank">Export to Excel</a>
+        <a class="btn btn-primary" href="{% url 'admin:masterlist_establishment_add' %}" target="_blank">Add an Establishment</a>
+    </div>
+</div>
+{% endblock %}

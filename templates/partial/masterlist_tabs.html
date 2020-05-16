@@ -1,0 +1,33 @@
+<ul class="nav nav-tabs">
+    <!--<li class="nav-item dropdown">-->
+    <!--    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+    <!--    <div class="dropdown-menu">-->
+    <!--        <a class="dropdown-item" href="#">Action</a>-->
+    <!--        <a class="dropdown-item" href="#">Another action</a>-->
+    <!--        <a class="dropdown-item" href="#">Something else here</a>-->
+    <!--        <div class="dropdown-divider"></div>-->
+    <!--        <a class="dropdown-item" href="#">Separated link</a>-->
+    <!--    </div>-->
+    <!--</li>-->
+    <li class="nav-item">
+        <a class="nav-link {{alllist_active}}" href="{% url 'masterlist:index' %}">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{foodlist_active}}" href="{% url 'masterlist:food-list' %}">Food</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{druglist_active}}" href="{% url 'masterlist:drug-list' %}">Drug</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{cosmeticlist_active}}" href="{% url 'masterlist:cosmetic-list' %}">Cosmetic</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{medicaldevice_active}}" href="{% url 'masterlist:medicaldevice-list' %}">Medical Devices</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{inactivelist_active}}" href="{% url 'masterlist:inactive-list' %}">Inactive</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </li>
+</ul>

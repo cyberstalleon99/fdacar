@@ -1,6 +1,6 @@
 from import_export import resources
 from import_export.fields import Field
-from .models import Establishment, SpecificActivity, Lto, ProductType
+from .models import Establishment
 from checklist.models import Job
 
 class EstablishmentResource(resources.ModelResource):
@@ -46,7 +46,13 @@ class EstablishmentResource(resources.ModelResource):
         return product_remarks
 
     def dehydrate_folder_id(self, establishment):
-        return establishment.record.folder_id
+
+        try:
+            establishment.record
+        except:
+            return 'No file'
+        else:
+            return establishment.record.folder_id
 
     class Meta:
         model=Establishment
@@ -95,7 +101,12 @@ class JobResource(resources.ModelResource):
         return product_remarks
 
     def dehydrate_folder_id(self, job):
-        return job.establishment.record.folder_id
+        try:
+            job.establishment.record
+        except:
+            return 'No file'
+        else:
+            return job.establishment.record.folder_id
 
     class Meta:
         model=Job

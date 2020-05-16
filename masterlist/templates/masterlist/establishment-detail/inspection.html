@@ -8,7 +8,7 @@
                         <span class="d-block">Displayed is the list of inspection for this establishment</span>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a class="btn btn-primary" href="{% url 'admin:records_inspection_add' %}" target="_blank">Add an Inspection</a>
+                        <a class="btn btn-primary" href="{% url 'admin:records_record_add' %}" target="_blank">Add an Inspection</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                             {% if inspections %}
                             {% for inspection in inspections %}
                             <tr>
-                                <td><a href="{% url 'admin:records_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
+                                <td><a href="{% url 'admin:records_record_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
                                 {% if inspection.capa %}
                                 <td><a href="{% url 'admin:records_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
                                 {% else %}

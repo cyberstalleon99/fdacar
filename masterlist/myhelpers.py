@@ -1,7 +1,5 @@
 from django.db.models import Q
 from django.db import models
-from masterlist import constants
-
 from django.http import HttpResponse
 
 

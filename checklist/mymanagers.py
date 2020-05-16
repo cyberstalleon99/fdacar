@@ -1,23 +1,27 @@
-from datetime import datetime
-from django.db import models
 from masterlist.myhelpers import MyModelManager
 from masterlist import constants
-from django.db.models import Q
 
 class RenewalChecklistManager(MyModelManager):
     except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
 
     def check_for_inspection(self):
         from masterlist.models import Establishment
-        for est in Establishment.objects.all():
-            if est.ltos.latest().get_duration() <= 6 and \
-            est.specific_activity.filter(name__in=self.except_activities).exists()==False and \
-            est.record.inspection_set.all().count() != 0:
+        for est in Establishment.objects.filter(status='Active'):
+            # if est.ltos.latest().get_duration() <= 6 and \
+            # est.specific_activity.filter(name__in=self.except_activities).exists()==False: and \
+            # est.record.inspection_set.all().count() != 0:
+            try:
+                est.record # Check if Establishment has a record
+            except:
+                # establishment has no inspections yet
+                pass
+            else:
+                if est.ltos.latest().get_duration() <= 6 and \
+                est.specific_activity.filter(name__in=self.except_activities).exists()==False:
+                    if super().filter(establishment_id=est.id).exists()==False:
+                        super().create(establishment=est, inspection_type=constants.JOB_TYPES[1])
 
-                if super().filter(establishment_id=est.id).exists()==False:
-                    super().create(establishment=est, inspection_type=constants.JOB_TYPES[1])
-
-            # check if est.lto.duration is renewed and establishment is still in the Job Checklist
+            # check if Establishment is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
                 # check if it's REN Type
                 if super().get_queryset().get(establishment=est).inspection_type==constants.JOB_TYPES[1]:
@@ -33,10 +37,17 @@ class PLIChecklistManager(MyModelManager):
 
     def check_for_inspection(self):
         from masterlist.models import Establishment
-        for est in Establishment.objects.all():
+        for est in Establishment.objects.filter(status='Active'):
             if est.specific_activity.filter(name__in=self.included_activities).exists()==True or est.primary_activity == 'Distributor':
-                if  est.record.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
-                    super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
+                # if  est.record.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
+                #     super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
+
+                try:
+                    est.record # Check if Establishment has a record
+                except:
+                    # establishment has no inspections yet
+                    if  super().filter(establishment_id=est.id).exists()==False:
+                        super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
 
             # check if est.lto.duration is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():

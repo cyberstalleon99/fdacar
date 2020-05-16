@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from . import dashboard
+from .dashboard import MasterlistSummary
 from masterlist.models import Establishment
 
 class DashboardView(View):
@@ -9,12 +9,19 @@ class DashboardView(View):
     def get(self, request):
         context = {}
         context['masterlist_dashboard_active'] = "active"
+        total_abra = Establishment.objects.filter(plant_address__province__name='Abra', status='Active').count()
+        total_apayao = Establishment.objects.filter(plant_address__province__name='Apayao', status='Active').count()
+        total_baguio = Establishment.objects.filter(plant_address__municipality_or_city__name='Baguio City', status='Active').count()
+        total_benguet = Establishment.objects.filter(plant_address__province__name='Benguet', status='Active').exclude(plant_address__municipality_or_city__name='Baguio City').count()
+        total_ifugao = Establishment.objects.filter(plant_address__province__name='Ifugao', status='Active').count()
+        total_kalinga = Establishment.objects.filter(plant_address__province__name='Kalinga', status='Active').count()
+        total_mountainprov = Establishment.objects.filter(plant_address__province__name='Mountain Province', status='Active').count()
 
         if Establishment.objects.all():
-            cfrr_summary = dashboard.MasterlistSummary.CFRR('CFRR')
-            cdrr_summary = dashboard.MasterlistSummary.CDRR('CDRR')
-            ccrr_summary = dashboard.MasterlistSummary.CCRR('CCRR')
-            cdrrhr_summary = dashboard.MasterlistSummary.CDRRHR('CDRRHR')
+            cfrr_summary = MasterlistSummary.CFRR('CFRR')
+            cdrr_summary = MasterlistSummary.CDRR('CDRR')
+            ccrr_summary = MasterlistSummary.CCRR('CCRR')
+            cdrrhr_summary = MasterlistSummary.CDRRHR('CDRRHR')
 
             context = {
                         'masterlist_dashboard_active': "active",
@@ -48,6 +55,13 @@ class DashboardView(View):
                                  'total_wholesaler':    cdrrhr_summary.get_total_wholesaler(),
                                  'total_importer':      cdrrhr_summary.get_total_importer(),
                                  'total_exporter':      cdrrhr_summary.get_total_exporter()},
+                        'total_abra':       total_abra,
+                        'total_apayao':     total_apayao,
+                        'total_baguio':     total_baguio,
+                        'total_benguet':    total_benguet,
+                        'total_ifugao':     total_ifugao,
+                        'total_kalinga':    total_kalinga,
+                        'total_mountainprov':   total_mountainprov,
                     }
 
         return render(request, self.template_name, context)

@@ -112,7 +112,11 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Folder Number</th>
+                                            {% if establishment.record %}
                                             <td class="text-left">{{establishment.record.folder_id}}</td>
+                                            {% else %}
+                                            <td class="text-left">Awan ti file na dytuy Apo</td>
+                                            {% endif %}
                                         </tr>
                                     </tbody>
                                 </table>

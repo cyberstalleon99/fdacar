@@ -18,3 +18,6 @@ class Job(models.Model):
 
     def __str__(self):
         return self.establishment.name
+
+    class Meta:
+        ordering = ['establishment__ltos__expiry']

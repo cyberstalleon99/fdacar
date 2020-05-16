@@ -64,14 +64,14 @@ from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAd
 #     ]
 #     inlines = [CapaPreparatorInline, CapaDeficiencyInline]
 
-admin.site.register(AdditionalActivity)
-admin.site.register(Region)
-admin.site.register(SpecificActivity)
-admin.site.register(PrimaryActivity)
-admin.site.register(ProductLine)
+# admin.site.register(AdditionalActivity)
+# admin.site.register(Region)
+# admin.site.register(SpecificActivity)
+# admin.site.register(PrimaryActivity)
+# admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
-admin.site.register(ProductType)
+# admin.site.register(ProductType)
 admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
@@ -97,9 +97,9 @@ class CityOrMunicipalityInline(admin.TabularInline, NestedTabularInline):
     model=CityOrMunicipality
     extra=5
 
-@admin.register(Province)
-class ProvinceAdmin(admin.ModelAdmin):
-    inlines = [CityOrMunicipalityInline]
+# @admin.register(Province)
+# class ProvinceAdmin(admin.ModelAdmin):
+#     inlines = [CityOrMunicipalityInline]
 
 class WarehouseAddressInline(admin.TabularInline, NestedTabularInline):
     model=WarehouseAddress
@@ -124,14 +124,15 @@ class QualifiedPersonInline(admin.TabularInline, NestedTabularInline):
 # class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin, TabbedModelAdmin):
 class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAdmin):
     model = Establishment
+    list_per_page = 20
     # fieldsets = [
     #     ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
     #     'specific_activity'], 'classes': ['collapse']}),
     # ]
 
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
-     'product_type', 'primary_activity', 'specific_activities',
-     'lto_number', 'expiry')
+     'product_type', 'primary_activity', 'specific_activities', 'center',
+     'lto_number', 'expiry', 'modified_by')
 
     list_filter = (
         ('name', DropdownFilter),
@@ -178,9 +179,10 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
 
     tabs = [
         ('General Information', tab_general_info),
+        ('Applications', tab_applications),
         ('Address', tab_address),
         ('Personnel', tab_personnel),
-        ('Applications', tab_applications),
+
         # ('Records', tab_record),
     ]
 
@@ -198,3 +200,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')
+
+    def save_model(self, request, obj, form, change):
+        obj.modified_by = request.user
+        super().save_model(request, obj, form, change)

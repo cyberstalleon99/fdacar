@@ -23,22 +23,22 @@ class MasterlistSummaryHelper:
             self.product_type = ProductType.objects.get(name='Medical Device')
 
     def get_total(self):
-        return Establishment.objects.filter(center=self.center).count()
+        return Establishment.objects.filter(center=self.center, status='Active').count()
 
     def get_total_mfg(self):
-        return Establishment.objects.filter(product_type=self.product_type, primary_activity=get_primary_acitivity_obj('Manufacturer')).count()
+        return Establishment.objects.filter(product_type=self.product_type, primary_activity=get_primary_acitivity_obj('Manufacturer'), status='Active').count()
 
     def get_total_trader(self):
-        return Establishment.objects.filter(product_type=self.product_type, primary_activity=get_primary_acitivity_obj('Trader')).count()
+        return Establishment.objects.filter(product_type=self.product_type, primary_activity=get_primary_acitivity_obj('Trader'), status='Active').count()
 
     def get_total_wholesaler(self):
-        return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Wholesaler')).count()
+        return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Wholesaler'), status='Active').count()
 
     def get_total_importer(self):
-            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Importer')).count()
+            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Importer'), status='Active').count()
 
     def get_total_exporter(self):
-            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Exporter')).count()
+            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Exporter'), status='Active').count()
 
 class MasterlistSummary:
 
@@ -48,11 +48,11 @@ class MasterlistSummary:
     class CDRR(MasterlistSummaryHelper):
 
         def get_total_hp(self):
-            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Hospital Pharmacy')).count()
+            return Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Hospital Pharmacy'), status='Active').count()
 
         def get_total_ds(self):
-            ds = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Drugstore')).count()
-            ronpd = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Retail Outlet for Non-Prescription Drugs')).count()
+            ds = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Drugstore'), status='Active').count()
+            ronpd = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Retail Outlet for Non-Prescription Drugs'), status='Active').count()
             return ds + ronpd
 
     class CCRR(MasterlistSummaryHelper):
@@ -61,10 +61,10 @@ class MasterlistSummary:
     class CDRRHR(MasterlistSummaryHelper):
 
         def get_total_xray(self):
-            med_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Medical X-Ray')).count()
-            vet_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Veterinary X-Ray')).count()
-            den_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Dental X-Ray')).count()
-            mri_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('MRI')).count()
-            edu_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Educational X-Ray')).count()
-            ctscan_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('CTScan')).count()
+            med_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Medical X-Ray'), status='Active').count()
+            vet_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Veterinary X-Ray'), status='Active').count()
+            den_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Dental X-Ray'), status='Active').count()
+            mri_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('MRI'), status='Active').count()
+            edu_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('Educational X-Ray'), status='Active').count()
+            ctscan_xray = Establishment.objects.filter(product_type=self.product_type, specific_activity=get_specific_acitivity_obj('CTScan'), status='Active').count()
             return med_xray + vet_xray + den_xray + mri_xray + edu_xray + ctscan_xray

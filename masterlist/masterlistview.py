@@ -5,7 +5,7 @@ from django.db.models import Q
 
 class MasterListView(ListView):
     model = Establishment
-    items_per_page = 10
+    items_per_page = 20
     context_object_name = 'establishments'
     establishments = ''
 
@@ -36,4 +36,4 @@ class MasterListView(ListView):
                 Q(specific_activity__name__icontains=query) |
                 Q(ltos__lto_number__icontains=query)
             ).distinct()
-        return establishments
+        return establishments.filter(status='Active')

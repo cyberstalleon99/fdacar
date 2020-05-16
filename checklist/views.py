@@ -1,15 +1,12 @@
-from django.shortcuts import reverse
 from django.views.generic import (
     ListView
 )
-from django.http import HttpResponseRedirect
-from masterlist.models import Establishment, SpecificActivity
+from masterlist.models import Establishment
 from masterlist import mypaginator
 from .models import Job
 from masterlist.myhelpers import MyExporter
 from .myresources import JobResource
 from django.utils import timezone
-from datetime import datetime
 
 class RenewalChekListView(ListView):
     items_per_page = 10

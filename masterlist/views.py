@@ -1,32 +1,35 @@
 from django.views.generic import (
     ListView,
-    CreateView,
-    DetailView
+    # CreateView,
+    DetailView,
 )
-from django.views import View
-from django.views.generic.edit import FormView
-from .models import Establishment, Lto, ProductType, PrimaryActivity, SpecificActivity, AdditionalActivity, ProductLine, \
-    PlantAddress, WarehouseAddress, OfficeAddress, \
-    Region, Province, CityOrMunicipality, AuthorizedOfficer, AuthorizedOfficerDesignation, QualifiedPerson, QualifiedPersonDesignation
+# from django.views import View
+# from django.views.generic.edit import FormView
+# from .models import Establishment, Lto, ProductType, PrimaryActivity, SpecificActivity, AdditionalActivity, ProductLine, \
+#     PlantAddress, WarehouseAddress, OfficeAddress, \
+#     Region, Province, CityOrMunicipality, AuthorizedOfficer, AuthorizedOfficerDesignation, QualifiedPerson, QualifiedPersonDesignation
 # from .forms import StepOneForm, StepTwoAForm, StepTwoBForm, StepTwoCForm, StepThreeForm
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
-from django.http import HttpResponseRedirect
+from .models import Establishment
 from django.utils import timezone
-from django.db.models import Q
 from . import mypaginator
 from .masterlistview import MasterListView
 from .myhelpers import MyExporter
 from .myresources import EstablishmentResource
+from django.shortcuts import get_list_or_404, get_object_or_404
 
-class AllListView(MasterListView):
+class AllListView(ListView):
+    model = Establishment
     template_name = 'masterlist/index.html'
 
     def get_context_data(self, **kwargs):
         establishments = Establishment.objects.all()
-        super().init_establishments(establishments)
+        # super().init_establishments(establishments)
         context = super().get_context_data()
+        # context['export_link'] = "{% url 'masterlist:export-all' %}"
+        context['paginated_result'] = establishments
+        context['result_count'] = 5
         context['alllist_active'] = "active"
+        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         return context
 
     def export(self):
@@ -34,13 +37,16 @@ class AllListView(MasterListView):
         queryset=Establishment.objects.all())
         return response
 
-class FoodListView(MasterListView):
+class FoodListView(ListView):
     template_name = 'masterlist/food-list.html'
 
     def get_context_data(self, **kwargs):
         establishments = Establishment.objects.filter(product_type__name='Food')
-        super().init_establishments(establishments)
+        # super().init_establishments(establishments)
         context = super().get_context_data()
+        context['paginated_result'] = establishments
+        context['result_count'] = 5
+        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         context['foodlist_active'] = "active"
         return context
 
@@ -56,6 +62,7 @@ class DrugListView(MasterListView):
         establishments = Establishment.objects.filter(product_type__name='Drug')
         super().init_establishments(establishments)
         context = super().get_context_data()
+        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         context['druglist_active'] = "active"
         return context
 
@@ -71,6 +78,7 @@ class CosmeticListView(MasterListView):
         establishments = Establishment.objects.filter(product_type__name='Cosmetic')
         super().init_establishments(establishments)
         context = super().get_context_data()
+        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         context['cosmeticlist_active'] = "active"
         return context
 
@@ -86,6 +94,7 @@ class MedicalDeviceListView(MasterListView):
         establishments = Establishment.objects.filter(product_type__name='Medical Device')
         super().init_establishments(establishments)
         context = super().get_context_data()
+        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         context['medicaldevice_active'] = "active"
         return context
 
@@ -94,9 +103,37 @@ class MedicalDeviceListView(MasterListView):
         queryset=Establishment.objects.filter(product_type__name='Medical Device'))
         return response
 
+class InactiveListView(ListView):
+    model = Establishment
+    items_per_page = 20
+    template_name = 'masterlist/inactive-list.html'
+    context_object_name = 'test'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['inactivelist_active'] = "active"
+        page = self.request.GET.get('page')
+        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
+        establishments = paginator.get_paginated_result()
+        context['paginated_result'] = establishments
+        context['result_count'] = paginator.get_result_count()
+        return context
+
+    def get_list(self):
+        inactivelist = Establishment.inactivelist.get_list()
+        query = self.request.GET.get('q', None)
+        if query:
+            inactivelist = Establishment.inactivelist.get_filtered_list(query=query)
+        return inactivelist
+
+    def export(self):
+        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Inactive List Pullout as of {}".format(timezone.now().date()),
+        queryset=Establishment.objects.filter(status='Inactive'))
+        return response
+
 class ExpiredListView(ListView):
     model = Establishment
-    items_per_page = 10
+    items_per_page = 20
     template_name = 'masterlist/expired-list.html'
     context_object_name = 'test'
 
@@ -111,11 +148,11 @@ class ExpiredListView(ListView):
         return context
 
     def get_list(self):
-        checklist = Establishment.expiredlist.get_list()
+        expiredlist = Establishment.expiredlist.get_list()
         query = self.request.GET.get('q', None)
         if query:
-            checklist = Establishment.expiredlist.get_filtered_list(query=query)
-        return checklist
+            expiredlist = Establishment.expiredlist.get_filtered_list(query=query)
+        return expiredlist
 
 def export_expired(request):
     checklist = Establishment.expiredlist.get_list()
@@ -138,7 +175,8 @@ class EstablishmentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
-        inspections = curr_est.record.inspection_set.all()
+        # inspections = curr_est.record.inspection_set.all()
+        inspections = get_list_or_404(Establishment, pk=curr_est.id)
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context

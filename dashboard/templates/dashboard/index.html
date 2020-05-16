@@ -10,9 +10,9 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:food-list' %}" target="_blank">CFRR</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:food-list' %}" target="_blank">ABRA</a></strong>
                         </div>
-                        <div class="number dashtext-1">{{cfrr.total}}</div>
+                        <div class="number dashtext-1">{{total_abra}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
@@ -24,9 +24,9 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:drug-list' %}" target="_blank">CDRR</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:drug-list' %}" target="_blank">APAYAO</a></strong>
                         </div>
-                        <div class="number dashtext-2">{{cdrr.total}}</div>
+                        <div class="number dashtext-2">{{total_apayao}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
@@ -38,9 +38,9 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">CCRR</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">BAGUIO CITY</a></strong>
                         </div>
-                        <div class="number dashtext-3">{{ccrr.total}}</div>
+                        <div class="number dashtext-3">{{total_baguio}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
@@ -52,15 +52,58 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">CDRRHR</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">BENGUET</a></strong>
                         </div>
-                        <div class="number dashtext-4">{{cdrrhr.total}}</div>
+                        <div class="number dashtext-4">{{total_benguet}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">IFUGAO</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{total_ifugao}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">KALINGA</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{total_kalinga}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">MOUNTAIN PROVINCE</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{total_mountainprov}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -70,7 +113,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">CFRR</strong>
+                    <div class="stats-3"><strong class="d-block">{{cfrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:food-list' %}" target="_blank">CFRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-1"></div>
                         </div>
@@ -134,7 +177,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">CDRR</strong>
+                    <div class="stats-3"><strong class="d-block">{{cdrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:drug-list' %}" target="_blank">CDRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-2"></div>
                         </div>
@@ -218,7 +261,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">CCRR</strong>
+                    <div class="stats-3"><strong class="d-block">{{ccrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">CCRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
                         </div>
@@ -282,7 +325,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">CDRRHR</strong>
+                    <div class="stats-3"><strong class="d-block">{{cdrrhr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">CDRRHR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
                         </div>
