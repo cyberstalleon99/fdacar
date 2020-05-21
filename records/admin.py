@@ -6,6 +6,7 @@ from checklist.models import Job
 from masterlist import constants
 
 admin.site.register(CapaPreparator)
+admin.site.register(Inspection)
 
 class InspectionInline(admin.TabularInline):
     model = Inspection

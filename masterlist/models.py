@@ -134,6 +134,10 @@ class Establishment(models.Model):
     inactivelist = mymanagers.InactiveListManager()
     objects = models.Manager()
 
+    @property
+    def test(self):
+        pass
+
     def __str__(self):
         return self.name + " - " + self.plant_address.address + "(" + self.specific_activities() + ")"
 

@@ -65,6 +65,7 @@ class Inspection(models.Model):
     date_of_followup_inspection = models.DateField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
     inspector = models.ForeignKey(User, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=200, null=True, help_text="Put inspection remarks here. Number each remark.")
+    for_capa = models.BooleanField(default=False)
     inspection_report = models.FileField(null=True, blank=True, upload_to=report_directory_path, verbose_name='Inspection Report')
 
     def __str__(self):

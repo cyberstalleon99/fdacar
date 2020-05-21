@@ -26,6 +26,8 @@
                             <tr>
                                 <th>Date Inspected</th>
                                 <th>No. of CAPA</th>
+                                <th>Pending CAPA</th>
+                                <th>CAPA Deficiencies</th>
                                 <th>Inspected by</th>
                                 <th>Type</th>
                                 <th>Frequency</th>
@@ -38,12 +40,40 @@
                             {% if inspections %}
                             {% for inspection in inspections %}
                             <tr>
-                                <td><a href="{% url 'admin:records_record_change' inspection.record.id %}" target="_blank">{{inspection.date_inspected}}</a></td>
+                                <td><a href="{% url 'admin:records_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected}}</a></td>
                                 {% if inspection.capa %}
                                 <td><a href="{% url 'admin:records_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
                                 {% else %}
                                 <td>None</td>
                                 {% endif %}
+
+                                <!-- For Pending CAPA -->
+                                {% if inspection.for_capa %}
+                                <td>PENDING</td>
+                                {% else %}
+                                    {% if inspection.capa %}
+                                        <td>COMPLETED</td>
+                                        {% else %}
+                                        <td>N/A</td>
+                                    {% endif %}
+                                {% endif %}
+
+                                <!-- For CAPA Deficiencies -->
+                                <td>
+                                {% if inspection.for_capa %}
+                                PENDING
+                                {% else %}
+                                    {% if inspection.capa %}
+                                        {% for deficiency in inspection.capa.capadeficiency_set.all %}
+                                            {{forloop.counter}}. &nbsp; ({{deficiency.type}}) {{deficiency.description}} <br>
+                                        {% endfor %}
+
+                                    {% else %}
+                                    N/A
+                                    {% endif %}
+                                {% endif %}
+                                </td>
+
                                 <td>{{inspection.inspector}}</td>
                                 <td>{{inspection.type_of_inspection}}</td>
                                 <td>{{inspection.frequency_of_inspection}}</td>
