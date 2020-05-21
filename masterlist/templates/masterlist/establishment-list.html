@@ -3,15 +3,27 @@
         <div class="block">
             <div class="title">
                 <div class="row">
-                    <div class="col-md-6">
-                        <!--<strong>List of Establishments</strong>-->
-                        <!--<span class="d-block">Displayed is the list of active establishments</span>-->
+                    <div class="col-md-4">
+                        <strong>List of Establishments</strong>
+                        <span class="d-block">Displayed is the list of active establishments</span>
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-sm-4 text-center">
+                        <!--<h4 class="bg-primary text-white p-2" style="margin: 15px;">List of Establishments</h4>-->
+                        <div class="btn-group btn-group-toggle" role="group" aria-label="Product Types">
+                            <button class="btn btn-success btn-est">All</button>
+                            <button class="btn btn-primary btn-est" rel="Food">Food</button>
+                            <button class="btn btn-primary btn-est" rel="Drug">Drug</button>
+                            <button class="btn btn-primary btn-est" rel="Cosmetic">Cosmetic</button>
+                            <button class="btn btn-primary btn-est" rel="Medical Device">Medical Device</button>
+                            <button class="btn btn-primary btn-inactive" rel="Inactive">Inactive</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-right">
                         <a class="btn btn-primary" href="{% url 'admin:masterlist_establishment_add' %}" target="_blank">Add an Establishment</a>
                     </div>
                 </div>
             </div>
+
             <div class="block-body">
                 <div class="table-responsive">
                     <table id="establishment_list" class="table table-striped table-hover">

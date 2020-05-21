@@ -7,6 +7,6 @@ def index(request):
     return render (request, 'masterlist/index.html')
 
 class EstablishmentViewSet(viewsets.ModelViewSet):
-    queryset = Establishment.objects.all().order_by('name')
+    queryset = Establishment.objects.filter(status='Active').order_by('name')
     serializer_class = EstablishmentSerializer
     # context={'request': request}

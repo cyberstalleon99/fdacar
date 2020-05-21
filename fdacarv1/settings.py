@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'import_export',
     'tabbed_admin',
 	'nested_admin',
-	'rest_framework',
+# 	'rest_framework',
 	'rest_framework_datatables',
 ]
 
