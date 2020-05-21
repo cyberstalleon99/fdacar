@@ -33,7 +33,7 @@
 
                                 <tr>
                                     <td><a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">{{lto.lto_number}}</a></td>
-                                    <td>{{lto.expiry.date}}</td>
+                                    <td>{{lto.expiry}}</td>
                                     <td>{{lto.type_of_application}}</td>
                                     <td>
                                         {% for variation in lto.variations.all %}

@@ -42,6 +42,24 @@ VARIATION_TYPES = [
     ('Major', 'Major')
 ]
 
+ALL_DESIGNATIONS = [
+    ("Owner",     "Owner"),
+    ("CEO/President/General Manager",     "CEO/President/General Manager"),
+    ("Head, Quality Assurance/Control",     "Head, Quality Assurance/Control"),
+    ("Head, Regulatory Affairs",     "Head, Regulatory Affairs"),
+    ("Head, Production",     "Head, Production"),
+    ("Company Pharmacist",     "Company Pharmacist"),
+    ("Production Manager/Head",     "Production Manager/Head"),
+    ("Quality Assurance Manager/Head",     "Quality Assurance Manager/Head"),
+    ("Quality Control Manager/Head",     "Quality Control Manager/Head"),
+    ("Pharmacovigilance Officer",    "Pharmacovigilance Officer"),
+    ("Authorized person for batch release",    "Authorized person for batch release"),
+    ("Production Manager/Head",    "Production Manager/Head"),
+    ("Food safety compliance officer",    "Food safety compliance officer"),
+    ("Regulatory officer",    "Regulatory officer"),
+    ("Authorized Representative",    "Authorized Representative")
+]
+
 JOB_TYPES = ['PLI', 'REN', 'FUP', 'RTN']
 
 RISK_RATINGS = [

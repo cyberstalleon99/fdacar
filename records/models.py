@@ -12,32 +12,35 @@ class Record(models.Model):
     def __str__(self):
         return self.establishment.name + "(" + self.folder_id + ")"
 
-class Capa(models.Model):
-    start_date = models.DateTimeField('start_date', help_text='Format: YYYY/MM/DD')
-    approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_submitted = models.DateTimeField('date_submitted', help_text='Format: YYYY/MM/DD')
-    date_approved = models.DateTimeField('date_approved', help_text='Format: YYYY/MM/DD')
-    remarks = models.CharField(max_length=200)
-
-    def __str__(self):
-        dateStr = self.start_date.strftime("%d %b %Y ")
-        return dateStr
-
 class CapaPreparator(Person):
-    capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
+    # capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
+    designation = models.CharField(max_length=255, choices=constants.ALL_DESIGNATIONS, null=True, blank=False)
 
     class Meta:
         verbose_name = 'Preparedy by'
         verbose_name_plural = 'Prepared by'
 
+class Capa(models.Model):
+    date_prepared = models.DateField('Date Prepared', help_text='Format: YYYY/MM/DD')
+    prepared_by = models.ForeignKey(CapaPreparator, on_delete=models.PROTECT, null=True, blank=False)
+    date_submitted = models.DateField('Date Submitted', help_text='Format: YYYY/MM/DD')
+    approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_approved = models.DateField('date_approved', help_text='Format: YYYY/MM/DD')
+    remarks = models.CharField(max_length=255, null=True, blank=True)
+    recommendation = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        dateStr = self.date_prepared.strftime("%d %b %Y ")
+        return dateStr
+
 class CapaDeficiency(models.Model):
+    type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.CharField(max_length=200)
     action = models.CharField(max_length=200)
     evidence = models.FileField(blank=True)
 
-    type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
-    proposed_comletion_date = models.DateTimeField(verbose_name="Proposed Completion Date")
+    proposed_completion_date = models.DateField(verbose_name="Proposed Completion Date", null=True, blank=True)
     inspector_comment = models.CharField(max_length=200, blank=True)
     accepted = models.BooleanField(default=False)
 
@@ -52,14 +55,14 @@ def report_directory_path(instance, filename):
     return 'masterlist/inspection/ir_{0}/{1}'.format(instance.record.establishment.id, filename)
 
 class Inspection(models.Model):
-    record = models.ForeignKey(Record, on_delete=models.SET_NULL, null=True, verbose_name="Record")
+    record = models.ForeignKey(Record, on_delete=models.SET_NULL, null=True, verbose_name="Record", related_name="inspections")
     tracking_number = models.CharField(max_length=14, null=True, verbose_name="DTN or Case #", help_text="Put N/I if no DTN")
     capa = models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     type_of_inspection = models.CharField(max_length=20, choices=constants.INSPECTION_TYPES)
-    date_inspected = models.DateTimeField('Date Inspected', help_text='Format: YYYY/MM/DD')
+    date_inspected = models.DateField('Date Inspected', help_text='Format: YYYY/MM/DD')
     frequency_of_inspection = models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True, help_text="Leave blank if not applicable")
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True, help_text="Leave blank if not applicable")
-    date_of_followup_inspection = models.DateTimeField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
+    date_of_followup_inspection = models.DateField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
     inspector = models.ForeignKey(User, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=200, null=True, help_text="Put inspection remarks here. Number each remark.")
     inspection_report = models.FileField(null=True, blank=True, upload_to=report_directory_path, verbose_name='Inspection Report')
@@ -72,7 +75,7 @@ class Inspection(models.Model):
         month = 0
         if self.date_of_followup_inspection:
             start_date = datetime.now().date()
-            end_date = self.date_of_followup_inspection.date()
+            end_date = self.date_of_followup_inspection
             difference = relativedelta(end_date, start_date)
             month = difference.years * 12 + difference.months
         return month

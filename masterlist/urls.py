@@ -2,9 +2,10 @@ from django.urls import path
 from .views import ( AllListView, FoodListView, DrugListView, CosmeticListView, MedicalDeviceListView,
                      # StepOneView, StepTwoAView, StepTwoBView, StepTwoCView, StepThreeView,
                      EstablishmentDetailView, ExpiredListView, InactiveListView)
-from . import views
-
 app_name='masterlist'
+
+from masterlist import views
+
 urlpatterns = [
     path('', AllListView.as_view(), name='index'),
     path('all/', AllListView.as_view(), name='index'),
@@ -29,6 +30,5 @@ urlpatterns = [
     path('export-inactive/', InactiveListView.export, name='export-inactive'),
 
     path('<int:id>/', EstablishmentDetailView.as_view(), name='est-detail'),
-
 
 ]

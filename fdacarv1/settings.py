@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'import_export',
     'tabbed_admin',
 	'nested_admin',
+	'rest_framework',
+	'rest_framework_datatables',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +127,19 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_datatables.renderers.DatatablesRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_datatables.filters.DatatablesFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_datatables.pagination.DatatablesPageNumberPagination',
+    'PAGE_SIZE': 50,
+}
 
 
 # Static files (CSS, JavaScript, Images)

@@ -23,11 +23,9 @@ class AllListView(ListView):
 
     def get_context_data(self, **kwargs):
         establishments = Establishment.objects.all()
-        # super().init_establishments(establishments)
         context = super().get_context_data()
-        # context['export_link'] = "{% url 'masterlist:export-all' %}"
         context['paginated_result'] = establishments
-        context['result_count'] = 5
+        # context['food_list'] = establishments.filter(product_type__name='Food')
         context['alllist_active'] = "active"
         context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
         return context
@@ -176,7 +174,14 @@ class EstablishmentDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
         # inspections = curr_est.record.inspection_set.all()
-        inspections = get_list_or_404(Establishment, pk=curr_est.id)
+        inspections = ''
+        try:
+            curr_est.record # Check if establishment has a record
+        except:
+            pass
+        else:
+            inspections = curr_est.record.inspections.all()
+
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context

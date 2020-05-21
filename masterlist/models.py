@@ -123,7 +123,7 @@ class Establishment(models.Model):
     modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=60)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
-    center = models.CharField(max_length=6, choices=constants.CENTERS)
+    center = models.CharField(max_length=6, choices=constants.CENTERS, default="CDRR")
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
     specific_activity = models.ManyToManyField(SpecificActivity)
     plant_address = models.OneToOneField(PlantAddress, on_delete=models.SET_NULL, null=True)
@@ -135,7 +135,7 @@ class Establishment(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.name + " - " + self.plant_address.address
+        return self.name + " - " + self.plant_address.address + "(" + self.specific_activities() + ")"
 
     def specific_activities(self):
         return ",\n".join(s.name for s in self.specific_activity.all())
@@ -173,16 +173,16 @@ class VariationType(models.Model):
 class Lto(models.Model):
     type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS)
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
-    issuance = models.DateTimeField(null=True, blank=True, verbose_name='Date Issued', help_text='Format: YYYY/MM/DD')
+    issuance = models.DateField(null=True, blank=True, verbose_name='Date Issued', help_text='Format: YYYY/MM/DD')
     lto_number = models.CharField(max_length=255)
-    expiry = models.DateTimeField('expiry date', help_text='Format: YYYY/MM/DD')
+    expiry = models.DateField('expiry date', help_text='Format: YYYY/MM/DD')
 
     def __str__(self):
         return self.lto_number
 
     def get_duration(self):
         start_date = datetime.now().date()
-        end_date = self.expiry.date()
+        end_date = self.expiry
         difference = relativedelta.relativedelta(end_date, start_date)
         month = difference.years * 12 + difference.months
         return month

@@ -23,18 +23,18 @@
                             </div>
                             <a href="#" class="user-title">
                                 <h3 class="h5">{{establishment.name}}</h3>
-                                <span>{{establishment.authorizedofficer.full_name}}</span> <br />
+                                <span>{{establishment.authorized_officer.full_name}}</span> <br />
                                 <br />
                                 {% for spec_act in establishment.specific_activity.all %}
                                 <span>{{spec_act.name}}</span><br>
                                 {% endfor %}
                             </a>
-                            <div class="contributions">{{establishment.ltos.first.lto_number}} <br> {{establishment.ltos.first.expiry.date}}</div> <br><br/>
+                            <div class="contributions">{{establishment.ltos.first.lto_number}} <br> {{establishment.ltos.first.expiry}}</div> <br><br/>
                             <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}" target="_blank">Update</a><br/>
                             <a href="#">Add branch</a>
                             <div class="details d-flex">
-                                <div class="item" data-toggle="tooltip" title="Number of Inspections"><i class="icon-info"></i><strong>{{establishment.inspection_set.all.count}}</strong></div>
-                                <div class="item" data-toggle="tooltip" title="Month/s before expiration"><i class="fa fa-gg"></i><strong>{{establishment.lto.get_duration}}</strong></div>
+                                <div class="item" data-toggle="tooltip" title="Number of Inspections"><i class="icon-info"></i><strong>{{establishment.record.inspections.all.count}}</strong></div>
+                                <div class="item" data-toggle="tooltip" title="Month/s before expiration"><i class="fa fa-gg"></i><strong>{{establishment.ltos.latest.get_duration}}</strong></div>
                                 <div class="item" data-toggle="tooltip" title="Status"><i class="icon-flow-branch"></i><strong>{{establishment.status}}</strong></div>
                             </div>
                         </div>

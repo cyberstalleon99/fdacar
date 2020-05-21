@@ -127,12 +127,15 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     list_per_page = 20
     # fieldsets = [
     #     ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
-    #     'specific_activity'], 'classes': ['collapse']}),
+    #     'specific_activities'], 'classes': ['collapse']}),
     # ]
 
+    search_fields = ['name']
+
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
-     'product_type', 'primary_activity', 'specific_activities', 'center',
-     'lto_number', 'expiry', 'modified_by')
+     'product_type', 'primary_activity',
+     'lto_number', 'expiry',
+     'last_inspection', 'type_of_inspection')
 
     list_filter = (
         ('name', DropdownFilter),
@@ -196,10 +199,16 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         return obj.ltos.first().lto_number
 
     def expiry(self, obj):
-        return obj.ltos.first().expiry.date()
+        return obj.ltos.first().expiry
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')
+
+    def last_inspection(self, obj):
+        return obj.record.inspections.latest().date_inspected
+
+    def type_of_inspection(self, obj):
+        return obj.record.inspections.latest().type_of_inspection
 
     def save_model(self, request, obj, form, change):
         obj.modified_by = request.user

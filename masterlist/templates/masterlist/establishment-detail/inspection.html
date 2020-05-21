@@ -8,7 +8,14 @@
                         <span class="d-block">Displayed is the list of inspection for this establishment</span>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a class="btn btn-primary" href="{% url 'admin:records_record_add' %}" target="_blank">Add an Inspection</a>
+                        <a class="btn btn-secondary" href="{% url 'admin:records_record_add' %}" target="_blank">Create Folder</a>
+
+                        <a class="btn btn-primary {{ inspections|yesno:",disabled" }}"
+                        href={% if inspections %}
+                        "{% url 'admin:records_record_change' inspections.latest.record.id %}"
+                        {% endif %}
+                        target="_blank">Add an Inspection</a>
+
                     </div>
                 </div>
             </div>
@@ -31,7 +38,7 @@
                             {% if inspections %}
                             {% for inspection in inspections %}
                             <tr>
-                                <td><a href="{% url 'admin:records_record_change' inspection.id %}" target="_blank">{{inspection.date_inspected.date}}</a></td>
+                                <td><a href="{% url 'admin:records_record_change' inspection.record.id %}" target="_blank">{{inspection.date_inspected}}</a></td>
                                 {% if inspection.capa %}
                                 <td><a href="{% url 'admin:records_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
                                 {% else %}
@@ -42,7 +49,13 @@
                                 <td>{{inspection.frequency_of_inspection}}</td>
                                 <td>{{inspection.date_of_followup_inspection.date}}</td>
                                 <td>{{inspection.remarks}}</td>
-                                <td><a href={{inspection.inspection_report.url}} target="_blank">{{inspection.inspection_report}}</a></td>
+                                <td>
+                                    {% if inspection.inspection_report %}
+                                    <a href={{inspection.inspection_report.url}} target="_blank">{{inspection.inspection_report}}</a>
+                                    {% else %}
+                                    No inspection report uploaded
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                             {% else %}

@@ -5,9 +5,12 @@ from dateutil.relativedelta import relativedelta
 from checklist.models import Job
 from masterlist import constants
 
+admin.site.register(CapaPreparator)
+
 class InspectionInline(admin.TabularInline):
     model = Inspection
     extra = 1
+    exclude = ['date_of_followup_inspection']
 
     def save_formset(self, request, form, formset, change):
         # if it's not the model we want to change
@@ -75,18 +78,30 @@ class RecordAdmin(admin.ModelAdmin):
 
 #         return super().save_model(request, obj, form, change)
 
-class CapaPreparatorInline(admin.StackedInline):
-    model = CapaPreparator
+# class CapaPreparatorInline(admin.StackedInline):
+#     model = CapaPreparator
 
 class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency
     extra=1
+    line_numbering = 0
+    fields = ('line_number', 'type', 'capa', 'description', 'action', 'evidence', 'proposed_completion_date', 'inspector_comment', 'accepted')
+    readonly_fields = ('line_number',)
+
+    def line_number(self, obj):
+        self.line_numbering += 1
+        return self.line_numbering
+
+    line_number.short_description = '#'
+    # proposed_comletion_date = models.DateField(verbose_name="Proposed Completion Date")
+    # inspector_comment = models.CharField(max_length=200, blank=True)
+    # accepted = models.BooleanField(default=False)
 
 @admin.register(Capa)
 class CapaAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Start', {'fields': ['start_date']}),
-        ('End', {'fields': ['date_submitted', 'date_approved', 'approved_by', 'remarks']})
+        ('Start', {'fields': ['date_submitted', 'date_prepared', 'prepared_by']}),
+        ('End', {'fields': ['date_approved', 'approved_by', 'remarks', 'recommendation']})
     ]
 
-    inlines = [CapaPreparatorInline, CapaDeficiencyInline]
+    inlines = [CapaDeficiencyInline,]

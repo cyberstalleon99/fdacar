@@ -11,6 +11,9 @@ urlpatterns = [
     path('checklist/', include('checklist.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
+
+    # API URLS
+    path('api/establishment-list/', include('masterlist.api.urls', 'masterlist-api')),
 ]
 
 if settings.DEBUG:
