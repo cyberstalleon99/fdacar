@@ -40,48 +40,15 @@ $(document).ready(function () {
                       return data;
                   }
               },
-              {
-                  'data': 'plant_address',
-                  'name': 'plant_address.address'
-
-              },
-              {
-                  'data': 'product_type.name',
-                  'name': 'product_type.name'
-              },
-              {
-                  'data': 'primary_activity',
-                  'name': 'primary_activity.name',
-
-              },
-              {
-                  'data': 'specific_activities',
-                  'name': 'specific_activity.name',
-
-              },
-              {
-                  'data': 'ltos.0.lto_number',
-                  'name': 'ltos.lto_number',
-                //   'searchable': false
-
-              },
-              {
-                  'data': 'ltos.0.expiry',
-                  'name': 'ltos.0.expiry',
-                  'searchable': false
-
-              },
-              {
-                  'data': 'duration',
-                  'searchable': false,
-                  "sortable": false
-              },
-              {
-                  'data': 'folder_number',
-                  'name': 'record.folder_id'
-              },
+              {'data': 'plant_address',         'name': 'plant_address.address'},
+              {'data': 'product_type.name',     'name': 'product_type.name'},
+              {'data': 'primary_activity',      'name': 'primary_activity.name'},
+              {'data': 'specific_activities',   'name': 'specific_activity.name'},
+              {'data': 'ltos.0.lto_number',     'name': 'ltos.lto_number'},
+              {'data': 'ltos.0.expiry',         'name': 'ltos.0.expiry',    'searchable': false},
+              {'data': 'duration',              'searchable': false, 'sortable': false},
+              {'data': 'folder_number',         'name': 'record.folder_id'},
         ],
-        // dom: 'B<"clear"lfrtip>',
         dom: 'B<fl<t>ip>',
         buttons: {
            name: 'primary',
@@ -99,15 +66,6 @@ $(document).ready(function () {
         }
     });
 
-    $('.btn-inactive').on('click', function() {
-        table.columns().search('');
-        var rel = $(this).attr('rel');
-        if (rel) {
-            table.columns(2).search(rel).draw();
-        } else {
-            table.draw();
-        }
-    });
 });
 
 // $(document).ready(function () {

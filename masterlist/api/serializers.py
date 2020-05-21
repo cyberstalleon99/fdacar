@@ -25,15 +25,10 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 
 class EstablishmentSerializer(serializers.ModelSerializer):
     product_type = ProductTypeSerializer()
-    # ltos = serializers.StringRelatedField(many=True)
     ltos = LtoSerializer(read_only=True, many=True)
     specific_activities = serializers.SerializerMethodField()
-    # additional_activities= serializers.StringRelatedField(many=True)
-    # product_type= serializers.StringRelatedField()
     plant_address = serializers.SerializerMethodField()
     primary_activity = serializers.StringRelatedField()
-    # lto = serializers.SerializerMethodField()
-    # expiry = serializers.SerializerMethodField()
     duration = serializers.SerializerMethodField()
     folder_number = serializers.SerializerMethodField()
 
