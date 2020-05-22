@@ -1,6 +1,5 @@
 from django.views.generic import (
     ListView,
-    # CreateView,
     DetailView,
 )
 # from django.views import View
@@ -12,109 +11,34 @@ from django.views.generic import (
 from .models import Establishment
 from django.utils import timezone
 from . import mypaginator
-from .masterlistview import MasterListView
+# from .masterlistview import MasterListView
 from .myhelpers import MyExporter
 from .myresources import EstablishmentResource
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 class AllListView(ListView):
     model = Establishment
     template_name = 'masterlist/index.html'
 
     def get_context_data(self, **kwargs):
-        establishments = Establishment.objects.all()
         context = super().get_context_data()
-        context['paginated_result'] = establishments
-        # context['food_list'] = establishments.filter(product_type__name='Food')
         context['alllist_active'] = "active"
-        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
+        context['alllist_tab_active'] = "active"
         return context
 
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Masterlist Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.all())
-        return response
-
-class FoodListView(ListView):
-    template_name = 'masterlist/food-list.html'
-
-    def get_context_data(self, **kwargs):
-        establishments = Establishment.objects.filter(product_type__name='Food')
-        # super().init_establishments(establishments)
-        context = super().get_context_data()
-        context['paginated_result'] = establishments
-        context['result_count'] = 5
-        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
-        context['foodlist_active'] = "active"
-        return context
-
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Food List Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.filter(product_type__name='Food'))
-        return response
-
-class DrugListView(MasterListView):
-    template_name = 'masterlist/drug-list.html'
-
-    def get_context_data(self, **kwargs):
-        establishments = Establishment.objects.filter(product_type__name='Drug')
-        super().init_establishments(establishments)
-        context = super().get_context_data()
-        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
-        context['druglist_active'] = "active"
-        return context
-
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Drug List Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.filter(product_type__name='Drug'))
-        return response
-
-class CosmeticListView(MasterListView):
-    template_name = 'masterlist/cosmetic-list.html'
-
-    def get_context_data(self, **kwargs):
-        establishments = Establishment.objects.filter(product_type__name='Cosmetic')
-        super().init_establishments(establishments)
-        context = super().get_context_data()
-        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
-        context['cosmeticlist_active'] = "active"
-        return context
-
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Cosmetic List Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.filter(product_type__name='Cosmetic'))
-        return response
-
-class MedicalDeviceListView(MasterListView):
-    template_name = 'masterlist/medicaldevice-list.html'
-
-    def get_context_data(self, **kwargs):
-        establishments = Establishment.objects.filter(product_type__name='Medical Device')
-        super().init_establishments(establishments)
-        context = super().get_context_data()
-        context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
-        context['medicaldevice_active'] = "active"
-        return context
-
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="MedicalDevices List Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.filter(product_type__name='Medical Device'))
-        return response
+    # def export(self):
+    #     response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Masterlist Pullout as of {}".format(timezone.now().date()),
+    #     queryset=Establishment.objects.all())
+    #     return response
 
 class InactiveListView(ListView):
     model = Establishment
-    items_per_page = 20
     template_name = 'masterlist/inactive-list.html'
-    context_object_name = 'test'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['inactivelist_active'] = "active"
-        page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
-        establishments = paginator.get_paginated_result()
-        context['paginated_result'] = establishments
-        context['result_count'] = paginator.get_result_count()
+        context['inactive_tab_active'] = "active"
+        context['alllist_active'] = "active"
         return context
 
     def get_list(self):
@@ -124,33 +48,82 @@ class InactiveListView(ListView):
             inactivelist = Establishment.inactivelist.get_filtered_list(query=query)
         return inactivelist
 
-    def export(self):
-        response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Inactive List Pullout as of {}".format(timezone.now().date()),
-        queryset=Establishment.objects.filter(status='Inactive'))
-        return response
+    # def export(self):
+    #     response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Inactive List Pullout as of {}".format(timezone.now().date()),
+    #     queryset=Establishment.objects.filter(status='Inactive'))
+    #     return response
+
+class AbraListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/abra-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['abra_list_active'] = "active"
+        return context
+
+class ApayaoListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/apayao-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['apayao_list_active'] = "active"
+        return context
+
+class BaguioListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/baguio-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['baguio_list_active'] = "active"
+        return context
+
+class BenguetListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/benguet-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['benguet_list_active'] = "active"
+        return context
+
+class IfugaoListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/ifugao-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['ifugao_list_active'] = "active"
+        return context
+
+class KalingaListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/kalinga-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['kalinga_list_active'] = "active"
+        return context
+
+class MountainListView(ListView):
+    model = Establishment
+    template_name = 'masterlist/mountain_province.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['mountain_list_active'] = "active"
+        return context
 
 class ExpiredListView(ListView):
     model = Establishment
-    items_per_page = 20
     template_name = 'masterlist/expired-list.html'
-    context_object_name = 'test'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['expiredlist_active'] = "active"
-        page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
-        establishments = paginator.get_paginated_result()
-        context['paginated_result'] = establishments
-        context['result_count'] = paginator.get_result_count()
         return context
-
-    def get_list(self):
-        expiredlist = Establishment.expiredlist.get_list()
-        query = self.request.GET.get('q', None)
-        if query:
-            expiredlist = Establishment.expiredlist.get_filtered_list(query=query)
-        return expiredlist
 
 def export_expired(request):
     checklist = Establishment.expiredlist.get_list()
@@ -173,7 +146,7 @@ class EstablishmentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
-        # inspections = curr_est.record.inspection_set.all()
+        context['alllist_active'] = "active"
         inspections = ''
         try:
             curr_est.record # Check if establishment has a record
@@ -185,6 +158,73 @@ class EstablishmentDetailView(DetailView):
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context
+
+# Commented out because I switched to datatables.
+# class FoodListView(ListView):
+#     template_name = 'masterlist/food-list.html'
+
+#     def get_context_data(self, **kwargs):
+#         establishments = Establishment.objects.filter(product_type__name='Food')
+#         # super().init_establishments(establishments)
+#         context = super().get_context_data()
+#         context['paginated_result'] = establishments
+#         context['result_count'] = 5
+#         context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
+#         context['foodlist_active'] = "active"
+#         return context
+
+#     def export(self):
+#         response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Food List Pullout as of {}".format(timezone.now().date()),
+#         queryset=Establishment.objects.filter(product_type__name='Food'))
+#         return response
+
+# class DrugListView(MasterListView):
+#     template_name = 'masterlist/drug-list.html'
+
+#     def get_context_data(self, **kwargs):
+#         establishments = Establishment.objects.filter(product_type__name='Drug')
+#         super().init_establishments(establishments)
+#         context = super().get_context_data()
+#         context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
+#         context['druglist_active'] = "active"
+#         return context
+
+#     def export(self):
+#         response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Drug List Pullout as of {}".format(timezone.now().date()),
+#         queryset=Establishment.objects.filter(product_type__name='Drug'))
+#         return response
+
+# class CosmeticListView(MasterListView):
+#     template_name = 'masterlist/cosmetic-list.html'
+
+#     def get_context_data(self, **kwargs):
+#         establishments = Establishment.objects.filter(product_type__name='Cosmetic')
+#         super().init_establishments(establishments)
+#         context = super().get_context_data()
+#         context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
+#         context['cosmeticlist_active'] = "active"
+#         return context
+
+#     def export(self):
+#         response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="Cosmetic List Pullout as of {}".format(timezone.now().date()),
+#         queryset=Establishment.objects.filter(product_type__name='Cosmetic'))
+#         return response
+
+# class MedicalDeviceListView(MasterListView):
+#     template_name = 'masterlist/medicaldevice-list.html'
+
+#     def get_context_data(self, **kwargs):
+#         establishments = Establishment.objects.filter(product_type__name='Medical Device')
+#         super().init_establishments(establishments)
+#         context = super().get_context_data()
+#         context['establishments_active'] = "active" # This line is so that Establishment link in sidebar is always active
+#         context['medicaldevice_active'] = "active"
+#         return context
+
+#     def export(self):
+#         response = MyExporter.export_to_xslx(resource=EstablishmentResource(), filename="MedicalDevices List Pullout as of {}".format(timezone.now().date()),
+#         queryset=Establishment.objects.filter(product_type__name='Medical Device'))
+#         return response
 
 # class StepOneView(FormView):
 #     template_name = 'masterlist/stepone.html'

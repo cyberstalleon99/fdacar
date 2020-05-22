@@ -1,25 +1,39 @@
-{% extends 'base-site.html' %}
+{% extends 'masterlist/partial/masterlist-base.html' %}
 {% block title %} Establishment List  {% endblock %}
 {% block subtitle %} MASTER LIST {% endblock %}
 
-{% block content %}
-<section class="no-padding-top">
-    <div class="container-fluid">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">All</a>
-                <a class="nav-item nav-link" id="nav-food-tab" data-toggle="tab" href="#nav-food" role="tab" aria-controls="nav-food" aria-selected="false">Inactive</a>
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-                {% include 'masterlist/establishment-list.html' %}
-            </div>
-            <div class="tab-pane fade" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">
+{% block tabs %}
+    {% include 'partial/masterlist_tabs.html' %}
+{% endblock %}
 
-            </div>
-        </div>
+{% block content-title %}
+List of Establishments
+{% endblock %}
 
-    </div>
-</section>
+{% block content-subtitle %}
+Displayed is the list of active establishments
+{% endblock %}
+
+{% block btn-name-all %}
+btn-est
+{% endblock %}
+
+{% block btn-name-food %}
+btn-est
+{% endblock %}
+
+{% block btn-name-drug %}
+btn-est
+{% endblock %}
+
+{% block btn-name-cosmetic %}
+btn-est
+{% endblock %}
+
+{% block btn-name-device %}
+btn-est
+{% endblock %}
+
+{% block table-name %}
+"all_list_table"
 {% endblock %}

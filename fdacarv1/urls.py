@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API URLS
-    path('api/establishment-list/', include('masterlist.api.urls', 'masterlist-api')),
+    path('api/est-list/', include('masterlist.api.urls', 'masterlist-api')),
 ]
 
 if settings.DEBUG:

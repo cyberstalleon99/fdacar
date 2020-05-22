@@ -52,12 +52,6 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         else:
             return establishment.record.folder_id
 
-    # def get_lto(self, establishment):
-    #     return establishment.ltos.latest().lto_number
-
-    # def get_expiry(self, establishment):
-    #     return establishment.ltos.latest().expiry.date()
-
     def get_specific_activities(self, establishment):
         return ', '.join([str(specific_activity) for specific_activity in establishment.specific_activity.all()])
 

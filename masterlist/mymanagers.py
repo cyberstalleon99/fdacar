@@ -9,7 +9,7 @@ class ExpiredListManager(myhelpers.MyModelManager):
         # establishments = super().get_queryset().filter(ltos__expiry__lt=timezone.now()).distinct()
         establishments = set()
         for est in super().get_queryset():
-            if est.ltos.latest().expiry < timezone.now():
+            if est.ltos.latest().expiry < timezone.now().date():
                 establishments.add(est.id)
 
         return super().get_queryset().filter(pk__in=establishments)

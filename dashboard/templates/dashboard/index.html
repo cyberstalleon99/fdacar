@@ -10,7 +10,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:food-list' %}" target="_blank">ABRA</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">ABRA</a></strong>
                         </div>
                         <div class="number dashtext-1">{{total_abra}}</div>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:drug-list' %}" target="_blank">APAYAO</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:apayao-list' %}" target="_blank">APAYAO</a></strong>
                         </div>
                         <div class="number dashtext-2">{{total_apayao}}</div>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">BAGUIO CITY</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:baguio-list' %}" target="_blank">BAGUIO CITY</a></strong>
                         </div>
                         <div class="number dashtext-3">{{total_baguio}}</div>
                     </div>
@@ -52,7 +52,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">BENGUET</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:benguet-list' %}" target="_blank">BENGUET</a></strong>
                         </div>
                         <div class="number dashtext-4">{{total_benguet}}</div>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">IFUGAO</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:ifugao-list' %}" target="_blank">IFUGAO</a></strong>
                         </div>
                         <div class="number dashtext-4">{{total_ifugao}}</div>
                     </div>
@@ -80,7 +80,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">KALINGA</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:kalinga-list' %}" target="_blank">KALINGA</a></strong>
                         </div>
                         <div class="number dashtext-4">{{total_kalinga}}</div>
                     </div>
@@ -94,7 +94,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">MOUNTAIN PROVINCE</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:mountain-list' %}" target="_blank">MOUNTAIN PROVINCE</a></strong>
                         </div>
                         <div class="number dashtext-4">{{total_mountainprov}}</div>
                     </div>
@@ -113,7 +113,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">{{cfrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:food-list' %}" target="_blank">CFRR</a></span>
+                    <div class="stats-3"><strong class="d-block">{{cfrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">CFRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-1"></div>
                         </div>
@@ -121,17 +121,13 @@
                     <div class="stats-3 d-flex justify-content-between text-center">
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_mfg}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:food-list' %}" method="get">
-                                    {%csrf_token%}
-                                    <input name="q" type="hidden" value="Manufacturer">
-                                    <button class="btn btn-link" type="submit" formtarget="_blank">FM</button>
-                                </form>
+                                <h3>FM</h3>
                             </span>
                             <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:food-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Trader">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FT</button>
@@ -141,7 +137,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:food-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Wholesaler">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FW</button>
@@ -151,7 +147,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_importer}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:food-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Importer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FI</button>
@@ -161,7 +157,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_exporter}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:food-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Exporter">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FE</button>
@@ -177,7 +173,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">{{cdrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:drug-list' %}" target="_blank">CDRR</a></span>
+                    <div class="stats-3"><strong class="d-block">{{cdrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">CDRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-2"></div>
                         </div>
@@ -185,7 +181,7 @@
                     <div class="stats-3 d-flex justify-content-between text-center">
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_hp}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Hospital Pharmacy">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">HP</button>
@@ -195,7 +191,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_ds}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Drugstore">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DS</button>
@@ -205,7 +201,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_mfg}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Manufacturer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DM</button>
@@ -215,7 +211,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_trader}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Trader">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DT</button>
@@ -225,7 +221,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Wholesaler">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DW</button>
@@ -235,7 +231,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Importer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DI</button>
@@ -245,7 +241,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:drug-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Exporter">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DE</button>
@@ -261,7 +257,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">{{ccrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:cosmetic-list' %}" target="_blank">CCRR</a></span>
+                    <div class="stats-3"><strong class="d-block">{{ccrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">CCRR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
                         </div>
@@ -269,7 +265,7 @@
                     <div class="stats-3 d-flex justify-content-between text-center">
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_mfg}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Manufacturer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CM</button>
@@ -279,7 +275,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_trader}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Trader">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CT</button>
@@ -289,7 +285,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Wholesaler">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CW</button>
@@ -299,7 +295,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_importer}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Importer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CI</button>
@@ -309,7 +305,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_exporter}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:cosmetic-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Exporter">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CE</button>
@@ -325,7 +321,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
-                    <div class="stats-3"><strong class="d-block">{{cdrrhr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:medicaldevice-list' %}" target="_blank">CDRRHR</a></span>
+                    <div class="stats-3"><strong class="d-block">{{cdrrhr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">CDRRHR</a></span>
                         <div class="progress progress-template progress-small">
                             <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
                         </div>
@@ -333,7 +329,7 @@
                     <div class="stats-3 d-flex justify-content-between text-center">
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_xray}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <button class="btn btn-link" type="submit" formtarget="_blank">XRAY</button>
                                 </form>
@@ -342,7 +338,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_mfg}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Manufacturer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDM</button>
@@ -352,7 +348,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_trader}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Trader">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDT</button>
@@ -362,7 +358,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Wholesaler">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDW</button>
@@ -372,7 +368,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_importer}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Importer">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDI</button>
@@ -382,7 +378,7 @@
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_exporter}}</strong>
                             <span class="d-block span-sm">
-                                <form action="{% url 'masterlist:medicaldevice-list' %}" method="get">
+                                <form action="#" method="get">
                                     {%csrf_token%}
                                     <input name="q" type="hidden" value="Exporter">
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDE</button>

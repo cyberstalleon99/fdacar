@@ -1,50 +1,8 @@
-<!--<ul class="nav nav-tabs">-->
-    <!--<li class="nav-item dropdown">-->
-    <!--    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
-    <!--    <div class="dropdown-menu">-->
-    <!--        <a class="dropdown-item" href="#">Action</a>-->
-    <!--        <a class="dropdown-item" href="#">Another action</a>-->
-    <!--        <a class="dropdown-item" href="#">Something else here</a>-->
-    <!--        <div class="dropdown-divider"></div>-->
-    <!--        <a class="dropdown-item" href="#">Separated link</a>-->
-    <!--    </div>-->
-    <!--</li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{alllist_active}}" href="{% url 'masterlist:index' %}">All</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{foodlist_active}}" href="{% url 'masterlist:food-list' %}">Food</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{druglist_active}}" href="{% url 'masterlist:drug-list' %}">Drug</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{cosmeticlist_active}}" href="{% url 'masterlist:cosmetic-list' %}">Cosmetic</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{medicaldevice_active}}" href="{% url 'masterlist:medicaldevice-list' %}">Medical Devices</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link {{inactivelist_active}}" href="{% url 'masterlist:inactive-list' %}">Inactive</a>-->
-<!--    </li>-->
-<!--    <li class="nav-item">-->
-<!--        <a class="nav-link disabled" href="#">Disabled</a>-->
-<!--    </li>-->
-<!--</ul>-->
-
-<nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="true">All</a>
-        <a class="nav-item nav-link" id="nav-food-tab" data-toggle="tab" href="#nav-food" role="tab" aria-controls="nav-food" aria-selected="false">Food</a>
-        <a class="nav-item nav-link" id="nav-drug-tab" data-toggle="tab" href="#nav-drug" role="tab" aria-controls="nav-drug" aria-selected="false">Drug</a>
-        <a class="nav-item nav-link" id="nav-cosmetic-tab" data-toggle="tab" href="#nav-cosmetic" role="tab" aria-controls="nav-cosmetic" aria-selected="false">Cosmetic</a>
-        <a class="nav-item nav-link" id="nav-device-tab" data-toggle="tab" href="#nav-device" role="tab" aria-controls="nav-device" aria-selected="false">Medical Devices</a>
-    </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">...</div>
-    <div class="tab-pane fade" id="nav-food" role="tabpanel" aria-labelledby="nav-food-tab">...</div>
-    <div class="tab-pane fade" id="nav-drug" role="tabpanel" aria-labelledby="nav-drug-tab">...</div>
-    <div class="tab-pane fade" id="nav-cosmetic" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-    <div class="tab-pane fade" id="nav-device" role="tabpanel" aria-labelledby="nav-device-tab">...</div>
-</div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link {{alllist_tab_active}}" href="{% url 'masterlist:index' %}">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{inactive_tab_active}}" href="{% url 'masterlist:inactive-list' %}">Inactive</a>
+    </li>
+</ul>

@@ -19,11 +19,10 @@
 
 <script>
 $(document).ready(function () {
-    var table = $('#establishment_list').DataTable ({
+    $.extend( $.fn.dataTable.defaults, {
         'serverSide': true,
         'processing': true,
         'pageLength': 20,
-        'ajax': '/api/establishment-list/estabs/?format=datatables',
         'searching': true,
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         'columns': [
@@ -35,7 +34,7 @@ $(document).ready(function () {
                           var url = "{% url 'masterlist:est-detail' 0 %}";
                           var id = row.DT_RowAttr.pkey;
                           url = url.replace(0, id);
-                          data = '<a href="' + url + '">' + data + '</a>';
+                          data = '<a href="' + url + '" target="_blank">' + data + '</a>';
                       }
                       return data;
                   }
@@ -47,7 +46,7 @@ $(document).ready(function () {
               {'data': 'ltos.0.lto_number',     'name': 'ltos.lto_number'},
               {'data': 'ltos.0.expiry',         'name': 'ltos.0.expiry',    'searchable': false},
               {'data': 'duration',              'searchable': false, 'sortable': false},
-              {'data': 'folder_number',         'name': 'record.folder_id'},
+              {'data': 'folder_number',         'name': 'record.folder_id', 'sortable': false},
         ],
         dom: 'B<fl<t>ip>',
         buttons: {
@@ -56,28 +55,149 @@ $(document).ready(function () {
        },
     });
 
+    // TABLES
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/all/?format=datatables',
+    });
+
+    var inactivetable = $('#inactive_table').DataTable ({
+        'ajax': '/api/est-list/inactive/?format=datatables',
+    });
+
+    var abratable = $('#abra_list_table').DataTable ({
+        'ajax': '/api/est-list/abra/?format=datatables',
+    });
+
+    var apayaotable = $('#apayao_list_table').DataTable ({
+        'ajax': '/api/est-list/apayao/?format=datatables',
+    });
+
+    var baguiotable = $('#baguio_list_table').DataTable ({
+        'ajax': '/api/est-list/baguio/?format=datatables',
+    });
+
+    var benguettable = $('#benguet_list_table').DataTable ({
+        'ajax': '/api/est-list/benguet/?format=datatables',
+    });
+
+    var ifugaotable = $('#ifugao_list_table').DataTable ({
+        'ajax': '/api/est-list/ifugao/?format=datatables',
+    });
+
+    var kalingatable = $('#kalinga_list_table').DataTable ({
+        'ajax': '/api/est-list/kalinga/?format=datatables',
+    });
+
+    var mountaintable = $('#mountain_list_table').DataTable ({
+        'ajax': '/api/est-list/mountain/?format=datatables',
+    });
+
+    var expiredtable = $('#expired_list_table').DataTable ({
+        'ajax': '/api/est-list/expired/?format=datatables',
+    });
+
+    // BUTTONS
     $('.btn-est').on('click', function() {
-        table.columns().search('');
+        alltable.columns().search('');
         var rel = $(this).attr('rel');
         if (rel) {
-            table.columns(2).search(rel).draw();
+            alltable.columns(2).search(rel).draw();
         } else {
-            table.draw();
+            alltable.draw();
+        }
+    });
+
+    $('.btn-est-inactive').on('click', function() {
+        inactivetable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            inactivetable.columns(2).search(rel).draw();
+        } else {
+            inactivetable.draw();
+        }
+    });
+
+    $('.btn-abra').on('click', function() {
+        abratable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            abratable.columns(2).search(rel).draw();
+        } else {
+            abratable.draw();
+        }
+    });
+
+    $('.btn-apayao').on('click', function() {
+        apayaotable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            apayaotable.columns(2).search(rel).draw();
+        } else {
+            apayaotable.draw();
+        }
+    });
+
+    $('.btn-baguio').on('click', function() {
+        baguiotable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            baguiotable.columns(2).search(rel).draw();
+        } else {
+            baguiotable.draw();
+        }
+    });
+
+    $('.btn-benguet').on('click', function() {
+        benguettable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            benguettable.columns(2).search(rel).draw();
+        } else {
+            benguettable.draw();
+        }
+    });
+
+    $('.btn-ifugao').on('click', function() {
+        ifugaotable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            ifugaotable.columns(2).search(rel).draw();
+        } else {
+            ifugaotable.draw();
+        }
+    });
+
+    $('.btn-kalinga').on('click', function() {
+        kalingatable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            kalingatable.columns(2).search(rel).draw();
+        } else {
+            kalingatable.draw();
+        }
+    });
+
+    $('.btn-mountain').on('click', function() {
+        mountaintable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            mountaintable.columns(2).search(rel).draw();
+        } else {
+            mountaintable.draw();
+        }
+    });
+
+    $('.btn-expired').on('click', function() {
+        expiredtable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            expiredtable.columns(2).search(rel).draw();
+        } else {
+            expiredtable.draw();
         }
     });
 
 });
-
-// $(document).ready(function () {
-//     $('#food_list').dataTable ({
-//       dom: 'B<"clear"lfrtip>',
-//       buttons: {
-//           name: 'primary',
-//           buttons: ['copy', 'csv', 'excel', 'pdf']
-//       },
-//       pageLength: 20
-//     });
-// });
 </script>
 
 <script>
