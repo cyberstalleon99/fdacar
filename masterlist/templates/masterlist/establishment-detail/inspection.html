@@ -8,7 +8,7 @@
                         <span class="d-block">Displayed is the list of inspection for this establishment</span>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a class="btn btn-secondary" href="{% url 'admin:records_record_add' %}" target="_blank">Create Folder</a>
+                        <a class="btn btn-secondary {{ establishment.record|yesno:"disabled," }}" href="{% url 'admin:records_record_add' %}" target="_blank">Create Folder</a>
 
                         <a class="btn btn-primary {{ inspections|yesno:",disabled" }}"
                         href={% if inspections %}
@@ -65,7 +65,7 @@
                                 {% else %}
                                     {% if inspection.capa %}
                                         {% for deficiency in inspection.capa.capadeficiency_set.all %}
-                                            {{forloop.counter}}. &nbsp; ({{deficiency.type}}) {{deficiency.description}} <br>
+                                            {{forloop.counter}}. &nbsp; ({{deficiency.type}}) {{deficiency.description}} - {{deficiency.accepted|yesno:"ACCEPTED,PENDING"}} <br>
                                         {% endfor %}
 
                                     {% else %}

@@ -9,26 +9,13 @@ from .myresources import JobResource
 from django.utils import timezone
 
 class RenewalChekListView(ListView):
-    items_per_page = 10
     model = Establishment
     template_name = 'checklist/index.html'
-    context_object_name = 'list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
-        context['paginated_result'] = paginator.get_paginated_result()
         context['ren_checklist_active'] = "active"
-        context['result_count'] = paginator.get_result_count()
         return context
-
-    def get_list(self):
-        renewal_checklist = Job.renchecklist.get_list()
-        query = self.request.GET.get('q', None)
-        if query:
-            renewal_checklist = Job.renchecklist.get_filtered_list(query=query)
-        return renewal_checklist
 
 def export_renewal(request):
     renewal_checklist = Job.renchecklist.get_list()
@@ -43,26 +30,13 @@ def export_renewal(request):
     return response
 
 class PliChekListView(ListView):
-    items_per_page = 10
     model = Establishment
     template_name = 'checklist/pli-list.html'
-    context_object_name = 'list'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        page = self.request.GET.get('page')
-        paginator = mypaginator.MyPaginator(self.get_list(), self.items_per_page, page)
-        context['paginated_result'] = paginator.get_paginated_result()
         context['pli_checklist_active'] = "active"
-        context['result_count'] = paginator.get_result_count()
         return context
-
-    def get_list(self):
-        pli_checklist = Job.plichecklist.get_list()
-        query = self.request.GET.get('q', None)
-        if query:
-            pli_checklist = Job.plichecklist.get_filtered_list(query=query)
-        return pli_checklist
 
 def export_pli(request):
     pli_checklist = Job.plichecklist.get_list()

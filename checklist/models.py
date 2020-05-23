@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from datetime import datetime
 from masterlist import constants
 from masterlist.models import Establishment
 from .mymanagers import RenewalChecklistManager, PLIChecklistManager, RoutineListManager

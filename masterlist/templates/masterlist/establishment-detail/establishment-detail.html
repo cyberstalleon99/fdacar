@@ -82,29 +82,35 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Plant Address</th>
-                                            <td class="text-left">{{establishment.plant_address.full_address}}</td>
+                                            <td class="text-left">{{establishment.plant_address.full_address}} <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-3" target="_blank">Edit</a></td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Warehouse Address</th>
                                             <td class="text-left">
                                                 {% for warehouse in establishment.warehouses.all %}
-                                                {{warehouse.full_address}} <br/>
+                                                {{warehouse.full_address}} <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-3" target="_blank">Edit</a><br/>
                                                 {% endfor %}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Office Address</th>
-                                            <td class="text-left">{{establishment.office_address.full_address}}</td>
+                                            <td class="text-left">{{establishment.office_address.full_address}} <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-3" target="_blank">Edit</a></td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Authorized Officer</th>
-                                            <td class="text-left">{{establishment.authorized_officer.full_name}} ({{establishment.authorized_officer.email}}, {{establishment.authorized_officer.mobile}})</td>
+                                            <td class="text-left">
+                                                {{establishment.authorized_officer.full_name}} ({{establishment.authorized_officer.email}}, {{establishment.authorized_officer.mobile}})
+                                                 <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-4" target="_blank">Edit</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th scope="row" class="text-left">Qualified Personnel</th>
                                             {% if establishment.qualifiedperson_set.all %}
                                             {% for qualified_person in establishment.qualifiedperson_set.all %}
-                                            <td class="text-left">{{qualified_person}} ({{qualified_person.email}}, {{qualified_person.mobile}})</td>
+                                            <td class="text-left">
+                                                {{qualified_person}} ({{qualified_person.email}}, {{qualified_person.mobile}})
+                                                <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-4" target="_blank">Edit</a>
+                                            </td>
                                             {% endfor %}
                                             {% else %}
                                             <td class="text-left">None</td>

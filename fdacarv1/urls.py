@@ -14,6 +14,7 @@ urlpatterns = [
 
     # API URLS
     path('api/est-list/', include('masterlist.api.urls', 'masterlist-api')),
+    path('api/checklist/', include('checklist.api.urls', 'checklist-api')),
 ]
 
 if settings.DEBUG:

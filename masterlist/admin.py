@@ -5,13 +5,13 @@ from .models import Establishment, ProductType, PrimaryActivity, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
     EstAdditionalActivity, EstProductLine, Variation
 
-from records.models import Record
-from checklist.models import Job
-from django_reverse_admin import ReverseModelAdmin
+# from records.models import Record
+# from checklist.models import Job
+# from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from . import constants
+# from datetime import datetime
+# from dateutil.relativedelta import relativedelta
+# from . import constants
 from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 from tabbed_admin import TabbedModelAdmin

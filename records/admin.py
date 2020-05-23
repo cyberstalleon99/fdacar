@@ -23,11 +23,13 @@ class InspectionInline(admin.TabularInline):
         instances = formset.save(commit=False)
         for instance in instances:
             frequency_of_inspection = request.POST.get('frequency_of_inspection')
-            date_inspec = request.POST.get('date_inspected_0')
-            time_inspec = request.POST.get('date_inspected_1')
+            # date_inspec = request.POST.get('date_inspected_0')
+            date_inspec = request.POST.get('date_inspected')
+            # time_inspec = request.POST.get('date_inspected_1')
 
-            date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
-            form.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+            # date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
+            # form.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
+            form.date_of_followup_inspection = date_inspec + relativedelta(years=int(frequency_of_inspection))
 
             est = form.record.establishment
             if Job.objects.filter(establishment=est).exists():
