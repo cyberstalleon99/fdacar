@@ -14,26 +14,23 @@ List of Establishments
 Displayed is the list of active establishments
 {% endblock %}
 
-{% block btn-name-all %}
-btn-est
-{% endblock %}
 
-{% block btn-name-food %}
-btn-est
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+            'ajax': '/api/est-list/all/?format=datatables',
+    });
 
-{% block btn-name-drug %}
-btn-est
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-est
-{% endblock %}
-
-{% block btn-name-device %}
-btn-est
-{% endblock %}
-
-{% block table-name %}
-"all_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

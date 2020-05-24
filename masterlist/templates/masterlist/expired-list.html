@@ -10,26 +10,22 @@ List of Expired Establishments
 Displayed is the list of expired establishments
 {% endblock %}
 
-{% block btn-name-all %}
-btn-expired
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/expired/?format=datatables',
+    });
 
-{% block btn-name-food %}
-btn-expired
-{% endblock %}
-
-{% block btn-name-drug %}
-btn-expired
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-expired
-{% endblock %}
-
-{% block btn-name-device %}
-btn-expired
-{% endblock %}
-
-{% block table-name %}
-"expired_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

@@ -10,26 +10,22 @@ List of Establishments - ABRA
 Displayed is the list of active establishments of Abra
 {% endblock %}
 
-{% block btn-name-all %}
-btn-abra
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/abra/?format=datatables',
+    });
 
-{% block btn-name-food %}
-btn-abra
-{% endblock %}
-
-{% block btn-name-drug %}
-btn-abra
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-abra
-{% endblock %}
-
-{% block btn-name-device %}
-btn-abra
-{% endblock %}
-
-{% block table-name %}
-"abra_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

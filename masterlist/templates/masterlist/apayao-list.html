@@ -10,26 +10,22 @@ List of Establishments - APAYAO
 Displayed is the list of active establishments of Apayao
 {% endblock %}
 
-{% block btn-name-all %}
-btn-apayao
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/apayao/?format=datatables',
+    });
 
-{% block btn-name-food %}
-btn-apayao
-{% endblock %}
-
-{% block btn-name-drug %}
-btn-apayao
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-apayao
-{% endblock %}
-
-{% block btn-name-device %}
-btn-apayao
-{% endblock %}
-
-{% block table-name %}
-"apayao_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

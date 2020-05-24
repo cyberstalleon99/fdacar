@@ -10,26 +10,22 @@ List of Establishments - BAGUIO CITY
 Displayed is the list of active establishments of Baguio City
 {% endblock %}
 
-{% block btn-name-all %}
-btn-baguio
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/baguio/?format=datatables',
+    });
 
-{% block btn-name-food %}
-btn-baguio
-{% endblock %}
-
-{% block btn-name-drug %}
-btn-baguio
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-baguio
-{% endblock %}
-
-{% block btn-name-device %}
-btn-baguio
-{% endblock %}
-
-{% block table-name %}
-"baguio_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

@@ -10,26 +10,47 @@ List of Establishments for PLI
 Displayed is the list of establishments for PLI
 {% endblock %}
 
-{% block btn-name-all %}
-btn-pli
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var checklist_cols = [
+          {
+              'data': 'establishment.name',
+              'name': 'establishment.name',
+              'render': function(data, type, row, meta){
+                  if(type === 'display') {
+                      var url = "{% url 'masterlist:est-detail' 0 %}";
+                      var id = row.DT_RowAttr.pkey;
+                      url = url.replace(0, id);
+                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+                  }
+                  return data;
+              }
+          },
+          {'data': 'establishment.plant_address',         'name': 'establishment.plant_address.address'},
+          {'data': 'establishment.product_type.name',     'name': 'establishment.product_type.name'},
+          {'data': 'establishment.primary_activity',      'name': 'establishment.primary_activity.name'},
+          {'data': 'establishment.specific_activities',   'name': 'establishment.specific_activity.name'},
+          {'data': 'establishment.ltos.0.lto_number',     'name': 'establishment.ltos.lto_number'},
+          {'data': 'establishment.ltos.0.expiry',         'name': 'establishment.ltos.0.expiry',    'searchable': false},
+          {'data': 'establishment.duration',              'searchable': false, 'sortable': false},
+          {'data': 'establishment.folder_number',         'name': 'establishment.record.folder_id', 'sortable': false},
+    ];
 
-{% block btn-name-food %}
-btn-pli
-{% endblock %}
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/checklist/pli/?format=datatables',
+        'columns': checklist_cols,
+    });
 
-{% block btn-name-drug %}
-btn-pli
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-pli
-{% endblock %}
-
-{% block btn-name-device %}
-btn-pli
-{% endblock %}
-
-{% block table-name %}
-"pli_list_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}

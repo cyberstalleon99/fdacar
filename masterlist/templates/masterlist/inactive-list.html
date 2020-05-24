@@ -14,26 +14,22 @@ List of Inactive Establishments
 Displayed is the list of inactive establishments
 {% endblock %}
 
-{% block btn-name-all %}
-btn-est-inactive
-{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/inactive/?format=datatables',
+    });
 
-{% block btn-name-food %}
-btn-est-inactive
-{% endblock %}
-
-{% block btn-name-drug %}
-btn-est-inactive
-{% endblock %}
-
-{% block btn-name-cosmetic %}
-btn-est-inactive
-{% endblock %}
-
-{% block btn-name-device %}
-btn-est-inactive
-{% endblock %}
-
-{% block table-name %}
-"inactive_table"
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
 {% endblock %}
