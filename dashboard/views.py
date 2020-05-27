@@ -9,6 +9,7 @@ class DashboardView(View):
     def get(self, request):
         context = {}
         context['masterlist_dashboard_active'] = "active"
+        total_all = Establishment.objects.filter(status='Active').count()
         total_abra = Establishment.objects.filter(plant_address__province__name='Abra', status='Active').count()
         total_apayao = Establishment.objects.filter(plant_address__province__name='Apayao', status='Active').count()
         total_baguio = Establishment.objects.filter(plant_address__municipality_or_city__name='Baguio City', status='Active').count()
@@ -55,6 +56,7 @@ class DashboardView(View):
                                  'total_wholesaler':    cdrrhr_summary.get_total_wholesaler(),
                                  'total_importer':      cdrrhr_summary.get_total_importer(),
                                  'total_exporter':      cdrrhr_summary.get_total_exporter()},
+                        'total_all':        total_all,
                         'total_abra':       total_abra,
                         'total_apayao':     total_apayao,
                         'total_baguio':     total_baguio,

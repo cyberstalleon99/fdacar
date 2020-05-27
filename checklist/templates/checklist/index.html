@@ -35,10 +35,12 @@ $(document).ready(function () {
           {'data': 'establishment.ltos.0.expiry',         'name': 'establishment.ltos.0.expiry',    'searchable': false},
           {'data': 'establishment.duration',              'searchable': false, 'sortable': false},
           {'data': 'establishment.folder_number',         'name': 'establishment.record.folder_id', 'sortable': false},
+          {'data': 'establishment.last_inspection',         'name': 'establishment.record.inspections.latest().date_inspected', 'sortable': false},
     ];
 
     var alltable = $('#all_list_table').DataTable ({
         'ajax': '/api/checklist/ren/?format=datatables',
+        'columns': checklist_cols,
     });
 
     $('.btn-prod-type').on('click', function() {

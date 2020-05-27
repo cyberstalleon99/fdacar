@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from checklist.models import Job
 from masterlist import constants

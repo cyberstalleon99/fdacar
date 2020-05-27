@@ -17,18 +17,6 @@ class RenewalChekListView(ListView):
         context['ren_checklist_active'] = "active"
         return context
 
-def export_renewal(request):
-    renewal_checklist = Job.renchecklist.get_list()
-    query = request.GET.get('q', None)
-    if query:
-        renewal_checklist = Job.renchecklist.get_filtered_list(query=query)
-    response = MyExporter.export_to_xslx(
-                                        resource=JobResource(),
-                                        filename="Renewal Checklist Pullout as of {}".format(timezone.now().date()),
-                                        queryset=renewal_checklist
-    )
-    return response
-
 class PliChekListView(ListView):
     model = Establishment
     template_name = 'checklist/pli-list.html'
@@ -37,18 +25,6 @@ class PliChekListView(ListView):
         context = super().get_context_data(**kwargs)
         context['pli_checklist_active'] = "active"
         return context
-
-def export_pli(request):
-    pli_checklist = Job.plichecklist.get_list()
-    query = request.GET.get('q', None)
-    if query:
-        pli_checklist = Job.plichecklist.get_filtered_list(query=query)
-    response = MyExporter.export_to_xslx(
-                                        resource=JobResource(),
-                                        filename="PLI List Pullout as of {}".format(timezone.now().date()),
-                                        queryset=pli_checklist
-    )
-    return response
 
 class RoutineChekListView(ListView):
     items_per_page = 10
@@ -72,15 +48,3 @@ class RoutineChekListView(ListView):
             routine_checklist = Job.routinelist.get_filtered_list(query=query)
         return routine_checklist
 
-def export_routine(request):
-    routine_checklist = Job.routinelist.get_list()
-    query = request.GET.get('q', None)
-    if query:
-        routine_checklist = Job.routinelist.get_filtered_list(query=query)
-    response = MyExporter.export_to_xslx(
-                                        resource=JobResource(),
-                                        filename="Routine List Pullout as of {}".format(timezone.now().date()),
-                                        queryset=routine_checklist
-    )
-
-    return response

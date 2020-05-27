@@ -31,6 +31,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     primary_activity = serializers.StringRelatedField()
     duration = serializers.SerializerMethodField()
     folder_number = serializers.SerializerMethodField()
+    last_inspection = serializers.SerializerMethodField()
 
     DT_RowId = serializers.SerializerMethodField()
     DT_RowAttr = serializers.SerializerMethodField()
@@ -43,6 +44,16 @@ class EstablishmentSerializer(serializers.ModelSerializer):
 
     def get_duration(self, establishment):
         return establishment.ltos.latest().get_duration()
+
+    def get_last_inspection(self, establishment):
+        try:
+            establishment.record.inspections.latest().date_inspected
+        except:
+            return 'No inspections yet'
+        else:
+            return establishment.record.inspections.latest().date_inspected
+            # return 'There are inspections'
+
 
     def get_folder_number(self, establishment):
         try:
@@ -64,5 +75,5 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         fields = (
             'DT_RowId', 'DT_RowAttr','id', 'specific_activities', 'name', 'center', 'status', 'product_type',
             'primary_activity', 'plant_address', 'authorized_officer',
-            'ltos', 'duration', 'folder_number',
+            'ltos', 'duration', 'folder_number', 'last_inspection',
         )

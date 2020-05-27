@@ -30,7 +30,7 @@ class EstablishmentResource(resources.ModelResource):
         return establishment.ltos.latest()
 
     def dehydrate_lto_expiry(self, establishment):
-        return establishment.ltos.latest().expiry.date()
+        return establishment.ltos.latest().expiry
 
     def dehydrate_product_line(self, establishment):
         product_lines = ''
@@ -85,7 +85,7 @@ class JobResource(resources.ModelResource):
         return job.establishment.ltos.latest()
 
     def dehydrate_lto_expiry(self, job):
-        return job.establishment.ltos.latest().expiry.date()
+        return job.establishment.ltos.latest().expiry
 
     def dehydrate_product_line(self, job):
         product_lines = ''

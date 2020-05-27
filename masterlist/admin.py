@@ -9,17 +9,10 @@ from .models import Establishment, ProductType, PrimaryActivity, \
 # from checklist.models import Job
 # from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
-# from datetime import datetime
-# from dateutil.relativedelta import relativedelta
-# from . import constants
 from import_export.admin import ExportActionModelAdmin
 from .myresources import EstablishmentResource
 from tabbed_admin import TabbedModelAdmin
 from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAdmin
-
-# @admin.register(Lto)
-# class LtoAdmin(admin.ModelAdmin):
-
 
 # @admin.register(Inspection)
 # class InspectionAdmin(admin.ModelAdmin):
@@ -47,37 +40,12 @@ from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAd
 #
 #         return super().save_model(request, obj, form, change)
 
-
-
-# class CapaPreparatorInline(admin.StackedInline):
-#     model = CapaPreparator
-#
-# class CapaDeficiencyInline(admin.TabularInline):
-#     model=CapaDeficiency
-#     extra=1
-#
-# @admin.register(Capa)
-# class CapaAdmin(admin.ModelAdmin):
-#     fieldsets = [
-#         ('Start', {'fields': ['start_date']}),
-#         ('End', {'fields': ['date_submitted', 'date_approved', 'approved_by', 'remarks']})
-#     ]
-#     inlines = [CapaPreparatorInline, CapaDeficiencyInline]
-
-# admin.site.register(AdditionalActivity)
-# admin.site.register(Region)
-# admin.site.register(SpecificActivity)
-# admin.site.register(PrimaryActivity)
-# admin.site.register(ProductLine)
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
-# admin.site.register(ProductType)
 admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
 
-# class RecordInline(admin.StackedInline, NestedStackedInline):
-#     model = Record
 
 @admin.register(VariationType)
 class VariationTypeAdmin(admin.ModelAdmin):
@@ -97,10 +65,6 @@ class CityOrMunicipalityInline(admin.TabularInline, NestedTabularInline):
     model=CityOrMunicipality
     extra=5
 
-# @admin.register(Province)
-# class ProvinceAdmin(admin.ModelAdmin):
-#     inlines = [CityOrMunicipalityInline]
-
 class WarehouseAddressInline(admin.TabularInline, NestedTabularInline):
     model=WarehouseAddress
     extra=1
@@ -108,11 +72,11 @@ class WarehouseAddressInline(admin.TabularInline, NestedTabularInline):
 
 class VariationInline(NestedTabularInline, admin.TabularInline):
     model = Variation
-    extra = 1
+    extra = 2
 
 class LtoInline(NestedStackedInline, admin.StackedInline):
     model = Lto
-    extra = 1
+    extra = 3
     # classes = ['collapse']
     inlines = [VariationInline]
 
@@ -175,10 +139,6 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     tab_applications = (
         LtoInline,
     )
-
-    # tab_record = (
-    #     RecordInline,
-    # )
 
     tabs = [
         ('General Information', tab_general_info),
