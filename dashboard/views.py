@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .dashboard import MasterlistSummary
+from .dashboard  import MasterlistSummary
 from masterlist.models import Establishment
 
 class DashboardView(View):
@@ -10,7 +10,7 @@ class DashboardView(View):
         context = {}
         context['masterlist_dashboard_active'] = "active"
         total_all = Establishment.objects.filter(status='Active').count()
-        total_abra = Establishment.objects.filter(plant_address__province__name='Abra', status='Active').count()
+        total_abra = MasterlistSummary.Provinces.Abra.get_total()
         total_apayao = Establishment.objects.filter(plant_address__province__name='Apayao', status='Active').count()
         total_baguio = Establishment.objects.filter(plant_address__municipality_or_city__name='Baguio City', status='Active').count()
         total_benguet = Establishment.objects.filter(plant_address__province__name='Benguet', status='Active').exclude(plant_address__municipality_or_city__name='Baguio City').count()
@@ -19,10 +19,10 @@ class DashboardView(View):
         total_mountainprov = Establishment.objects.filter(plant_address__province__name='Mountain Province', status='Active').count()
 
         if Establishment.objects.all():
-            cfrr_summary = MasterlistSummary.CFRR('CFRR')
-            cdrr_summary = MasterlistSummary.CDRR('CDRR')
-            ccrr_summary = MasterlistSummary.CCRR('CCRR')
-            cdrrhr_summary = MasterlistSummary.CDRRHR('CDRRHR')
+            cfrr_summary = MasterlistSummary.Centers.Cfrr()
+            cdrr_summary = MasterlistSummary.Centers.Cdrr()
+            ccrr_summary = MasterlistSummary.Centers.Ccrr()
+            cdrrhr_summary = MasterlistSummary.Centers.Cdrrhr()
 
             context = {
                         'masterlist_dashboard_active': "active",
