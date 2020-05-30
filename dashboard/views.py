@@ -11,12 +11,12 @@ class DashboardView(View):
         context['masterlist_dashboard_active'] = "active"
         total_all = Establishment.objects.filter(status='Active').count()
         total_abra = MasterlistSummary.Provinces.Abra.get_total()
-        total_apayao = Establishment.objects.filter(plant_address__province__name='Apayao', status='Active').count()
-        total_baguio = Establishment.objects.filter(plant_address__municipality_or_city__name='Baguio City', status='Active').count()
-        total_benguet = Establishment.objects.filter(plant_address__province__name='Benguet', status='Active').exclude(plant_address__municipality_or_city__name='Baguio City').count()
-        total_ifugao = Establishment.objects.filter(plant_address__province__name='Ifugao', status='Active').count()
-        total_kalinga = Establishment.objects.filter(plant_address__province__name='Kalinga', status='Active').count()
-        total_mountainprov = Establishment.objects.filter(plant_address__province__name='Mountain Province', status='Active').count()
+        total_apayao = MasterlistSummary.Provinces.Apayao.get_total()
+        total_baguio =  MasterlistSummary.Provinces.Baguio.get_total()
+        total_benguet = MasterlistSummary.Provinces.Benguet.get_total()
+        total_ifugao = MasterlistSummary.Provinces.Ifugao.get_total()
+        total_kalinga = MasterlistSummary.Provinces.Kalinga.get_total()
+        total_mountainprov = MasterlistSummary.Provinces.Mountain.get_total()
 
         if Establishment.objects.all():
             cfrr_summary = MasterlistSummary.Centers.Cfrr()
@@ -56,14 +56,15 @@ class DashboardView(View):
                                  'total_wholesaler':    cdrrhr_summary.get_total_wholesaler(),
                                  'total_importer':      cdrrhr_summary.get_total_importer(),
                                  'total_exporter':      cdrrhr_summary.get_total_exporter()},
-                        'total_all':        total_all,
-                        'total_abra':       total_abra,
-                        'total_apayao':     total_apayao,
-                        'total_baguio':     total_baguio,
-                        'total_benguet':    total_benguet,
-                        'total_ifugao':     total_ifugao,
-                        'total_kalinga':    total_kalinga,
-                        'total_mountainprov':   total_mountainprov,
+                                 
+                                    'total_all':        total_all,
+                                    'total_abra':       total_abra,
+                                    'total_apayao':     total_apayao,
+                                    'total_baguio':     total_baguio,
+                                    'total_benguet':    total_benguet,
+                                    'total_ifugao':     total_ifugao,
+                                    'total_kalinga':    total_kalinga,
+                                    'total_mountainprov':   total_mountainprov,
                     }
 
         return render(request, self.template_name, context)

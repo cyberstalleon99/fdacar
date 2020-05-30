@@ -7,7 +7,8 @@ from .models import Establishment
 from django.utils import timezone
 from .myhelpers import MyExporter
 from .myresources import EstablishmentResource
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django.views import View
 
 class AllListView(ListView):
     model = Establishment
@@ -141,3 +142,9 @@ class EstablishmentDetailView(DetailView):
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context
+
+class SummaryView(View):
+    template_name = 'masterlist/summary.html'
+
+    def get(self, request):
+        return render(request, self.template_name)

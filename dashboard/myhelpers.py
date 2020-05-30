@@ -80,7 +80,6 @@ class Center:
             else:
                 super().__init__(center='CFRR')
 
-
     class Cdrr(MasterlistSummaryHelper):
 
         def __init__(self, **kwargs):
@@ -130,6 +129,11 @@ class Province:
         self.province_or_city = province_or_city
 
     def get_total(self):
+        if self.province_or_city=='Baguio City':
+            return Establishment.objects.filter(plant_address__municipality_or_city__name=self.province_or_city, status='Active').count()
+        elif self.province_or_city=='Benguet':
+            return Establishment.objects.filter(plant_address__province__name=self.province_or_city, status='Active').exclude(plant_address__municipality_or_city__name='Baguio City').count()
+
         return Establishment.objects.filter(plant_address__province__name=self.province_or_city, status='Active').count()
 
     def cfrr(self):

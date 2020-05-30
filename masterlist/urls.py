@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import ( AllListView, EstablishmentDetailView, ExpiredListView, InactiveListView,
-                     AbraListView, ApayaoListView, BaguioListView, BenguetListView, IfugaoListView, KalingaListView, MountainListView)
+                     AbraListView, ApayaoListView, BaguioListView, BenguetListView, IfugaoListView, KalingaListView, MountainListView,
+                     SummaryView)
 app_name='masterlist'
 
 from masterlist import views
@@ -22,6 +23,8 @@ urlpatterns = [
 
     path('inactive/', InactiveListView.as_view(), name='inactive-list'),
     # path('export-inactive/', InactiveListView.export, name='export-inactive'),
+
+    path('summary/', SummaryView.as_view(), name='summary'),
 
     path('<int:id>/', EstablishmentDetailView.as_view(), name='est-detail'),
 
