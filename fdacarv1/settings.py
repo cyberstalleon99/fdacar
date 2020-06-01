@@ -25,7 +25,7 @@ SECRET_KEY = '7jrf=_sb^!kys%+410u*pvniqffb)oxhutjw@##=^cy(^)bu$a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dongilay.pythonanywhere.com']
 
 
 # Application definition

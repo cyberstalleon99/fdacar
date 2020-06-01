@@ -9,6 +9,7 @@ from .myhelpers import MyExporter
 from .myresources import EstablishmentResource
 from django.shortcuts import get_object_or_404, render
 from django.views import View
+from dashboard.dashboard  import MasterlistSummary
 
 class AllListView(ListView):
     model = Establishment
@@ -144,7 +145,16 @@ class EstablishmentDetailView(DetailView):
         return context
 
 class SummaryView(View):
-    template_name = 'masterlist/summary.html'
+    template_name = 'masterlist/summary/summary.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        context = {}
+        province_obj = MasterlistSummary.Provinces()
+        province_list = [attr for attr in dir(province_obj) if not callable(getattr(province_obj, attr)) and not attr.startswith("__")]
+        provinces = {}
+        for province in province_list:
+            provinces[province] = getattr(province_obj, province)
+
+        context['provinces'] = provinces
+        context['summary_active'] = "active"
+        return render(request, self.template_name, context)
