@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.2/b-colvis-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fc-3.3.1/fh-3.1.7/kt-2.5.2/r-2.2.4/rg-1.1.2/rr-1.2.7/sc-2.0.2/sp-1.1.0/sl-1.3.1/datatables.min.js"></script>
 
-<!--<script src="{% static 'darkadmin/vendor/popper.js/umd/popper.min.js' %}"> </script>-->
+<script src="{% static 'darkadmin/vendor/popper.js/umd/popper.min.js' %}"> </script>
 <script src="{% static 'darkadmin/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'darkadmin/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
 <script src="{% static 'darkadmin/vendor/chart.js/Chart.min.js' %}"></script>
@@ -44,9 +44,10 @@ $(document).ready(function () {
               {'data': 'specific_activities',   'name': 'specific_activity.name'},
               {'data': 'ltos.0.lto_number',     'name': 'ltos.lto_number'},
               {'data': 'ltos.0.expiry',         'name': 'ltos.0.expiry',    'searchable': false},
-              {'data': 'duration',              'searchable': false, 'sortable': false},
-              {'data': 'folder_number',         'name': 'record.folder_id', 'sortable': false},
+            //   {'data': 'duration',              'searchable': false, 'sortable': false},
+            //   {'data': 'folder_number',         'name': 'record.folder_id', 'sortable': false},
               {'data': 'last_inspection',       'name': 'record.inspections.latest().date_inspected', 'searchable': false, 'sortable': false},
+              {'data': 'next_inspection', 'searchable': false, 'sortable': false},
         ],
         dom: 'B<fl<t>ip>',
         buttons: {
@@ -54,6 +55,15 @@ $(document).ready(function () {
            buttons: ['copy', 'csv', 'excel', 'pdf']
        },
     });
+
+    $('#summarytable').DataTable( {
+        "createdRow": function ( row, data, index ) {
+            if ( data[5].replace(/[\$,]/g, '') * 1 > 0 ) {
+                $('td', row).eq(5).addClass('highlight');
+                alert('thest');
+            }
+        }
+    } );
 
 });
 </script>

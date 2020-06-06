@@ -7,9 +7,6 @@ class RenewalChecklistManager(MyModelManager):
     def check_for_inspection(self):
         from masterlist.models import Establishment
         for est in Establishment.objects.filter(status='Active'):
-            # if est.ltos.latest().get_duration() <= 6 and \
-            # est.specific_activity.filter(name__in=self.except_activities).exists()==False: and \
-            # est.record.inspection_set.all().count() != 0:
             try:
                 est.record # Check if Establishment has a record
             except:
@@ -39,8 +36,6 @@ class PLIChecklistManager(MyModelManager):
         from masterlist.models import Establishment
         for est in Establishment.objects.filter(status='Active'):
             if est.specific_activity.filter(name__in=self.included_activities).exists()==True or est.primary_activity == 'Distributor':
-                # if  est.record.inspection_set.all().count() == 0 and super().filter(establishment_id=est.id).exists()==False:
-                #     super().create(establishment=est, inspection_type=constants.JOB_TYPES[0])
 
                 try:
                     est.record # Check if Establishment has a record
@@ -70,7 +65,6 @@ class RoutineListManager(MyModelManager):
                     if super().filter(establishment_id=est.id).exists()==False:
                         super().create(establishment=est, inspection_type=constants.JOB_TYPES[3])
 
-            # check if est.lto.duration is renewed and establishment is still in the Job Checklist
             if est.ltos.latest().get_duration() > 6 and super().filter(establishment_id=est.id).exists():
                 # check if it's RTN Type
                 if super().get_queryset().get(establishment=est).inspection_type==constants.JOB_TYPES[3]:

@@ -10,9 +10,9 @@
                     <div class="col-md-6 text-right">
                         <a class="btn btn-secondary {{ establishment.record|yesno:"disabled," }}" href="{% url 'admin:records_record_add' %}" target="_blank">Create Folder</a>
 
-                        <a class="btn btn-primary {{ inspections|yesno:",disabled" }}"
-                        href={% if inspections %}
-                        "{% url 'admin:records_record_change' inspections.latest.record.id %}"
+                        <a class="btn btn-primary {{ establishment.record|yesno:",disabled" }}"
+                        href={% if establishment.record %}
+                        "{% url 'admin:records_record_change' establishment.record.id %}"
                         {% endif %}
                         target="_blank">Add an Inspection</a>
 

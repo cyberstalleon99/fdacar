@@ -1,4 +1,4 @@
-{% extends 'base-site.html' %}
+ {% extends 'base-site.html' %}
 {% block title %} Summary  {% endblock %}
 {% block subtitle %} SUMMARY  {% endblock %}
 
@@ -22,7 +22,7 @@
                     <div class="block-body">
                         <!-- <strong>FOOD</strong> -->
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            <table id="summarytable" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Product Type</th>
@@ -46,13 +46,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Food</td>
-                                        <td>
-                                            {% if province.cfrr.get_total_mfg > 0 %}
-                                            <a href="#">{{province.cfrr.get_total_mfg}}</a>
-                                            {% else %}
-                                            {{province.cfrr.get_total_mfg}
-                                            {% endif %}
-                                        </td>
+                                        <td>{{province.cfrr.get_total_mfg}}</td>
                                         <td>{{province.cfrr.get_total_packer}}</td>
                                         <td>{{province.cfrr.get_total_repacker}}</td>
                                         <td>{{province.cfrr.get_total_trader}}</td>
@@ -63,13 +57,7 @@
                                         <td>{{province.cfrr.get_total_wi}}</td>
                                         <td>{{province.cfrr.get_total_ie}}</td>
                                         <td>{{province.cfrr.get_total_wei}}</td>
-                                        <td>
-                                            {% if province.cfrr.get_total_ds > 0 %}
-                                            <a href="#">{{province.cfrr.get_total_ds}}</a>
-                                            {% else %}
-                                            {{province.cfrr.get_total_ds}}
-                                            {% endif %}
-                                        </td>
+                                        <td>{{province.cfrr.get_total_ds}}</td>
                                         <td>{{province.cfrr.get_total_hp}}</td>
                                         <td>{{province.cfrr.get_total_ronpd}}</td>
                                         <td>{{province.cfrr.get_total_xray}}</td>
@@ -88,13 +76,7 @@
                                         <td>{{province.cdrr.get_total_wi}}</td>
                                         <td>{{province.cdrr.get_total_ie}}</td>
                                         <td>{{province.cdrr.get_total_wei}}</td>
-                                        <td>
-                                            {% if province.cdrr.get_total_ds > 0 %}
-                                            <a href="#">{{province.cdrr.get_total_ds}}</a>
-                                            {% else %}
-                                            {{province.cdrr.get_total_ds}}
-                                            {% endif %}
-                                        </td>
+                                        <td>{{province.cdrr.get_total_ds}}</td>
                                         <td>{{province.cdrr.get_total_hp}}</td>
                                         <td>{{province.cdrr.get_total_ronpd}}</td>
                                         <td>{{province.cdrr.get_total_xray}}</td>

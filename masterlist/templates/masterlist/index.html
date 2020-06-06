@@ -20,6 +20,7 @@ Displayed is the list of active establishments
 $(document).ready(function () {
     var alltable = $('#all_list_table').DataTable ({
             'ajax': '/api/est-list/all/?format=datatables',
+
     });
 
     $('.btn-prod-type').on('click', function() {
@@ -31,6 +32,8 @@ $(document).ready(function () {
             alltable.draw();
         }
     });
+
+
 });
 </script>
 {% endblock %}

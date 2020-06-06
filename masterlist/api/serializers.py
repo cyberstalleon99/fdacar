@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from masterlist.models import Establishment, Lto, ProductType
+from dateutil.relativedelta import relativedelta
 
 class LtoSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
@@ -32,9 +33,25 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     duration = serializers.SerializerMethodField()
     folder_number = serializers.SerializerMethodField()
     last_inspection = serializers.SerializerMethodField()
+    next_inspection = serializers.SerializerMethodField()
 
     DT_RowId = serializers.SerializerMethodField()
     DT_RowAttr = serializers.SerializerMethodField()
+
+    def get_next_inspection(self, establishment):
+        next_date_inspection = ''
+
+        try:
+            establishment.record.inspections.latest()
+        except:
+            return 'No inspections yet'
+        else:
+            frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
+            if frequency_of_inspection:
+                next_date_inspection = establishment.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
+            else:
+                return 'N/A'
+        return next_date_inspection
 
     def get_DT_RowId(self, establishment):
         return 'row_%d' % establishment.pk
@@ -75,5 +92,5 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         fields = (
             'DT_RowId', 'DT_RowAttr','id', 'specific_activities', 'name', 'center', 'status', 'product_type',
             'primary_activity', 'plant_address', 'authorized_officer',
-            'ltos', 'duration', 'folder_number', 'last_inspection',
+            'ltos', 'duration', 'folder_number', 'last_inspection', 'next_inspection',
         )
