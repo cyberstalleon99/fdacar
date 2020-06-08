@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.views import View
 from .dashboard  import MasterlistSummary
 from masterlist.models import Establishment
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin, View):
     template_name = 'dashboard/index.html'
 
     def get(self, request):
@@ -56,7 +57,7 @@ class DashboardView(View):
                                  'total_wholesaler':    cdrrhr_summary.get_total_wholesaler(),
                                  'total_importer':      cdrrhr_summary.get_total_importer(),
                                  'total_exporter':      cdrrhr_summary.get_total_exporter()},
-                                 
+
                                     'total_all':        total_all,
                                     'total_abra':       total_abra,
                                     'total_apayao':     total_apayao,

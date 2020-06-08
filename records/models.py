@@ -26,8 +26,8 @@ class Capa(models.Model):
     date_submitted = models.DateField('Date Submitted', help_text='Format: YYYY/MM/DD')
     approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_approved = models.DateField('date_approved', help_text='Format: YYYY/MM/DD')
-    remarks = models.CharField(max_length=255, null=True, blank=True)
-    recommendation = models.CharField(max_length=255, null=True, blank=True)
+    remarks = models.CharField(max_length=300, null=True, blank=True)
+    recommendation = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         dateStr = self.date_prepared.strftime("%d %b %Y ")
@@ -36,12 +36,12 @@ class Capa(models.Model):
 class CapaDeficiency(models.Model):
     type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
-    description = models.CharField(max_length=200)
-    action = models.CharField(max_length=200)
+    description = models.CharField(max_length=300)
+    action = models.CharField(max_length=300)
     evidence = models.FileField(blank=True)
 
     proposed_completion_date = models.DateField(verbose_name="Proposed Completion Date", null=True, blank=True)
-    inspector_comment = models.CharField(max_length=200, blank=True)
+    inspector_comment = models.CharField(max_length=300, blank=True)
     accepted = models.BooleanField(default=False)
 
     def __str__(self):

@@ -10,8 +10,9 @@ from .myresources import EstablishmentResource
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from dashboard.dashboard  import MasterlistSummary
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class AllListView(ListView):
+class AllListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/index.html'
 
@@ -21,7 +22,7 @@ class AllListView(ListView):
         context['alllist_tab_active'] = "active"
         return context
 
-class InactiveListView(ListView):
+class InactiveListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/inactive-list.html'
 
@@ -38,70 +39,77 @@ class InactiveListView(ListView):
             inactivelist = Establishment.inactivelist.get_filtered_list(query=query)
         return inactivelist
 
-class AbraListView(ListView):
+class AbraListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/abra-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['abra_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class ApayaoListView(ListView):
+class ApayaoListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/apayao-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['apayao_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class BaguioListView(ListView):
+class BaguioListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/baguio-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['baguio_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class BenguetListView(ListView):
+class BenguetListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/benguet-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['benguet_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class IfugaoListView(ListView):
+class IfugaoListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/ifugao-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['ifugao_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class KalingaListView(ListView):
+class KalingaListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/kalinga-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['kalinga_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class MountainListView(ListView):
+class MountainListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/mountain-list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['mountain_list_active'] = "active"
+        context['provincelist_active'] = "active"
         return context
 
-class ExpiredListView(ListView):
+class ExpiredListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/expired-list.html'
 
@@ -120,7 +128,7 @@ def export_expired(request):
     queryset=checklist)
     return response
 
-class EstablishmentDetailView(DetailView):
+class EstablishmentDetailView(LoginRequiredMixin, DetailView):
     template_name = 'masterlist/establishment-detail/establishment-detail.html'
     context_object_name = 'establishment'
 
@@ -144,7 +152,7 @@ class EstablishmentDetailView(DetailView):
         context['inspections'] = inspections
         return context
 
-class SummaryView(View):
+class SummaryView(LoginRequiredMixin, View):
     template_name = 'masterlist/summary/summary.html'
 
     def get(self, request):

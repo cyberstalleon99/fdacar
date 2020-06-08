@@ -4,11 +4,12 @@ from django.views.generic import (
 from masterlist.models import Establishment
 from masterlist import mypaginator
 from .models import Job
-from masterlist.myhelpers import MyExporter
-from .myresources import JobResource
-from django.utils import timezone
+# from masterlist.myhelpers import MyExporter
+# from .myresources import JobResource
+# from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RenewalChekListView(ListView):
+class RenewalChekListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'checklist/index.html'
 
@@ -17,7 +18,7 @@ class RenewalChekListView(ListView):
         context['ren_checklist_active'] = "active"
         return context
 
-class PliChekListView(ListView):
+class PliChekListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'checklist/pli-list.html'
 
@@ -26,7 +27,7 @@ class PliChekListView(ListView):
         context['pli_checklist_active'] = "active"
         return context
 
-class RoutineChekListView(ListView):
+class RoutineChekListView(LoginRequiredMixin, ListView):
     items_per_page = 10
     model = Establishment
     template_name = 'checklist/routine-list.html'
