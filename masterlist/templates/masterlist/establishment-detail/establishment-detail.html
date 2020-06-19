@@ -120,7 +120,14 @@
                                         <tr>
                                             <th scope="row" class="text-left">Folder Number</th>
                                             {% if establishment.record %}
-                                            <td class="text-left">{{establishment.record.folder_id}}</td>
+                                            <td class="text-left">
+                                                {{establishment.record.folder_id}}
+                                                <a {{ establishment.record|yesno:",disabled" }}"
+                                                    href={% if establishment.record %}
+                                                    "{% url 'admin:records_record_change' establishment.record.id %}"
+                                                    {% endif %}
+                                                    target="_blank">Edit</a>
+                                            </td>
                                             {% else %}
                                             <td class="text-left">Awan ti file na dytuy Apo</td>
                                             {% endif %}
