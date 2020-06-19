@@ -26,8 +26,8 @@ class Capa(models.Model):
     date_submitted = models.DateField('Date Submitted', help_text='Format: YYYY/MM/DD')
     approved_by = models.ForeignKey(User, on_delete=models.CASCADE)
     date_approved = models.DateField('date_approved', help_text='Format: YYYY/MM/DD')
-    remarks = models.CharField(max_length=300, null=True, blank=True)
-    recommendation = models.CharField(max_length=300, null=True, blank=True)
+    remarks = models.TextField(max_length=500, null=True, blank=True)
+    recommendation = models.TextField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         dateStr = self.date_prepared.strftime("%d %b %Y ")
@@ -37,11 +37,11 @@ class CapaDeficiency(models.Model):
     type = models.CharField(max_length=10, choices=constants.CAPA_TYPES)
     capa = models.ForeignKey(Capa, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.CharField(max_length=300)
-    action = models.CharField(max_length=300)
+    action = models.TextField()
     evidence = models.FileField(blank=True)
 
     proposed_completion_date = models.DateField(verbose_name="Proposed Completion Date", null=True, blank=True)
-    inspector_comment = models.CharField(max_length=300, blank=True)
+    inspector_comment = models.TextField(max_length=300, blank=True)
     accepted = models.BooleanField(default=False)
 
     def __str__(self):
@@ -64,7 +64,7 @@ class Inspection(models.Model):
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True, help_text="Leave blank if not applicable")
     date_of_followup_inspection = models.DateField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
     inspector = models.ForeignKey(User, on_delete=models.CASCADE)
-    remarks = models.CharField(max_length=200, null=True, help_text="Put inspection remarks here. Number each remark.")
+    remarks = models.TextField(null=True, help_text="Put inspection remarks here. Number each remark.")
     for_capa = models.BooleanField(default=False)
     inspection_report = models.FileField(null=True, blank=True, upload_to=report_directory_path, verbose_name='Inspection Report')
 

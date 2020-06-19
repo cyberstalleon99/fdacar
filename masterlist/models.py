@@ -121,7 +121,7 @@ class AuthorizedOfficer(Person):
 class Establishment(models.Model):
     date_modified = models.DateTimeField('date modified', default=timezone.now)
     modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.DO_NOTHING)
-    name = models.CharField(max_length=60)
+    name = models.TextField()
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     center = models.CharField(max_length=6, choices=constants.CENTERS, default="CDRR")
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
