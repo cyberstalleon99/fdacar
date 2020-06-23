@@ -97,7 +97,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     search_fields = ['name']
 
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
-     'product_type', 'primary_activity',
+     'product_type', 'primary_activity', 'specific_activities',
      'lto_number', 'expiry',
      'last_inspection', 'type_of_inspection')
 
