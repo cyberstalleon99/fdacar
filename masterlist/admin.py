@@ -99,7 +99,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
      'product_type', 'primary_activity', 'specific_activities',
      'lto_number', 'expiry',
-     'last_inspection', 'type_of_inspection')
+     'last_inspection', 'type_of_inspection', 'folder')
 
     list_filter = (
         ('name', DropdownFilter),
@@ -148,6 +148,9 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
 
         # ('Records', tab_record),
     ]
+
+    def folder(self, obj):
+        return obj.record.folder_id
 
     def province(self, obj):
         return obj.plant_address.province.name
