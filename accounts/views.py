@@ -17,7 +17,7 @@ class LoginView(FormView):
             if user.is_active:
                 login(self.request, user)
                 # Redirect to a success page.
-                return redirect("/checklist/")
+                return redirect("/dashboard/")
             # else:
             #     # Return a 'disabled account' error message
 
