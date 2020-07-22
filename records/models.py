@@ -10,7 +10,13 @@ class Record(models.Model):
     folder_id = models.CharField(max_length=10, null=True, verbose_name="Folder Number")
 
     def __str__(self):
-        return self.establishment.name + "(" + self.folder_id + ")"
+        try:
+            # Check if Establishment has a folder
+            self.establishment.name
+        except:
+            return "No file"
+        else:
+            return self.establishment.name + "(" + self.folder_id + ")"
 
 class CapaPreparator(Person):
     # capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)

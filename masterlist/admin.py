@@ -150,7 +150,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     ]
 
     def folder(self, obj):
-        return obj.record.folder_id
+        return obj.record.id
 
     def province(self, obj):
         return obj.plant_address.province.name
