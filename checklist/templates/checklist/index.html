@@ -1,4 +1,4 @@
-{% extends 'masterlist/partial/masterlist-base.html' %}
+{% extends 'checklist/partial/checklist-base.html' %}
 {% block title %} Renewal Checklist  {% endblock %}
 {% block subtitle %} RENEWAL CHECKLIST {% endblock %}
 
@@ -33,8 +33,6 @@ $(document).ready(function () {
           {'data': 'establishment.specific_activities',   'name': 'establishment.specific_activity.name'},
           {'data': 'establishment.ltos.0.lto_number',     'name': 'establishment.ltos.lto_number'},
           {'data': 'establishment.ltos.0.expiry',         'name': 'establishment.ltos.0.expiry',    'searchable': false},
-          {'data': 'establishment.duration',              'searchable': false, 'sortable': false},
-          {'data': 'establishment.folder_number',         'name': 'establishment.record.folder_id', 'sortable': false},
           {'data': 'establishment.last_inspection',         'name': 'establishment.record.inspections.latest().date_inspected', 'sortable': false},
     ];
 
