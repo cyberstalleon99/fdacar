@@ -50,7 +50,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
             if frequency_of_inspection:
                 next_date_inspection = establishment.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
             else:
-                return 'N/A'
+                return 'No Risk Assessment'
         return next_date_inspection
 
     def get_DT_RowId(self, establishment):
