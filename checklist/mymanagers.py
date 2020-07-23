@@ -25,7 +25,7 @@ class RenewalChecklistManager(MyModelManager):
                     super().get_queryset().get(establishment=est).delete()
 
     def get_list(self):
-        self.check_for_inspection()
+        # self.check_for_inspection()
         jobs = super().get_queryset().filter(inspection_type=constants.JOB_TYPES[1], inspection_status=constants.INSPECTION_STATUS[1])
         return jobs
 
