@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'inspector.apps.InspectorConfig',
     'records.apps.RecordsConfig',
     'incoming.apps.IncomingConfig',
+    'outgoing.apps.OutgoingConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
