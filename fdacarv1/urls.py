@@ -10,11 +10,13 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('checklist/', include('checklist.urls')),
     path('accounts/', include('accounts.urls')),
+    path('incoming/', include('incoming.urls')),
     path('admin/', admin.site.urls),
 
     # API URLS
     path('api/est-list/', include('masterlist.api.urls', 'masterlist-api')),
     path('api/checklist/', include('checklist.api.urls', 'checklist-api')),
+    path('api/incoming/', include('incoming.api.urls', 'incoming-api')),
 ]
 
 if settings.DEBUG:

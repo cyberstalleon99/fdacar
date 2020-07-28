@@ -44,7 +44,7 @@
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>PLI </a></li>
         <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>In & Out </a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li><a href="#">Incoming</a></li>
+                <li class="{{incoming_active}}"><a href="{% url 'incoming:index' %}">Incoming</a></li>
                 <li><a href="#">Outgoing</a></li>
                 <!--<li><a href="#">Page</a></li>-->
             </ul>
