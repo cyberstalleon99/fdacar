@@ -56,8 +56,8 @@
 $(document).ready(function () {
     var incoming_cols = [
           {
-              'data': 'date_received',
-              'name': 'date_received',
+              'data': 'dtn',
+              'name': 'dtn',
               'render': function(data, type, row, meta){
                   if(type === 'display') {
                       var url = "{% url 'admin:incoming_incoming_change' 0 %}";
@@ -68,7 +68,7 @@ $(document).ready(function () {
                   return data;
               }
           },
-          {'data': 'dtn',                   'name': 'dtn'},
+          {'data': 'date_received',         'name': 'date_received'},
           {'data': 'received_by',           'name': 'received_by'},
           {'data': 'received_from',         'name': 'received_from'},
           {'data': 'received_from_1',       'name': 'received_from_1'},
