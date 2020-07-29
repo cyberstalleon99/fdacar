@@ -19,7 +19,8 @@ APPLICATIONS = [
 ]
 
 EST_STATUS = [
-    ('Inactive', 'Inactive'),
+    ('Inactive', 'Inactive (For unlicensed establishments)'),
+    ('Closed', 'Closed (For closed establishments)'),
     ('Active', 'Active')
 ]
 

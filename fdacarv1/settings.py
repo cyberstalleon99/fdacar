@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'records.apps.RecordsConfig',
     'incoming.apps.IncomingConfig',
     'outgoing.apps.OutgoingConfig',
+    'pli.apps.PliConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
