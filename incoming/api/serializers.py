@@ -16,6 +16,6 @@ class IncomingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Incoming
         fields = (
-            'DT_RowId', 'DT_RowAttr','id', 'dtn', 'date_received', 'received_by', 'received_from',
+            'DT_RowId', 'DT_RowAttr','id', 'dtn', 'month', 'date_received', 'received_by', 'received_from',
             'received_from_1', 'document_type', 'particulars', 'endorsed_to', 'date_endorsed', 'date_acted_upon', 'actions_taken',
         )

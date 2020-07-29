@@ -27,8 +27,9 @@
                             <table id="incoming_list_table" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Date Received</th>
                                         <th>DTN</th>
+                                        <th>Month</th>
+                                        <th>Date Received</th>
                                         <th>Received by</th>
                                         <th>Received from </th>
                                         <th>Received from (Establishment Name)</th>
@@ -68,14 +69,15 @@ $(document).ready(function () {
                   return data;
               }
           },
-          {'data': 'date_received',         'name': 'date_received'},
+          {'data': 'month',                 'name': 'month'},
+          {'data': 'date_received',         'name': 'date_received',    'searchable': false},
           {'data': 'received_by',           'name': 'received_by'},
           {'data': 'received_from',         'name': 'received_from'},
           {'data': 'received_from_1',       'name': 'received_from_1'},
           {'data': 'document_type',         'name': 'document_type'},
-          {'data': 'particulars',           'name': 'particulars',    'searchable': false},
+          {'data': 'particulars',           'name': 'particulars'},
           {'data': 'endorsed_to',           'name': 'endorsed_to'},
-          {'data': 'date_endorsed',         'name': 'date_endorsed'},
+          {'data': 'date_endorsed',         'name': 'date_endorsed',    'searchable': false},
           {'data': 'date_acted_upon',       'name': 'date_acted_upon'},
           {'data': 'actions_taken',         'name': 'actions_taken'},
     ];
