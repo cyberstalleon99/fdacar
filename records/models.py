@@ -79,7 +79,7 @@ class Inspection(models.Model):
     def __str__(self):
         dateStr = self.date_inspected.strftime("%d %b %Y ")
         name = self.record.establishment.name
-        return dateStr + "(" + name + ")"
+        return name + " - " + self.tracking_number + "(" + dateStr + ")"
 
     def get_followup_duration(self):
         month = 0

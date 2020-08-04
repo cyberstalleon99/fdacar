@@ -12,6 +12,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('incoming/', include('incoming.urls')),
     path('outgoing', include('outgoing.urls')),
+    path('pli', include('pli.urls')),
     path('admin/', admin.site.urls),
 
     # API URLS
@@ -19,6 +20,7 @@ urlpatterns = [
     path('api/checklist/', include('checklist.api.urls', 'checklist-api')),
     path('api/incoming/', include('incoming.api.urls', 'incoming-api')),
     path('api/outgoing/', include('outgoing.api.urls', 'outgoing-api')),
+    path('api/pli/', include('pli.api.urls', 'pli-api')),
 ]
 
 if settings.DEBUG:

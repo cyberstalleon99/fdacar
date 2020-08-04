@@ -1,0 +1,154 @@
+{% extends 'base-site.html' %}
+{% block title %} Post Licensing Inspection  {% endblock %}
+{% block subtitle %} POST LICENSING INSPECTION {% endblock %}
+
+{% block content %}
+<section class="no-padding-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>List of PLI</strong>
+                                <span class="d-block">Displayed is the list of PLI's</span>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a class="btn btn-primary" href="{% url 'admin:pli_pli_add' %}" target="_blank">Add an Inspection</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block-body">
+                        <div class="table-responsive">
+                            <table id="pli_list_table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Month</th>
+                                        <th>Product Type</th>
+                                        <th>Primary Activity</th>
+                                        <th>Specific Activity Activity</th>
+                                        <th>LTO No.</th>
+                                        <th>Expiry</th>
+                                        <th>Type of Inspection</th>
+                                        <th>Date Inspected</th>
+                                        <th>Inspector/s</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function () {
+    var pli_cols = [
+          {
+              'data': 'status',
+              'name': 'status',
+              'searchable': false,
+              'render': function(data, type, row, meta){
+                  if(type === 'display') {
+                      var url = "{% url 'admin:pli_pli_change' 0 %}";
+                      var id = row.DT_RowAttr.pkey;
+                      url = url.replace(0, id);
+                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+                  }
+                  return data;
+              }
+          },
+          {
+              'data': 'inspection.record.establishment.name',
+              'name': 'inspection.record.establishment.name',
+              'render': function(data, type, row, meta){
+                  if(type === 'display') {
+                      var url = "{% url 'masterlist:est-detail' 0 %}";
+                      var id = row.DT_RowId;
+                      url = url.replace(0, id);
+                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+                  }
+                  return data;
+              }
+          },
+          {
+              'data': 'inspection.record.establishment.plant_address',
+              'name': 'inspection.record.establishment.plant_address.address',
+              'searchable': false,
+              'sortable': false
+          },
+          {
+              'data': 'group',
+              'name': 'group'
+          },
+          {
+              'data': 'inspection.record.establishment.product_type.name',
+              'name': 'inspection.record.establishment.product_type.name',
+              'searchable': false
+          },
+          {
+              'data': 'inspection.record.establishment.primary_activity',
+              'name': 'inspection.record.establishment.primary_activity.name',
+              'searchable': false
+          },
+          {
+              'data': 'inspection.record.establishment.specific_activities',
+              'name': 'inspection.record.establishment.specific_activity.name',
+              'searchable': false
+          },
+          {
+              'data': 'inspection.record.establishment.ltos.0.lto_number',
+              'name': 'inspection.record.establishment.ltos.lto_number',
+              'searchable': false
+          },
+          {
+              'data': 'inspection.record.establishment.ltos.0.expiry',
+              'name': 'inspection.record.establishment.ltos.0.expiry',
+              'searchable': false
+          },
+          {
+              'data': 'inspection.type_of_inspection',
+              'name': 'inspection.type_of_inspection',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.date_inspected',
+              'name': 'inspection.date_inspected',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.inspector',
+              'name': 'inspection.inspector',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.remarks',
+              'name': 'inspection.remarks',
+              'sortable': false,
+              'searchable': false
+          },
+    ];
+
+    var alltable = $('#pli_list_table').DataTable ({
+        'ajax': '/api/pli/all/?format=datatables',
+        'columns': pli_cols,
+    });
+});
+</script>
+{% endblock %}
