@@ -1,5 +1,5 @@
 from django.db import models
-from masterlist.models import Address, PrimaryActivity, SpecificActivity, Lto
+from masterlist.models import Address, PrimaryActivity, Lto
 from accounts.models import User
 
 class Classification(models.Model):
@@ -45,6 +45,12 @@ class Unit(models.Model):
     def __str__(self):
         return self.unit
 
+class ProductSpecificActivity(models.Model):
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
+
 class ProductAddress(Address):
     pass
 
@@ -54,7 +60,7 @@ class ProductEstablishment(models.Model):
     lto_number = models.CharField(max_length=255, null=True, blank=True)
     expiry = models.DateField('expiry date', help_text='Format: YYYY/MM/DD', null=True, blank=True)
     primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
-    specific_activity = models.ManyToManyField(SpecificActivity)
+    specific_activity = models.ManyToManyField(ProductSpecificActivity)
 
     def __str__(self):
         return self.name
@@ -75,26 +81,26 @@ class Product(models.Model):
     brand_name =            models.CharField(max_length=250, verbose_name="Brand Name")
     cpr_number =            models.CharField(max_length=250, verbose_name="CPR No.")
     batch_lot_number =      models.CharField(max_length=250, verbose_name="Batch/Lot No.")
-    date_manufactured =     models.DateField(verbose_name="Manufacuring Date")
-    date_exiry =            models.DateField(verbose_name="Expiration Date")
+    date_manufactured =     models.DateField(verbose_name="Manufacuring Date", null=True, blank=True)
+    date_exiry =            models.DateField(verbose_name="Expiration Date", null=True, blank=True)
     tmr_name =              models.CharField(max_length=250, verbose_name="Trader/Mfg/Repacker's Name")
     tmr_address =           models.TextField(verbose_name="Trader/Mfg/Repacker's Address")
     distributor_name =      models.CharField(max_length=250, verbose_name="Distributor's Name")
     distributor_address =   models.TextField(verbose_name="Distributor's Address")
     collection_mode =       models.ForeignKey(CollectionMode, on_delete=models.DO_NOTHING, verbose_name="Mode of Collection")
     inspector =             models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Inspector")
-    remarks =               models.TextField(verbose_name="Remarks")
+    remarks =               models.CharField(max_length=250, verbose_name="Remarks", null=True, blank=True)
     quantity =              models.PositiveIntegerField(verbose_name="Number of Samples")
-    unit =                  models.ForeignKey(Unit, on_delete=models.DO_NOTHING)
-    unit_cost =             models.DecimalField(max_digits=10, decimal_places=2)
-    or_number =             models.CharField(max_length=250, verbose_name="OR Number")
-    total_cost =            models.DecimalField(max_digits=10, decimal_places=2)
-    date_forwarded =        models.DateField()
-    date_result_received =  models.DateField()
+    unit =                  models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
+    unit_cost =             models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    or_number =             models.CharField(max_length=250, verbose_name="OR Number", null=True, blank=True)
+    total_cost =            models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    date_forwarded =        models.DateField(null=True, blank=True)
+    date_result_received =  models.DateField(null=True, blank=True)
     result =                models.TextField()
-    analysis_request =      models.ForeignKey(AnalysisRequest, on_delete=models.DO_NOTHING, verbose_name="Analysis Request (For Lab Analysis only)")
-    csl_reference_number =  models.CharField(max_length=250, verbose_name="CSL Control Ref. No.")
+    analysis_request =      models.ForeignKey(AnalysisRequest, on_delete=models.DO_NOTHING, verbose_name="Analysis Request (For Lab Analysis only)", null=True, blank=True)
+    csl_reference_number =  models.CharField(max_length=250, verbose_name="CSL Control Ref. No.", null=True, blank=True)
     center_remarks =        models.TextField(verbose_name="Remarks of Centers")
-    action =                models.CharField(max_length=250, verbose_name="Action Take by RFO")
+    action =                models.TextField(max_length=250, verbose_name="Action Take by RFO")
     warning_letter =        models.CharField(max_length=250, null=True, blank=True)
 

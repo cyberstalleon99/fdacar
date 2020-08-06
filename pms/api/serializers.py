@@ -1,12 +1,29 @@
 from rest_framework import serializers
-from pms.models import Product
-from masterlist.api.serializers import EstablishmentSerializer
+from pms.models import Product, ProductEstablishment
+
+class EstablishmentSerializer(serializers.ModelSerializer):
+    address                 = serializers.SerializerMethodField()
+    primary_activity        = serializers.StringRelatedField()
+    specific_activities     = serializers.SerializerMethodField()
+
+    def get_address(self, establishment):
+        return establishment.address.full_address()
+
+    def get_specific_activities(self, establishment):
+        return ', '.join([str(specific_activity) for specific_activity in establishment.specific_activity.all()])
+
+    class Meta:
+        model = ProductEstablishment
+        fields = (
+            'name', 'lto_number', 'expiry', 'primary_activity', 'specific_activities', 'address'
+        )
 
 class ProductSerializer(serializers.ModelSerializer):
     group               = serializers.SerializerMethodField()
     establishment       = EstablishmentSerializer(many=False)
     product_category    = serializers.StringRelatedField()
     collection_mode     = serializers.StringRelatedField()
+    classification      = serializers.StringRelatedField()
     inspector           = serializers.SerializerMethodField()
     analysis_request    = serializers.StringRelatedField()
     type_of_referral    = serializers.StringRelatedField()

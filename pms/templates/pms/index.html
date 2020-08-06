@@ -120,19 +120,19 @@ $(document).ready(function () {
           {
               'data': 'establishment.name',
               'name': 'establishment.name',
-              'render': function(data, type, row, meta){
-                  if(type === 'display') {
-                      var url = "{% url 'masterlist:est-detail' 0 %}";
-                      var id = row.DT_RowId;
-                      url = url.replace(0, id);
-                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
-                  }
-                  return data;
-              }
+            //   'render': function(data, type, row, meta){
+            //       if(type === 'display') {
+            //           var url = "{% url 'masterlist:est-detail' 0 %}";
+            //           var id = row.DT_RowId;
+            //           url = url.replace(0, id);
+            //           data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+            //       }
+            //       return data;
+            //   }
           },
           {
-              'data': 'establishment.plant_address',
-              'name': 'establishment.plant_address.address',
+              'data': 'establishment.address',
+              'name': 'establishment.address.address',
               'searchable': false,
               'sortable': false
           },
