@@ -5,6 +5,11 @@ INSPECTORS = [
     ('SOP', 'Saturnina O. Pandosen')
 ]
 
+QUALIFIED_PERSON_STATUS = [
+    ('Inactive', 'Inactive'),
+    ('Active', 'Active')
+]
+
 CENTERS = [
     ('CFRR', 'CFRR'),
     ('CDRR', 'CDRR'),
@@ -15,7 +20,8 @@ CENTERS = [
 APPLICATIONS = [
     ('Initial', 'Initial'),
     ('Renewal', 'Renewal'),
-    ('Variation', 'Variation')
+    ('Variation', 'Variation'),
+    ('Re-Issuance', 'Re-Issuance')
 ]
 
 EST_STATUS = [

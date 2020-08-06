@@ -107,7 +107,7 @@
                                             <th scope="row" class="text-left">Qualified Personnel</th>
                                             {% if establishment.qualifiedperson_set.all %}
                                             <td class="text-left">
-                                            {% for qualified_person in establishment.qualifiedperson_set.all %}
+                                            {% for qualified_person in qualified_persons %}
                                                 {{qualified_person}} ({{qualified_person.email}}, {{qualified_person.mobile}})
                                                 <a href="{% url 'admin:masterlist_establishment_change' establishment.id %}#tabs-4" target="_blank">Edit</a>
                                                 <br>

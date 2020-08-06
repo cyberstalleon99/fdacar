@@ -119,7 +119,8 @@ class AuthorizedOfficer(Person):
         return self.full_name()
 
 class Establishment(models.Model):
-    date_modified = models.DateTimeField('date modified', default=timezone.now)
+    # date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField('date modified', auto_now=True)
     modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.DO_NOTHING)
     name = models.TextField()
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
@@ -211,6 +212,7 @@ class Variation(models.Model):
         return self.objects.first()
 
 class QualifiedPerson(Person):
+    status = models.CharField(max_length=20, choices=constants.QUALIFIED_PERSON_STATUS, null=True)
     establishment = models.ForeignKey(Establishment, on_delete=models.SET_NULL, null=True)
     designation = models.ForeignKey(QualifiedPersonDesignation, on_delete=models.CASCADE)
 

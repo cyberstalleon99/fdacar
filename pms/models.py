@@ -1,5 +1,5 @@
 from django.db import models
-from masterlist.models import Establishment
+from masterlist.models import Address, PrimaryActivity, SpecificActivity, Lto
 from accounts.models import User
 
 class Classification(models.Model):
@@ -45,14 +45,30 @@ class Unit(models.Model):
     def __str__(self):
         return self.unit
 
+class ProductAddress(Address):
+    pass
+
+class ProductEstablishment(models.Model):
+    name = models.TextField()
+    address = models.ForeignKey(ProductAddress, on_delete=models.DO_NOTHING)
+    lto_number = models.CharField(max_length=255, null=True, blank=True)
+    expiry = models.DateField('expiry date', help_text='Format: YYYY/MM/DD', null=True, blank=True)
+    primary_activity = models.ForeignKey(PrimaryActivity, on_delete=models.CASCADE)
+    specific_activity = models.ManyToManyField(SpecificActivity)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
+    group =                 models.DateField(verbose_name="Month", null=True, blank=False)
     date_collected =        models.DateField(verbose_name="Date Collected")
     tracking_number =       models.CharField(max_length=12, verbose_name="DTN/Case No.")
     date_request_received = models.DateField(verbose_name="Date of Request Letter Received", null=True, blank=True)
     date_of_referral =      models.DateField(verbose_name="Date of Referral")
     classification =        models.ForeignKey(Classification, on_delete=models.DO_NOTHING, verbose_name="PMS Classification")
     type_of_referral =      models.ForeignKey(ReferralType, on_delete=models.DO_NOTHING, verbose_name="Type of Referral")
-    establishment =         models.ForeignKey(Establishment, on_delete=models.DO_NOTHING, verbose_name="Establishment")
+    establishment =         models.ForeignKey(ProductEstablishment, on_delete=models.DO_NOTHING, verbose_name="Establishment")
     product_category =      models.ForeignKey(ProductCategory, on_delete=models.DO_NOTHING, verbose_name="Product Category")
     dosage_form =           models.ForeignKey(DosageForm, on_delete=models.DO_NOTHING, verbose_name="Dosage Form")
     generic_name =          models.CharField(max_length=250, verbose_name="Generic Name")
@@ -67,7 +83,7 @@ class Product(models.Model):
     distributor_address =   models.TextField(verbose_name="Distributor's Address")
     collection_mode =       models.ForeignKey(CollectionMode, on_delete=models.DO_NOTHING, verbose_name="Mode of Collection")
     inspector =             models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Inspector")
-    remarks =               models.DateField(verbose_name="Remarks")
+    remarks =               models.TextField(verbose_name="Remarks")
     quantity =              models.PositiveIntegerField(verbose_name="Number of Samples")
     unit =                  models.ForeignKey(Unit, on_delete=models.DO_NOTHING)
     unit_cost =             models.DecimalField(max_digits=10, decimal_places=2)

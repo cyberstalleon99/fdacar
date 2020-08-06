@@ -34,9 +34,13 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     folder_number = serializers.SerializerMethodField()
     last_inspection = serializers.SerializerMethodField()
     next_inspection = serializers.SerializerMethodField()
+    # extra = serializers.SerializerMethodField()
 
     DT_RowId = serializers.SerializerMethodField()
     DT_RowAttr = serializers.SerializerMethodField()
+
+    # def get_extra(self, establishment):
+    #     return establishment.ltos.latest().type_of_application + " - " + establishment.record.inspections.count()
 
     def get_next_inspection(self, establishment):
         next_date_inspection = ''

@@ -148,6 +148,7 @@ class EstablishmentDetailView(LoginRequiredMixin, DetailView):
         else:
             inspections = curr_est.record.inspections.all()
 
+        context['qualified_persons'] = curr_est.qualifiedperson_set.filter(status='Active')
         context['masterlist_active'] = "active"
         context['inspections'] = inspections
         return context
