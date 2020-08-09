@@ -89,7 +89,6 @@ class Product(models.Model):
     distributor_name =      models.CharField(max_length=250, verbose_name="Distributor's Name")
     distributor_address =   models.TextField(verbose_name="Distributor's Address")
     collection_mode =       models.ForeignKey(CollectionMode, on_delete=models.DO_NOTHING, verbose_name="Mode of Collection")
-    # inspector =             models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Inspector")
     remarks =               models.CharField(max_length=250, verbose_name="Remarks", null=True, blank=True)
     quantity =              models.PositiveIntegerField(verbose_name="Number of Samples")
     unit =                  models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
