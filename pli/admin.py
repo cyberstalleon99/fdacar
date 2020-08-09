@@ -20,8 +20,13 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
 
         list_filter = (
             ('inspection__inspector', RelatedDropdownFilter),
+            ('inspection__type_of_inspection', DropdownFilter),
+            ('inspection__record__establishment__product_type', RelatedDropdownFilter),
+            ('inspection__record__establishment__primary_activity', RelatedDropdownFilter),
+            ('inspection__record__establishment__specific_activity', RelatedDropdownFilter),
             ('status', RelatedDropdownFilter),
             ('group', DropdownFilter),
+
         )
 
         search_fields = ['inspection__record__establishment__name']

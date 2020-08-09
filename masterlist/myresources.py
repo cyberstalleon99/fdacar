@@ -17,6 +17,8 @@ class EstablishmentResource(resources.ModelResource):
     municipality_or_city = Field(attribute="plant_address__municipality_or_city__name", column_name="City or Municipality")
     contact_number = Field(attribute="authorized_officer__mobile", column_name="Contact Number")
     email = Field(attribute="authorized_officer__email", column_name="Email Address")
+    last_inspection = Field(column_name="Last Inspection")
+    inspected_by = Field(column_name="Inspector")
     status = Field(attribute="status", column_name="Status")
     folder_id = Field(column_name="Folder Number")
 
@@ -44,6 +46,22 @@ class EstablishmentResource(resources.ModelResource):
             if prod_line.remarks:
                 product_remarks += prod_line.remarks + ", "
         return product_remarks
+
+    def dehydrate_last_inspection(self, establishment):
+        try:
+            establishment.record.inspections.latest().date_inspected
+        except:
+            return 'No inspections yet'
+        else:
+            return establishment.record.inspections.latest().date_inspected
+
+    def dehydrate_inspected_by(self, establishment):
+        try:
+            establishment.record.inspections.latest().inspector
+        except:
+            return 'No inspections yet'
+        else:
+            return establishment.record.inspections.latest().inspector
 
     def dehydrate_folder_id(self, establishment):
 

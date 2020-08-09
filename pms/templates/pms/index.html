@@ -27,6 +27,7 @@
                             <table id="pms_list_table" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th>Status</th>
                                         <th>Generic Name</th>
                                         <th>Brand</th></th>
                                         <th>Month</th></th>
@@ -43,7 +44,7 @@
                                         <th>Date Forwarded</th>
                                         <th>Date Result Received</th>
                                         <th>Result</th>
-                                        <th>Remarks</th>
+                                        <th>Center Remarks</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -62,9 +63,15 @@
 $(document).ready(function () {
     var pms_cols = [
           {
+              'data': 'status',
+              'name': 'status',
+              'searchable': false,
+              'sortable': false
+          },
+          {
               'data': 'generic_name',
               'name': 'generic_name',
-              'searchable': false,
+              'searchable': true,
               'render': function(data, type, row, meta){
                   if(type === 'display') {
                       var url = "{% url 'admin:pms_product_change' 0 %}";
@@ -78,7 +85,7 @@ $(document).ready(function () {
           {
               'data': 'brand_name',
               'name': 'brand_name',
-              'searchable': false,
+              'searchable': true,
               'sortable': false
           },
           {
@@ -96,7 +103,7 @@ $(document).ready(function () {
           {
               'data': 'tracking_number',
               'name': 'tracking_number',
-              'searchable': false,
+              'searchable': true,
               'sortable': false
           },
           {
@@ -165,12 +172,12 @@ $(document).ready(function () {
           {
               'data': 'result',
               'name': 'result',
-              'searchable': false
+              'searchable': true
           },
           {
               'data': 'center_remarks',
               'name': 'center_remarks',
-              'sortable': false,
+              'sortable': true,
               'searchable': false
           },
     ];

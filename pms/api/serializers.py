@@ -41,12 +41,12 @@ class ProductSerializer(serializers.ModelSerializer):
         return product.group.strftime('%B')
 
     def get_inspector(self, product):
-        return product.inspector.get_short_name()
+        return ",\n".join(s.product_inspector.get_short_name()  for s in product.product_inspectors.all())
 
     class Meta:
         model = Product
         fields = (
-            'DT_RowId', 'DT_RowAttr','id', 'group', 'generic_name', 'brand_name', 'date_collected',
+            'DT_RowId', 'DT_RowAttr','id', 'status', 'group', 'generic_name', 'brand_name', 'date_collected',
             'tracking_number', 'classification', 'type_of_referral', 'analysis_request', 'establishment', 'product_category',
             'collection_mode', 'inspector', 'date_forwarded', 'date_result_received', 'result', 'center_remarks'
         )

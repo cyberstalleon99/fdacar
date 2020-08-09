@@ -27,21 +27,24 @@
           <ul class="list-unstyled ">
               <li class="{{alllist_active}}"><a href="{% url 'masterlist:index' %}">All</a></li>
               <li class="{{provincelist_active}}"><a href="{% url 'masterlist:abra-list' %}">Provinces</a></li>
-              <!--<li class="{{abra_list_active}}"><a href="{% url 'masterlist:abra-list' %}">Abra</a></li>-->
-              <!--<li class="{{apayao_list_active}}"><a href="{% url 'masterlist:apayao-list' %}">Apayao</a></li>-->
-              <!--<li class="{{baguio_list_active}}"><a href="{% url 'masterlist:baguio-list' %}">Baguio City</a></li>-->
-              <!--<li class="{{benguet_list_active}}"><a href="{% url 'masterlist:benguet-list' %}">Benguet</a></li>-->
-              <!--<li class="{{ifugao_list_active}}"><a href="{% url 'masterlist:ifugao-list' %}">Ifugao</a></li>-->
-              <!--<li class="{{kalinga_list_active}}"><a href="{% url 'masterlist:kalinga-list' %}">Kalinga</a></li>-->
-              <!--<li class="{{mountain_list_active}}"><a href="{% url 'masterlist:mountain-list' %}">Mountain Province</a></li>-->
               <li class="{{expiredlist_active}}"><a href="{% url 'masterlist:expired-list' %}">Expired</a></li>
               <li class=""><a href="{% url 'admin:masterlist_establishment_changelist' %}" target="_blank">Advanced Search</a></li>
               <li class="{{summary_active}}"><a href="{% url 'masterlist:summary' %}" target="_blank">Summary</a></li>
           </ul>
         </li>
-        <li class="{{pms_active}}"><a href="{% url 'pms:index' %}"> <i class="icon-grid"></i>PMS </a></li>
+        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>PMS </a>
+            <ul class="list-unstyled ">
+                <li class="{{ pms_active }}"><a href="{% url 'pms:index' %}">All</a></li>
+                <li class="{{ ren_checklist_active }}"><a href="{% url 'admin:pms_product_changelist' %}" target="_blank">Advanced Search</a></li>
+            </ul>
+        </li>
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>
-        <li class="{{pli_active}}"><a href="{% url 'pli:index' %}"> <i class="icon-chart"></i>PLI </a></li>
+        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>PLI </a>
+            <ul class="list-unstyled ">
+                <li class="{{pli_active}}"><a href="{% url 'pli:index' %}">All</a></li>
+                <li class=""><a href="{% url 'admin:pli_pli_changelist' %}" target="_blank">Advanced Search</a></li>
+            </ul>
+        </li>
         <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>In & Out </a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                 <li class="{{incoming_active}}"><a href="{% url 'incoming:index' %}">Incoming</a></li>

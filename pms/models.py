@@ -1,6 +1,7 @@
 from django.db import models
 from masterlist.models import Address, PrimaryActivity, Lto
 from accounts.models import User
+from . import constants
 
 class Classification(models.Model):
     name = models.CharField(max_length=50)
@@ -65,8 +66,8 @@ class ProductEstablishment(models.Model):
     def __str__(self):
         return self.name
 
-
 class Product(models.Model):
+    status =                models.CharField(max_length=20, choices=constants.PMS_STATUS)
     group =                 models.DateField(verbose_name="Month", null=True, blank=False)
     date_collected =        models.DateField(verbose_name="Date Collected")
     tracking_number =       models.CharField(max_length=12, verbose_name="DTN/Case No.")
@@ -88,7 +89,7 @@ class Product(models.Model):
     distributor_name =      models.CharField(max_length=250, verbose_name="Distributor's Name")
     distributor_address =   models.TextField(verbose_name="Distributor's Address")
     collection_mode =       models.ForeignKey(CollectionMode, on_delete=models.DO_NOTHING, verbose_name="Mode of Collection")
-    inspector =             models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Inspector")
+    # inspector =             models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Inspector")
     remarks =               models.CharField(max_length=250, verbose_name="Remarks", null=True, blank=True)
     quantity =              models.PositiveIntegerField(verbose_name="Number of Samples")
     unit =                  models.ForeignKey(Unit, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -98,9 +99,16 @@ class Product(models.Model):
     date_forwarded =        models.DateField(null=True, blank=True)
     date_result_received =  models.DateField(null=True, blank=True)
     result =                models.TextField()
-    analysis_request =      models.ForeignKey(AnalysisRequest, on_delete=models.DO_NOTHING, verbose_name="Analysis Request (For Lab Analysis only)", null=True, blank=True)
+    analysis_request =      models.ForeignKey(AnalysisRequest, on_delete=models.DO_NOTHING, verbose_name="Analysis Request", null=True, blank=True)
     csl_reference_number =  models.CharField(max_length=250, verbose_name="CSL Control Ref. No.", null=True, blank=True)
     center_remarks =        models.TextField(verbose_name="Remarks of Centers")
     action =                models.TextField(max_length=250, verbose_name="Action Take by RFO")
     warning_letter =        models.CharField(max_length=250, null=True, blank=True)
+
+class ProductInspector(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="product_inspectors")
+    product_inspector = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.product_inspector.get_short_name()
 
