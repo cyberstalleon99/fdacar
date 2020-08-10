@@ -176,11 +176,11 @@ class VariationType(models.Model):
         return self.name + " - " + self.type
 
 class Lto(models.Model):
-    type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS)
+    type_of_application = models.CharField(max_length=20, choices=constants.APPLICATIONS, null=True, blank=True)
     establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, null=True, related_name='ltos')
     issuance = models.DateField(null=True, blank=True, verbose_name='Date Issued', help_text='Format: YYYY/MM/DD')
-    lto_number = models.CharField(max_length=255)
-    expiry = models.DateField('expiry date', help_text='Format: YYYY/MM/DD')
+    lto_number = models.CharField(max_length=255, null=True, blank=True)
+    expiry = models.DateField('expiry date', help_text='Format: YYYY/MM/DD', null=True, blank=True)
 
     def __str__(self):
         return self.lto_number
