@@ -17,6 +17,8 @@ class ApplicationAdmin(admin.ModelAdmin):
         'eod_no_inspection', 'eod_with_inspection', 'backlog', 'reason',
     )
 
+    search_fields = ['establishment__name', 'tracking_number']
+
     def month(self, pli):
         return pli.group.strftime('%B')
 
