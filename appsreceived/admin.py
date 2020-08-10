@@ -20,10 +20,6 @@ class ApplicationAdmin(admin.ModelAdmin):
 
     search_fields = ['establishment__name', 'tracking_number']
     list_filter = (
-        ('status', DropdownFilter),
-        ('applied_thru', DropdownFilter),
-        ('group', DropdownFilter),
-        ('application_type', DropdownFilter),
         ('establishment__name', DropdownFilter),
         ('establishment__product_type', RelatedDropdownFilter),
         ('establishment__primary_activity', RelatedDropdownFilter),
@@ -31,7 +27,10 @@ class ApplicationAdmin(admin.ModelAdmin):
         ('establishment__plant_address__province', RelatedDropdownFilter),
         ('establishment__plant_address__municipality_or_city', RelatedDropdownFilter),
         ('inspection__inspector', RelatedDropdownFilter),
-
+        ('status', DropdownFilter),
+        ('applied_thru', DropdownFilter),
+        ('group', DropdownFilter),
+        ('application_type', DropdownFilter),
     )
 
     def month(self, pli):
