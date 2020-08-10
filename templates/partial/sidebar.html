@@ -38,7 +38,13 @@
                 <li class="{{ ren_checklist_active }}"><a href="{% url 'admin:pms_product_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>
+        <!--<li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>-->
+        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Applications Received </a>
+            <ul class="list-unstyled ">
+                <li class=""><a href="#">All</a></li>
+                <li class=""><a href="{% url 'admin:appsreceived_application_changelist' %}" target="_blank">Advanced Search</a></li>
+            </ul>
+        </li>
         <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>PLI </a>
             <ul class="list-unstyled ">
                 <li class="{{pli_active}}"><a href="{% url 'pli:index' %}">All</a></li>

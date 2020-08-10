@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'outgoing.apps.OutgoingConfig',
     'pli.apps.PliConfig',
     'pms.apps.PmsConfig',
+    'appsreceived.apps.AppsreceivedConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
