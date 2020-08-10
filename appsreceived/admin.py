@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Application
 from dateutil.relativedelta import relativedelta
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
 # admin.site.register(VariationType)
 
@@ -18,6 +19,20 @@ class ApplicationAdmin(admin.ModelAdmin):
     )
 
     search_fields = ['establishment__name', 'tracking_number']
+    list_filter = (
+        ('status', DropdownFilter),
+        ('applied_thru', DropdownFilter),
+        ('group', DropdownFilter),
+        ('application_type', DropdownFilter),
+        ('establishment__name', DropdownFilter),
+        ('establishment__product_type', RelatedDropdownFilter),
+        ('establishment__primary_activity', RelatedDropdownFilter),
+        ('establishment__specific_activity', RelatedDropdownFilter),
+        ('establishment__plant_address__province', RelatedDropdownFilter),
+        ('establishment__plant_address__municipality_or_city', RelatedDropdownFilter),
+        ('inspection__inspector', RelatedDropdownFilter),
+
+    )
 
     def month(self, pli):
         return pli.group.strftime('%B')
