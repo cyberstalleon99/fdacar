@@ -22,6 +22,7 @@ $(document).ready(function () {
         'serverSide': true,
         'processing': true,
         'pageLength': 20,
+        // 'order': [[ 0, "desc" ]],
         'searching': true,
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         'columns': [
@@ -70,49 +71,49 @@ $(document).ready(function () {
 
 
 <script>
-$("#id_region").change(function() {
-    var url = $("#plantaddressform").attr("data-provinces-url");
-    var regionId = $(this).val();
+// $("#id_region").change(function() {
+//     var url = $("#plantaddressform").attr("data-provinces-url");
+//     var regionId = $(this).val();
 
-    $.ajax({
-        url: url,
-        data: {
-            'region': regionId
-        },
-        success: function(data) {
-            $("#id_province").html(data);
-        }
-    });
-});
+//     $.ajax({
+//         url: url,
+//         data: {
+//             'region': regionId
+//         },
+//         success: function(data) {
+//             $("#id_province").html(data);
+//         }
+//     });
+// });
 
-$("#id_province").change(function() {
-    var url = $("#plantaddressform").attr("data-cities-url");
-    var provinceId = $(this).val();
+// $("#id_province").change(function() {
+//     var url = $("#plantaddressform").attr("data-cities-url");
+//     var provinceId = $(this).val();
 
-    $.ajax({
-        url: url,
-        data: {
-            'province': provinceId
-        },
-        success: function(data) {
-            $("#id_municipality_or_city").html(data);
-        }
-    });
-});
+//     $.ajax({
+//         url: url,
+//         data: {
+//             'province': provinceId
+//         },
+//         success: function(data) {
+//             $("#id_municipality_or_city").html(data);
+//         }
+//     });
+// });
 
 
-$("#id_product_type").change(function() {
-    var url = $("#steponeform").attr("data-productlines-url");
-    var productTypeId = $(this).val();
+// $("#id_product_type").change(function() {
+//     var url = $("#steponeform").attr("data-productlines-url");
+//     var productTypeId = $(this).val();
 
-    $.ajax({
-        url: url,
-        data: {
-            'productType': productTypeId
-        },
-        success: function(data) {
-            $("#id_product_line").html(data);
-        }
-    });
-});
+//     $.ajax({
+//         url: url,
+//         data: {
+//             'productType': productTypeId
+//         },
+//         success: function(data) {
+//             $("#id_product_line").html(data);
+//         }
+//     });
+// });
 </script>

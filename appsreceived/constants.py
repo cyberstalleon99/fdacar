@@ -1,9 +1,9 @@
 APPLICATION_STATUS = [
-    (1, '1. Unassigned'),
-    (2, '2. Received by Inspector'),
-    (3, '3. Returned to Client'),
-    (4, '4. Forwarded to Supervisor'),
-    (5, '5. Complete'),
+    ('1', '1. Unassigned'),
+    ('2', '2. Received by Inspector'),
+    ('3', '3. Returned to Client'),
+    ('4', '4. Forwarded to Supervisor'),
+    ('5', '5. Complete'),
 ]
 
 APPLIED_THRU = [

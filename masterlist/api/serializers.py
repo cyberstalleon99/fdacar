@@ -73,8 +73,6 @@ class EstablishmentSerializer(serializers.ModelSerializer):
             return 'No inspections yet'
         else:
             return establishment.record.inspections.latest().date_inspected
-            # return 'There are inspections'
-
 
     def get_folder_number(self, establishment):
         try:
