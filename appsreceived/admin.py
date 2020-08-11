@@ -2,11 +2,11 @@ from django.contrib import admin
 from .models import Application
 from dateutil.relativedelta import relativedelta
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
-
-# admin.site.register(VariationType)
+from import_export.admin import ExportActionModelAdmin
+from .myresources import ApplicationResource
 
 @admin.register(Application)
-class ApplicationAdmin(admin.ModelAdmin):
+class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
     model = Application
     list_per_page = 20
     list_display = (
@@ -32,6 +32,9 @@ class ApplicationAdmin(admin.ModelAdmin):
         ('group', DropdownFilter),
         ('application_type', DropdownFilter),
     )
+
+    resource_class = ApplicationResource
+
 
     def month(self, pli):
         return pli.group.strftime('%B')
