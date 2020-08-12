@@ -71,11 +71,11 @@ class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
 
     def capa_start_date(self, application):
         try:
-            application.inspection.capa.date_prepared
+            application.inspection.date_inspected
         except:
             return None
         else:
-            return application.inspection.capa.date_prepared
+            return application.inspection.date_inspected
 
     def capa_date_received(self, application):
         try:

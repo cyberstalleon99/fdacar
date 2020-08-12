@@ -1,0 +1,266 @@
+
+<!-- saved from url=(0131)https://www.pythonanywhere.com/user/dongilay/files/home/dongilay/fdacar/appsreceived/templates/appsreceived/appsreceived/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link id="avast_os_ext_custom_font" href="chrome-extension://eofcbnmajmjmplflapaojjnihcjkigck/common/ui/fonts/fonts.css" rel="stylesheet" type="text/css"></head><body>{% extends 'base-site.html' %}
+{% block title %} Applications Received  {% endblock %}
+{% block subtitle %} APPLICATIONS RECEIVED {% endblock %}
+
+{% block content %}
+<section class="no-padding-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>List of Applications Received</strong>
+                                <span class="d-block">Displayed is the list of Applications Received</span>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a class="btn btn-primary" href="https://www.pythonanywhere.com/user/dongilay/files/home/dongilay/fdacar/appsreceived/templates/appsreceived/appsreceived/%7B%%20url%20&#39;admin:pli_pli_add&#39;%20%%7D" target="_blank">Add an Application</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block-body">
+                        <div class="table-responsive">
+                            <table id="pli_list_table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Tracking Number</th>
+                                        <th>Group</th>
+                                        <th>Establishment</th>
+                                        <th>Address</th>
+                                        <th>Product Type</th>
+                                        <th>Primary Activity</th>
+                                        <th>Specific Activity</th>
+                                        <th>LTO Number</th>
+                                        <th>Expiry</th>
+                                        <th>Application Type</th>
+                                        <th>Varition Type</th>
+                                        <th>Payment</th>
+                                        <th>Date Posted</th>
+                                        <th>Date Received by Inspector</th>
+                                        <th>Inspector</th>
+                                        <th>Date Inspected</th>
+                                        <th>Notes on inspection</th>
+                                        <th>Date Accomplished</th>
+                                        <th>CAPA Start Date</th>
+                                        <th>CAPA Date Received</th>
+                                        <th>Processing Duration (CAPA)</th>
+                                        <th>Recommendation</th>
+                                        <th>Date Approved by Supervisor</th>
+                                        <th>Processing Duration (Eportal)</th>
+                                        <th>EOD no Inspection</th>
+                                        <th>EOD w/ Inspection</th>
+                                        <th>Backlog</th>
+                                        <th>Reason for Backlog</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function () {
+    var pli_cols = [
+          {
+              'data': 'status',
+              'name': 'status',
+              'searchable': false
+          },
+          {
+              'data': 'tracking_number',
+              'name': 'tracking_number',
+              'render': function(data, type, row, meta){
+                  if(type === 'display') {
+                      var url = "{% url 'admin:appsreceived_application_change' 0 %}";
+                      var id = row.DT_RowAttr.pkey;
+                      url = url.replace(0, id);
+                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+                  }
+                  return data;
+              }
+          },
+          {
+              'data': 'group',
+              'name': 'group',
+              'searchable': false,
+          },
+          {
+              'data': 'establishment.name',
+              'name': 'establishment.name',
+              'render': function(data, type, row, meta){
+                  if(type === 'display') {
+                      var url = "{% url 'masterlist:est-detail' 0 %}";
+                      var id = row.DT_RowId;
+                      url = url.replace(0, id);
+                      data = '<a href="' + url + '" target="_blank">' + data + '</a>';
+                  }
+                  return data;
+              }
+          },
+          {
+              'data': 'establishment.plant_address',
+              'name': 'establishment.plant_address.address',
+              'searchable': false
+          },
+          {
+              'data': 'establishment.product_type.name',
+              'name': 'establishment.product_type.name',
+              'searchable': false
+          },
+          {
+              'data': 'establishment.primary_activity',
+              'name': 'establishment.primary_activity.name',
+              'searchable': false
+          },
+          {
+              'data': 'establishment.specific_activities',
+              'name': 'establishment.specific_activities.name',
+              'searchable': false
+          },
+          {
+              'data': 'establishment.ltos.0.lto_number',
+              'name': 'establishment.ltos.0.lto_number',
+              'searchable': false
+          },
+          {
+              'data': 'establishment.ltos.0.expiry',
+              'name': 'establishment.ltos.0.expiry',
+              'searchable': false
+          },
+          {
+              'data': 'application_type',
+              'name': 'application_type',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'type_of_variation',
+              'name': 'type_of_variation',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'payment',
+              'name': 'payment',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'date_received_by_rfo',
+              'name': 'date_received_by_rfo',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'date_received_by_inspector',
+              'name': 'date_received_by_inspector',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.inspector',
+              'name': 'inspection.inspector',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.date_inspected',
+              'name': 'inspection.date_inspected',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'inspection.remarks',
+              'name': 'inspection.remarks',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'date_accomplished',
+              'name': 'date_accomplished',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'capa_start_date',
+              'name': 'capa_start_date',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'capa_date_received',
+              'name': 'capa_date_received',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'capa_processing_duration',
+              'name': 'capa_processing_duration',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'recommendation',
+              'name': 'recommendation',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'date_approved_by_supervisor',
+              'name': 'date_approved_by_supervisor',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'processing_duration',
+              'name': 'processing_duration',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'eod_1',
+              'name': 'eod_1',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'eod_2',
+              'name': 'eod_2',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'backlog',
+              'name': 'backlog',
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'reason_1',
+              'name': 'reason_1',
+              'sortable': false,
+              'searchable': false
+          },
+    ];
+
+    var alltable = $('#pli_list_table').DataTable ({
+        'ajax': '/api/appsreceived/all/?format=datatables',
+        'columns': pli_cols,
+    });
+});
+</script>
+{% endblock %}</body></html>

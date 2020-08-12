@@ -4,37 +4,37 @@ from .models import Application
 from dateutil.relativedelta import relativedelta
 
 class ApplicationResource(resources.ModelResource):
-    status = Field(attribute="status", column_name="Status")
-    tracking_number = Field(attribute="tracking_number", column_name="Tracking Number")
-    group = Field(attribute="group", column_name="Month")
-    establishment = Field(column_name="Name")
-    plant_address = Field(column_name="Address")
-    province = Field(column_name="Province")
-    city_or_municipality = Field(column_name="City or Municipality")
-    product_type = Field(column_name="Product Type")
-    primary_activity = Field(column_name="Primary Activity")
-    specific_activity = Field(column_name="Specific Activity")
-    lto = Field(column_name="LTO Number")
-    lto_expiry = Field(column_name="Expiry")
-    application_type = Field(attribute="application_type", column_name="Application Type")
-    type_of_variation = Field(attribute="type_of_variation", column_name="Varition Type")
-    payment = Field(attribute="payment", column_name="Payment")
-    date_received_by_rfo = Field(attribute="date_received_by_rfo", column_name="Date Posted")
-    date_received_by_inspector = Field(attribute="date_received_by_inspector", column_name="Date Received by Inspector")
-    inspector = Field(column_name="Inspector")
-    date_inspected = Field(column_name="Date Inspected")
-    notes_on_inspection = Field(column_name="Notes on inspection")
-    date_accomplished = Field(attribute="date_accomplished", column_name="Date Accomplished")
-    capa_start_date = Field(column_name="CAPA Start Date")
-    capa_date_received = Field(column_name="CAPA Date Received")
-    capa_processing_duration = Field(column_name="Processing Duration (CAPA)")
-    recommendation = Field(attribute="recommendation", column_name="Recommendation")
+    status =                    Field(attribute="status", column_name="Status")
+    tracking_number =           Field(attribute="tracking_number", column_name="Tracking Number")
+    group =                     Field(attribute="group", column_name="Month")
+    establishment =             Field(column_name="Name")
+    plant_address =             Field(column_name="Address")
+    province =                  Field(column_name="Province")
+    city_or_municipality =      Field(column_name="City or Municipality")
+    product_type =              Field(column_name="Product Type")
+    primary_activity =          Field(column_name="Primary Activity")
+    specific_activity =         Field(column_name="Specific Activity")
+    lto =                       Field(column_name="LTO Number")
+    lto_expiry =                Field(column_name="Expiry")
+    application_type =          Field(attribute="application_type", column_name="Application Type")
+    type_of_variation =         Field(attribute="type_of_variation", column_name="Varition Type")
+    payment =                   Field(attribute="payment", column_name="Payment")
+    date_received_by_rfo =      Field(attribute="date_received_by_rfo", column_name="Date Posted")
+    date_received_by_inspector =Field(attribute="date_received_by_inspector", column_name="Date Received by Inspector")
+    inspector =                 Field(column_name="Inspector")
+    date_inspected =            Field(column_name="Date Inspected")
+    notes_on_inspection =       Field(column_name="Notes on inspection")
+    date_accomplished =         Field(attribute="date_accomplished", column_name="Date Accomplished")
+    capa_start_date =           Field(column_name="CAPA Start Date")
+    capa_date_received =        Field(column_name="CAPA Date Received")
+    capa_processing_duration =  Field(column_name="Processing Duration (CAPA)")
+    recommendation =            Field(attribute="recommendation", column_name="Recommendation")
     date_approved_by_supervisor = Field(attribute="date_approved_by_supervisor", column_name="Date Approved by Supervisor")
-    processing_duration = Field(attribute="processing_duration", column_name="Processing Duration (Eportal)")
-    eod_1 = Field(attribute="eod_1", column_name="EOD no Inspection")
-    eod_2 = Field(attribute="eod_2", column_name="EOD w/ Inspection")
-    backlog = Field(attribute="backlog", column_name="Backlog")
-    reason_1 = Field(attribute="reason_1", column_name="Reason for Backlog")
+    processing_duration =       Field(attribute="processing_duration", column_name="Processing Duration (Eportal)")
+    eod_1 =                     Field(attribute="eod_1", column_name="EOD no Inspection")
+    eod_2 =                     Field(attribute="eod_2", column_name="EOD w/ Inspection")
+    backlog =                   Field(attribute="backlog", column_name="Backlog")
+    reason_1 =                  Field(attribute="reason_1", column_name="Reason for Backlog")
 
     def dehydrate_establishment(self, app):
         return app.establishment.name
@@ -77,6 +77,9 @@ class ApplicationResource(resources.ModelResource):
 
     def dehydrate_notes_on_inspection(self, app):
         return app.inspection.remarks
+
+    def dehydrate_type_of_variation(self, app):
+        return app.type_of_variation.name
 
     def dehydrate_capa_start_date(self, app):
         try:

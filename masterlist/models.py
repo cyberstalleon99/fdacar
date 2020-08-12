@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from . import constants
 from datetime import datetime
 from dateutil import relativedelta
