@@ -4,7 +4,6 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 from import_export.admin import ExportActionModelAdmin
 from .myresources import IncomingResource
 
-# admin.site.register(Incoming)
 admin.site.register(DocumentType)
 
 

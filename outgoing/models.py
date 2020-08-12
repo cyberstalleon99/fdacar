@@ -10,10 +10,10 @@ class Courier(models.Model):
 
 class Outgoing(models.Model):
     group = models.DateField(verbose_name='Group')
-    dtn = models.CharField(max_length=14, verbose_name="DTN")
+    tracking_number = models.CharField(max_length=14, verbose_name="DTN")
     document_type = models.OneToOneField(DocumentType, on_delete=models.CASCADE, verbose_name="Type of Document")
     particulars = models.TextField()
-    remarks = models.TextField()
+    remarks = models.TextField(null=True, blank=True)
     courier = models.OneToOneField(Courier, on_delete=models.CASCADE, verbose_name="Courier Name")
     courier_tracking_number = models.CharField(max_length=250, verbose_name = "Courier Tracking No.")
     date_forwarded = models.DateField(verbose_name="Date Forwarded/Mailed")
@@ -22,5 +22,5 @@ class Outgoing(models.Model):
     forwarded_to_1 = models.CharField(max_length=250, verbose_name="Forwarded To (Company/Office Name)")
 
     def __str__(self):
-        return self.dtn
+        return self.tracking_number
 

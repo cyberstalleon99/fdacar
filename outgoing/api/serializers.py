@@ -17,6 +17,6 @@ class OutgoingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Outgoing
         fields = (
-            'DT_RowId', 'DT_RowAttr','id', 'group', 'dtn', 'document_type', 'particulars', 'remarks', 'courier', 'courier_tracking_number',
+            'DT_RowId', 'DT_RowAttr','id', 'group', 'tracking_number', 'document_type', 'particulars', 'remarks', 'courier', 'courier_tracking_number',
             'forwarded_by', 'date_forwarded', 'forwarded_to', 'forwarded_to_1',
         )

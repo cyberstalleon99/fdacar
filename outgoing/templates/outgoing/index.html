@@ -56,8 +56,8 @@
 $(document).ready(function () {
     var outgoing_cols = [
           {
-              'data': 'dtn',
-              'name': 'dtn',
+              'data': 'tracking_number',
+              'name': 'tracking_number',
               'render': function(data, type, row, meta){
                   if(type === 'display') {
                       var url = "{% url 'admin:outgoing_outgoing_change' 0 %}";
@@ -68,16 +68,16 @@ $(document).ready(function () {
                   return data;
               }
           },
-          {'data': 'group',                   'name': 'group'},
-          {'data': 'document_type',           'name': 'document_type'},
+          {'data': 'group',                   'name': 'group', 'searchable': false},
+          {'data': 'document_type',           'name': 'document_type.name'},
           {'data': 'particulars',             'name': 'particulars'},
           {'data': 'remarks',                 'name': 'remarks'},
-          {'data': 'courier',                 'name': 'courier'},
+          {'data': 'courier',                 'name': 'courier', 'searchable': false},
           {'data': 'courier_tracking_number', 'name': 'courier_tracking_number'},
           {'data': 'date_forwarded',          'name': 'date_forwarded', 'searchable': false},
-          {'data': 'forwarded_by',            'name': 'forwarded_by'},
+          {'data': 'forwarded_by',            'name': 'forwarded_by', 'searchable': false},
           {'data': 'forwarded_to',            'name': 'forwarded_to'},
-          {'data': 'forwarded_to_1',          'name': 'forwarded_to_1', 'sortable': false},
+          {'data': 'forwarded_to_1',          'name': 'forwarded_to_1'},
     ];
 
     var alltable = $('#outgoing_list_table').DataTable ({
