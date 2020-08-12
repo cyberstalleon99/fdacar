@@ -57,8 +57,8 @@
 $(document).ready(function () {
     var incoming_cols = [
           {
-              'data': 'dtn',
-              'name': 'dtn',
+              'data': 'tracking_number',
+              'name': 'tracking_number',
               'render': function(data, type, row, meta){
                   if(type === 'display') {
                       var url = "{% url 'admin:incoming_incoming_change' 0 %}";
@@ -69,17 +69,17 @@ $(document).ready(function () {
                   return data;
               }
           },
-          {'data': 'month',                 'name': 'month'},
-          {'data': 'date_received',         'name': 'date_received',    'searchable': false},
-          {'data': 'received_by',           'name': 'received_by'},
+          {'data': 'month',                 'name': 'month', 'searchable': false},
+          {'data': 'date_received',         'name': 'date_received', 'searchable': false},
+          {'data': 'received_by',           'name': 'received_by', 'searchable': false},
           {'data': 'received_from',         'name': 'received_from'},
           {'data': 'received_from_1',       'name': 'received_from_1'},
-          {'data': 'document_type',         'name': 'document_type'},
+          {'data': 'document_type',         'name': 'document_type', 'searchable': false},
           {'data': 'particulars',           'name': 'particulars'},
-          {'data': 'endorsed_to',           'name': 'endorsed_to'},
+          {'data': 'endorsed_to',           'name': 'endorsed_to', 'searchable': false},
           {'data': 'date_endorsed',         'name': 'date_endorsed',    'searchable': false},
-          {'data': 'date_acted_upon',       'name': 'date_acted_upon'},
-          {'data': 'actions_taken',         'name': 'actions_taken'},
+          {'data': 'date_acted_upon',       'name': 'date_acted_upon', 'searchable': false},
+          {'data': 'actions_taken',         'name': 'actions_taken', 'searchable': false},
     ];
 
     var alltable = $('#incoming_list_table').DataTable ({

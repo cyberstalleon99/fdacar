@@ -51,11 +51,16 @@
                 <li class=""><a href="{% url 'admin:pli_pli_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>In & Out </a>
-            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li class="{{incoming_active}}"><a href="{% url 'incoming:index' %}">Incoming</a></li>
-                <li class="{{outgoing_active}}"><a href="{% url 'outgoing:index' %}">Outgoing</a></li>
-                <!--<li><a href="#">Page</a></li>-->
+        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Incoming </a>
+            <ul class="list-unstyled ">
+                <li class="{{incoming_active}}"><a href="{% url 'incoming:index' %}">All</a></li>
+                <li class=""><a href="{% url 'admin:incoming_incoming_changelist' %}" target="_blank">Advanced Search</a></li>
+            </ul>
+        </li>
+        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Outgoing </a>
+            <ul class="list-unstyled ">
+                <li class="{{outgoing_active}}"><a href="{% url 'outgoing:index' %}">All</a></li>
+                <li class=""><a href="{% url 'admin:outgoing_outgoing_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
         <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>

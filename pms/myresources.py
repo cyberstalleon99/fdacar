@@ -1,7 +1,5 @@
 from import_export import resources
 from import_export.fields import Field
-from .models import Product
-
 
 class ProductResource(resources.ModelResource):
     status = Field(attribute="status", column_name="Status")

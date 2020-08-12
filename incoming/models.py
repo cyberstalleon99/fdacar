@@ -9,8 +9,8 @@ class DocumentType(models.Model):
 
 # Create your models here.
 class Incoming(models.Model):
-    group = models.DateField(verbose_name='Group')
-    dtn = models.CharField(max_length=14, verbose_name="DTN")
+    group = models.DateField(verbose_name='Month')
+    tracking_number = models.CharField(max_length=14, verbose_name="DTN")
     date_received = models.DateField(verbose_name='Date Received', help_text='Format: YYYY/MM/DD')
     received_by = models.OneToOneField(User, on_delete=models.CASCADE)
     received_from = models.CharField(max_length=250, verbose_name="Received from")
@@ -23,5 +23,5 @@ class Incoming(models.Model):
     actions_taken = models.TextField()
 
     def __str__(self):
-        return self.dtn
+        return self.tracking_number
 
