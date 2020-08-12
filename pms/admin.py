@@ -84,6 +84,10 @@ class ProductAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         ('result', DropdownFilter),
     )
 
+    search_fields = ['generic_name', 'brand_name', 'tracking_number', 'establishment',
+                    'product_category', 'result', 'center_remarks'
+    ]
+
     def __str__(self, product):
         return product.generic_name + " - " + product.tracking_number
 
