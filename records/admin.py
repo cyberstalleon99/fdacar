@@ -1,16 +1,29 @@
 from django.contrib import admin
-from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record
+from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record, EstInspector
 from dateutil.relativedelta import relativedelta
 from checklist.models import Job
 from masterlist import constants
+from nested_admin import NestedTabularInline, NestedModelAdmin
 
 admin.site.register(CapaPreparator)
-admin.site.register(Inspection)
 
-class InspectionInline(admin.TabularInline):
+class InspectorInline(NestedTabularInline, admin.TabularInline):
+    model = EstInspector
+    extra = 1
+
+# admin.site.register(Inspection)
+@admin.register(Inspection)
+class InspectionAdmin(admin.ModelAdmin):
+    inlines = (InspectorInline,)
+    list_per_page = 20
+
+
+
+class InspectionInline(NestedTabularInline, admin.TabularInline):
     model = Inspection
     extra = 1
     exclude = ['date_of_followup_inspection']
+    inlines = [InspectorInline]
 
     def save_formset(self, request, form, formset, change):
         # if it's not the model we want to change
@@ -35,7 +48,7 @@ class InspectionInline(admin.TabularInline):
 
 
 @admin.register(Record)
-class RecordAdmin(admin.ModelAdmin):
+class RecordAdmin(NestedModelAdmin):
     list_display = ('folder_id', 'name', 'address', 'province', 'municipality_or_city', )
     inlines = [InspectionInline]
 

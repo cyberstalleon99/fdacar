@@ -105,7 +105,7 @@ class Product(models.Model):
     warning_letter =        models.CharField(max_length=250, null=True, blank=True)
 
 class ProductInspector(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name="product_inspectors")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_inspectors")
     product_inspector = models.ForeignKey(User, on_delete=models.PROTECT)
 
     def __str__(self):

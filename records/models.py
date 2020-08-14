@@ -94,9 +94,9 @@ class Inspection(models.Model):
         ordering = ['-date_inspected']
         get_latest_by = 'date_inspected'
 
-class Inspector(models.Model):
-    inspection = models.ForeignKey(Inspection, on_delete=models.SET_NULL, null=True, related_name="Inspectors")
-    inspector = models.ForeignKey(User, on_delete=models.PROTECT)
+class EstInspector(models.Model):
+    inspection = models.ForeignKey(Inspection, on_delete=models.CASCADE, related_name="est_inspectors")
+    inspector = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.inspector.get_short_name()
