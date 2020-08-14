@@ -32,12 +32,22 @@ class InactiveListView(LoginRequiredMixin, ListView):
         context['alllist_active'] = "active"
         return context
 
+class ClosedListView(LoginRequiredMixin, ListView):
+    model = Establishment
+    template_name = 'masterlist/closed-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['closed_tab_active'] = "active"
+        context['alllist_active'] = "active"
+        return context
+
     def get_list(self):
-        inactivelist = Establishment.inactivelist.get_list()
+        closedlist = Establishment.inactivelist.get_list()
         query = self.request.GET.get('q', None)
         if query:
-            inactivelist = Establishment.inactivelist.get_filtered_list(query=query)
-        return inactivelist
+            closedlist = Establishment.closedlist.get_filtered_list(query=query)
+        return closedlist
 
 class AbraListView(LoginRequiredMixin, ListView):
     model = Establishment

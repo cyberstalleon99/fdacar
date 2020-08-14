@@ -12,7 +12,12 @@ class ExpiredListManager(myhelpers.MyModelManager):
 
         return super().get_queryset().filter(pk__in=establishments)
 
-class InactiveListManager(models.Manager):
+class ClosedManager(models.Manager):
 
     def get_list(self):
         return super().get_queryset().filter(status='Closed')
+
+class InactiveManager(models.Manager):
+
+    def get_list(self):
+        return super().get_queryset().filter(status='Inactive')

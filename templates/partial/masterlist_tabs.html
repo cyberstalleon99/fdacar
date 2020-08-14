@@ -3,6 +3,10 @@
         <a class="nav-link {{alllist_tab_active}}" href="{% url 'masterlist:index' %}">All</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{inactive_tab_active}}" href="{% url 'masterlist:inactive-list' %}">Inactive</a>
+        <a class="nav-link {{closed_tab_active}}" href="{% url 'masterlist:closed-list' %}">Closed</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{inactive_tab_active}}" href="{% url 'masterlist:inactive-list' %}">Unlicensed</a>
+    </li>
+
 </ul>

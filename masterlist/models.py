@@ -131,12 +131,9 @@ class Establishment(models.Model):
     authorized_officer = models.OneToOneField(AuthorizedOfficer, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=8, choices=constants.EST_STATUS, null=True, default="Active")
     expiredlist = mymanagers.ExpiredListManager()
-    inactivelist = mymanagers.InactiveListManager()
+    closedlist = mymanagers.ClosedManager()
+    inactivelist = mymanagers.InactiveManager()
     objects = models.Manager()
-
-    @property
-    def test(self):
-        pass
 
     def __str__(self):
         return self.name + " - " + self.plant_address.address + "(" + self.specific_activities() + ")"

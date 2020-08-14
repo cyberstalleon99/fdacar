@@ -1,0 +1,35 @@
+{% extends 'masterlist/partial/masterlist-base.html' %}
+{% block title %} Closed Establishments  {% endblock %}
+{% block subtitle %} MASTER LIST {% endblock %}
+
+{% block tabs %}
+    {% include 'partial/masterlist_tabs.html' %}
+{% endblock %}
+
+{% block content-title %}
+List of Closed Establishments
+{% endblock %}
+
+{% block content-subtitle %}
+Displayed is the list of closed establishments
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function () {
+    var alltable = $('#all_list_table').DataTable ({
+        'ajax': '/api/est-list/closed/?format=datatables',
+    });
+
+    $('.btn-prod-type').on('click', function() {
+        alltable.columns().search('');
+        var rel = $(this).attr('rel');
+        if (rel) {
+            alltable.columns(2).search(rel).draw();
+        } else {
+            alltable.draw();
+        }
+    });
+});
+</script>
+{% endblock %}

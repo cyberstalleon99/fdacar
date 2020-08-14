@@ -7,6 +7,7 @@ app_name='masterlist'
 
 router = routers.DefaultRouter()
 router.register('all', views.EstablishmentViewSet)
+router.register('closed', views.ClosedViewSet)
 router.register('inactive', views.InactiveViewSet)
 router.register('abra', views.AbraViewSet)
 router.register('apayao', views.ApayaoViewSet)

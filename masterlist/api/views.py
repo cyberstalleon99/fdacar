@@ -6,8 +6,12 @@ class EstablishmentViewSet(viewsets.ModelViewSet):
     queryset = Establishment.objects.filter(status='Active').order_by('date_modified')
     serializer_class = EstablishmentSerializer
 
-class InactiveViewSet(viewsets.ModelViewSet):
+class ClosedViewSet(viewsets.ModelViewSet):
     queryset = Establishment.objects.filter(status='Closed').order_by('name')
+    serializer_class = EstablishmentSerializer
+
+class InactiveViewSet(viewsets.ModelViewSet):
+    queryset = Establishment.objects.filter(status='Inactive').order_by('name')
     serializer_class = EstablishmentSerializer
 
 class AbraViewSet(viewsets.ModelViewSet):
