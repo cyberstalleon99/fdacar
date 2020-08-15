@@ -8,7 +8,10 @@ class AppsReceivedSerializer(serializers.ModelSerializer):
     group =                     serializers.SerializerMethodField()
     establishment =             EstablishmentSerializer()
     type_of_variation =         serializers.SerializerMethodField()
-    inspection =                InspectionSerializer()
+    # inspection =                InspectionSerializer()
+    inspector =                 serializers.SerializerMethodField()
+    date_inspected =            serializers.SerializerMethodField()
+    inspection_remarks =        serializers.SerializerMethodField()
     capa_start_date =           serializers.SerializerMethodField()
     capa_date_received =        serializers.SerializerMethodField()
     capa_processing_duration =  serializers.SerializerMethodField()
@@ -62,12 +65,36 @@ class AppsReceivedSerializer(serializers.ModelSerializer):
             difference = relativedelta(end_date, start_date)
             return difference
 
+    def get_inspector(self, app):
+        try:
+            app.inspection.est_inspectors.all()
+        except:
+            return "N/A"
+        else:
+            return ",\n".join(inspector.inspector.get_short_name()  for inspector in app.inspection.est_inspectors.all())
+
+    def get_date_inspected(self, app):
+        try:
+            app.inspection.date_inspected
+        except:
+            return "N/A"
+        else:
+            return app.inspection.date_inspected
+
+    def get_inspection_remarks(self, app):
+        try:
+            app.inspection.remarks
+        except:
+            return "N/A"
+        else:
+            return app.inspection.remarks
+
     class Meta:
         model = Application
         fields = (
             'DT_RowId', 'DT_RowAttr','id', 'status', 'tracking_number', 'group', 'establishment', 'application_type',
-            'type_of_variation', 'payment', 'date_received_by_rfo', 'date_received_by_inspector', 'inspection',
-            'date_accomplished', 'capa_start_date', 'capa_date_received',
+            'type_of_variation', 'payment', 'date_received_by_rfo', 'date_received_by_inspector', 'inspector', 'date_inspected',
+            'inspection_remarks', 'date_accomplished', 'capa_start_date', 'capa_date_received',
             'capa_processing_duration', 'recommendation', 'date_approved_by_supervisor', 'processing_duration',
             'eod_1', 'eod_2', 'backlog', 'reason_1',
         )

@@ -109,13 +109,28 @@ class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
         return application.establishment.ltos.first().expiry
 
     def inspector(self, application):
-        return ",\n".join(inspector.inspector.get_short_name()  for inspector in application.inspection.est_inspectors.all())
+        try:
+            application.inspection.est_inspectors.all()
+        except:
+            return None
+        else:
+            return ",\n".join(inspector.inspector.get_short_name()  for inspector in application.inspection.est_inspectors.all())
 
     def date_inspected(self, application):
-        return application.inspection.date_inspected
+        try:
+            application.inspection.date_inspected
+        except:
+           return None
+        else:
+            return application.inspection.date_inspected
 
     def notes_on_inspection(self, application):
-        return application.inspection.remarks
+        try:
+            application.inspection.remarks
+        except:
+            return None
+        else:
+            return application.inspection.remarks
 
     def capa_start_date(self, application):
         try:
