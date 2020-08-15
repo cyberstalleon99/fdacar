@@ -39,20 +39,19 @@ class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     application_fieldset = (
             'Application',
             {'fields': ['status', 'group', 'tracking_number', 'applied_thru', 'establishment', 'application_type',
-                        'type_of_variation', 'payment']}
+                        'type_of_variation', 'payment', 'date_received_by_rfo', 'date_forwarded_to_inspector']}
     )
 
     inspection_fieldset = (
             'Inspection',
-            {'fields': ['date_received_by_rfo', 'date_forwarded_to_inspector', 'date_received_by_inspector', 'inspection',
+            {'fields': ['date_received_by_inspector', 'inspection',
                         'recommendation']}
     )
 
     supervisor_fieldset = (
             'Forwarded to Supervisor',
             {'fields': ['licensing_officer', 'date_received_by_supervisor', 'date_approved_by_supervisor', 'date_accomplished', 'processing_duration',
-                        'eod_1', 'eod_2', 'backlog', 'reason_1', 'date_forwarded_to_center_1', 'date_returned_by_center',
-                        'reason_2', 'date_forwarded_to_center_2']}
+                        'eod_1', 'eod_2', 'backlog', 'reason_1']}
     )
 
     center_fieldset = (
