@@ -17,6 +17,29 @@ class InspectionAdmin(admin.ModelAdmin):
     inlines = (InspectorInline,)
     list_per_page = 20
 
+    fieldsets = [
+        (
+            'General Information',
+            {'fields': ['record', 'tracking_number', 'type_of_inspection', 'date_inspected']}
+        ),
+        (
+            'Risk Rating',
+            {'fields': ['frequency_of_inspection', 'risk_rating']}
+        ),
+        (
+            'CAPA',
+            {'fields': ['capa']}
+        ),
+        (
+            'Notes on Inspection',
+            {'fields': ['remarks']}
+        ),
+        (
+            'Inspection Report',
+            {'fields': ['inspection_report']}
+        ),
+    ]
+
 
 
 class InspectionInline(NestedTabularInline, admin.TabularInline):

@@ -31,7 +31,7 @@ class InspectionSerializer(serializers.ModelSerializer):
         return {'pkey': inspection.pk}
 
     def get_inspector(self, inspection):
-        return inspection.inspector.get_short_name()
+        return ",\n".join(inspector.inspector.get_short_name()  for inspector in inspection.est_inspectors.all())
 
     class Meta:
         model = Inspection

@@ -69,7 +69,7 @@ class Inspection(models.Model):
     frequency_of_inspection = models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True, help_text="Leave blank if not applicable")
     risk_rating = models.CharField(max_length=7, choices=constants.RISK_RATINGS, null=True, blank=True, help_text="Leave blank if not applicable")
     date_of_followup_inspection = models.DateField('Date of Followup Inspection', null=True, blank=True, help_text='Format: YYYY/MM/DD')
-    inspector = models.ForeignKey(User, on_delete=models.CASCADE) # Modify this so that User can select multiple inspectors
+    # inspector = models.ForeignKey(User, on_delete=models.CASCADE) # Modify this so that User can select multiple inspectors
     remarks = models.TextField(null=True, help_text="Put inspection remarks here. Number each remark.")
     date_forwarded = models.DateField('Date Forwarded to Supervisor', null=True, blank=True, help_text='Format: YYYY/MM/DD')
     date_approved = models.DateField('Date Approved by Supervisor', null=True, blank=True, help_text='Format: YYYY/MM/DD')

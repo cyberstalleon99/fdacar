@@ -74,7 +74,15 @@
                                 {% endif %}
                                 </td>
 
-                                <td>{{inspection.inspector}}</td>
+                                <td>
+                                {% for inspector in  inspection.est_inspectors.all %}
+                                {% if forloop.last %}
+                                    {{inspector}}
+                                {% else %}
+                                    {{inspector}},
+                                {% endif %}
+                                {% endfor %}
+                                </td>
                                 <td>{{inspection.type_of_inspection}}</td>
                                 <td>{{inspection.frequency_of_inspection}}</td>
                                 <td>{{inspection.date_of_followup_inspection.date}}</td>

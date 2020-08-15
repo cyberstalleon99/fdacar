@@ -51,7 +51,7 @@ class PliResource(resources.ModelResource):
         return pli.inspection.date_inspected
 
     def dehydrate_inspector(self, pli):
-        return pli.inspection.inspector.get_short_name()
+        return ",\n".join(s.get_short_name()  for s in pli.inspection.est_inspectors.all())
 
     def dehydrate_remarks(self, pli):
         return pli.inspection.remarks

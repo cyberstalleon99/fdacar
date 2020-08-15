@@ -19,7 +19,7 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         )
 
         list_filter = (
-            ('inspection__inspector', RelatedDropdownFilter),
+            ('inspection__est_inspectors__inspector', RelatedDropdownFilter),
             ('inspection__type_of_inspection', DropdownFilter),
             ('inspection__record__establishment__product_type', RelatedDropdownFilter),
             ('inspection__record__establishment__primary_activity', RelatedDropdownFilter),
@@ -63,7 +63,7 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
             return pli.inspection.date_inspected
 
         def inspector(self, pli):
-            return pli.inspection.inspector
+            return ",\n".join(inspector.inspector.get_short_name()  for inspector in pli.inspection.est_inspectors.all())
 
         def remarks(self, pli):
             return pli.inspection.remarks

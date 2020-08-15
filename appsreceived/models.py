@@ -3,6 +3,7 @@ from . import constants
 from masterlist.models import Establishment, VariationType
 from records.models import Inspection
 from accounts.models import User
+DEFAULT_SUPERVISOR_ID = 7
 
 class Application(models.Model):
     status  =                       models.CharField(max_length=250, choices=constants.APPLICATION_STATUS)
@@ -12,14 +13,16 @@ class Application(models.Model):
     establishment =                 models.ForeignKey(Establishment, on_delete=models.PROTECT)
     application_type =              models.CharField(max_length=250, choices=constants.APPLICATIONS)
     type_of_variation =             models.ForeignKey(VariationType, on_delete=models.CASCADE, null=True, blank=True)
-    payment =                       models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    payment =                       models.DecimalField(max_digits=10, decimal_places=2)
+
     date_received_by_rfo =          models.DateField(verbose_name="Date Posted/Received")
     date_forwarded_to_inspector =   models.DateField(null=True, blank=True)
     date_received_by_inspector =    models.DateField(null=True, blank=True)
     inspection =                    models.ForeignKey(Inspection, on_delete=models.PROTECT, null=True, blank=True)
     date_accomplished =             models.DateField(verbose_name="Eportal Accomplishment Date", null=True, blank=True)
     recommendation =                models.CharField(max_length=20, choices=constants.RECOMMENDATION)
-    licensing_officer =             models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+
+    licensing_officer =             models.ForeignKey(User, on_delete=models.DO_NOTHING, default=DEFAULT_SUPERVISOR_ID)
     date_received_by_supervisor =   models.DateField(verbose_name="Date Received by Supervisor (eportal)", null=True, blank=True)
     date_approved_by_supervisor =   models.DateField(verbose_name="Date Approved by Supervisor (eportal)", null=True, blank=True)
     processing_duration =           models.PositiveIntegerField(null=True, blank=True)

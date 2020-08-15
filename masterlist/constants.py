@@ -47,7 +47,8 @@ INSPECTION_TYPES = [
 
 VARIATION_TYPES = [
     ('Minor', 'Minor'),
-    ('Major', 'Major')
+    ('Major', 'Major'),
+    ('N/A', 'N/A')
 ]
 
 ALL_DESIGNATIONS = [

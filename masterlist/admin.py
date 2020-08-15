@@ -118,6 +118,9 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     # change_form_template = 'admin/custom/change_form.html'
     resource_class = EstablishmentResource
 
+    test = ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
+            'specific_activity']})
+
     tab_general_info = (
         ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
             'specific_activity']}),

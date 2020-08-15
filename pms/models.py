@@ -76,6 +76,7 @@ class Product(models.Model):
     classification =        models.ForeignKey(Classification, on_delete=models.DO_NOTHING, verbose_name="PMS Classification")
     type_of_referral =      models.ForeignKey(ReferralType, on_delete=models.DO_NOTHING, verbose_name="Type of Referral")
     establishment =         models.ForeignKey(ProductEstablishment, on_delete=models.DO_NOTHING, verbose_name="Establishment")
+
     product_category =      models.ForeignKey(ProductCategory, on_delete=models.DO_NOTHING, verbose_name="Product Category")
     dosage_form =           models.ForeignKey(DosageForm, on_delete=models.DO_NOTHING, verbose_name="Dosage Form")
     generic_name =          models.CharField(max_length=250, verbose_name="Generic Name")
@@ -88,6 +89,7 @@ class Product(models.Model):
     tmr_address =           models.TextField(verbose_name="Trader/Mfg/Repacker's Address")
     distributor_name =      models.CharField(max_length=250, verbose_name="Distributor's Name")
     distributor_address =   models.TextField(verbose_name="Distributor's Address")
+
     collection_mode =       models.ForeignKey(CollectionMode, on_delete=models.DO_NOTHING, verbose_name="Mode of Collection")
     remarks =               models.CharField(max_length=250, verbose_name="Remarks", null=True, blank=True)
     quantity =              models.PositiveIntegerField(verbose_name="Number of Samples")
@@ -95,6 +97,7 @@ class Product(models.Model):
     unit_cost =             models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     or_number =             models.CharField(max_length=250, verbose_name="OR Number", null=True, blank=True)
     total_cost =            models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
     date_forwarded =        models.DateField(null=True, blank=True)
     date_result_received =  models.DateField(null=True, blank=True)
     result =                models.TextField()
@@ -103,6 +106,9 @@ class Product(models.Model):
     center_remarks =        models.TextField(verbose_name="Remarks of Centers")
     action =                models.TextField(max_length=250, verbose_name="Action Take by RFO")
     warning_letter =        models.CharField(max_length=250, null=True, blank=True)
+
+    def __str__(self):
+        return self.generic_name + "(" + self.brand_name + ")" + " - " + self.tracking_number
 
 class ProductInspector(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_inspectors")

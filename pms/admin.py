@@ -5,6 +5,7 @@ AnalysisRequest, Unit, ProductEstablishment, ProductAddress, ProductSpecificActi
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 from import_export.admin import ExportActionModelAdmin
 from .myresources import ProductResource
+from tabbed_admin import TabbedModelAdmin
 
 
 admin.site.register(Classification)
@@ -63,9 +64,9 @@ class InspectorInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Product)
-class ProductAdmin(ExportActionModelAdmin, admin.ModelAdmin):
+class ProductAdmin(ExportActionModelAdmin, TabbedModelAdmin):
 
-    inlines = (InspectorInline,)
+    # inlines = (InspectorInline,)
     list_per_page = 20
     ordering = ('-group',)
     resource_class = ProductResource
@@ -86,6 +87,53 @@ class ProductAdmin(ExportActionModelAdmin, admin.ModelAdmin):
 
     search_fields = ['generic_name', 'brand_name', 'tracking_number', 'establishment',
                     'product_category', 'result', 'center_remarks'
+    ]
+
+    general_fieldset = (
+            'General',
+            {'fields': ['status', 'group', 'date_collected', 'tracking_number', 'date_request_received', 'date_of_referral',
+                        'classification', 'type_of_referral', 'establishment']}
+    )
+
+    product_fieldset = (
+            'Product',
+            {'fields': ['product_category', 'dosage_form', 'generic_name', 'brand_name', 'cpr_number', 'batch_lot_number',
+                        'date_manufactured', 'date_exiry', 'tmr_name', 'tmr_address', 'distributor_name', 'distributor_address', 'remarks']}
+    )
+
+    collection_fieldset = (
+            'Mode of Collection',
+            {'fields': ['collection_mode', 'quantity', 'unit', 'unit_cost', 'or_number', 'total_cost']}
+    )
+
+    result_fieldset = (
+            'Date Result',
+            {'fields': ['date_forwarded', 'date_result_received', 'result', 'analysis_request',
+            'csl_reference_number', 'center_remarks', 'action', 'warning_letter']}
+    )
+
+    tab_general = (
+        general_fieldset,
+        InspectorInline
+    )
+
+    tab_product = (
+        product_fieldset,
+    )
+
+    tab_collection = (
+        collection_fieldset,
+    )
+
+    tab_result = (
+        result_fieldset,
+    )
+
+    tabs = [
+        ('General', tab_general),
+        ('Product', tab_product),
+        ('Mode of Collection', tab_collection),
+        ('Result', tab_result),
     ]
 
     def __str__(self, product):

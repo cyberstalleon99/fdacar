@@ -4,9 +4,10 @@ from dateutil.relativedelta import relativedelta
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 from import_export.admin import ExportActionModelAdmin
 from .myresources import ApplicationResource
+from tabbed_admin import TabbedModelAdmin
 
 @admin.register(Application)
-class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
+class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     model = Application
     list_per_page = 20
     list_display = (
@@ -26,7 +27,7 @@ class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         ('establishment__specific_activity', RelatedDropdownFilter),
         ('establishment__plant_address__province', RelatedDropdownFilter),
         ('establishment__plant_address__municipality_or_city', RelatedDropdownFilter),
-        ('inspection__inspector', RelatedDropdownFilter),
+        ('inspection__est_inspectors__inspector', RelatedDropdownFilter),
         ('status', DropdownFilter),
         ('applied_thru', DropdownFilter),
         ('group', DropdownFilter),
@@ -34,6 +35,54 @@ class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
     )
 
     resource_class = ApplicationResource
+
+    application_fieldset = (
+            'Application',
+            {'fields': ['status', 'group', 'tracking_number', 'applied_thru', 'establishment', 'application_type',
+                        'type_of_variation', 'payment']}
+    )
+
+    inspection_fieldset = (
+            'Inspection',
+            {'fields': ['date_received_by_rfo', 'date_forwarded_to_inspector', 'date_received_by_inspector', 'inspection',
+                        'recommendation']}
+    )
+
+    supervisor_fieldset = (
+            'Forwarded to Supervisor',
+            {'fields': ['licensing_officer', 'date_received_by_supervisor', 'date_approved_by_supervisor', 'date_accomplished', 'processing_duration',
+                        'eod_1', 'eod_2', 'backlog', 'reason_1', 'date_forwarded_to_center_1', 'date_returned_by_center',
+                        'reason_2', 'date_forwarded_to_center_2']}
+    )
+
+    center_fieldset = (
+            'Forwarded to Center',
+            {'fields': ['date_forwarded_to_center_1', 'date_returned_by_center',
+                        'reason_2', 'date_forwarded_to_center_2']}
+    )
+
+    tab_application = (
+        application_fieldset,
+    )
+
+    tab_inspection = (
+        inspection_fieldset,
+    )
+
+    tab_supervisor = (
+        supervisor_fieldset,
+    )
+
+    tab_center = (
+        center_fieldset,
+    )
+
+    tabs = [
+        ('Application', tab_application),
+        ('Inspection', tab_inspection),
+        ('Forwarded to Supervisor', tab_supervisor),
+        ('Forwarded to Center', tab_center)
+    ]
 
 
     def month(self, pli):
@@ -61,7 +110,7 @@ class ApplicationAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         return application.establishment.ltos.first().expiry
 
     def inspector(self, application):
-        return application.inspection.inspector.get_short_name()
+        return ",\n".join(inspector.inspector.get_short_name()  for inspector in application.inspection.est_inspectors.all())
 
     def date_inspected(self, application):
         return application.inspection.date_inspected
