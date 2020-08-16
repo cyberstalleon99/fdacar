@@ -151,7 +151,6 @@ class EstablishmentDetailView(LoginRequiredMixin, DetailView):
         curr_est = Establishment.objects.get(pk=self.kwargs.get('id'))
         context['alllist_active'] = "active"
         inspections = ''
-        inspectors = ''
         try:
             curr_est.record # Check if establishment has a record
         except:

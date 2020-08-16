@@ -1,5 +1,5 @@
 from masterlist.models import Establishment, ProductType
-from django.db.models import Q
+# from django.db.models import Q
 
 class MasterlistSummaryHelper:
     model = ''
@@ -26,8 +26,8 @@ class MasterlistSummaryHelper:
         # Default filters
 
         self.filters = {
-            'product_type':self.product_type,
-            'status': 'Active',
+            'product_type': self.product_type,
+            'status':       'Active',
         }
 
         if 'province_or_city' in kwargs:
@@ -39,7 +39,6 @@ class MasterlistSummaryHelper:
         return self.filters
 
     def get_total(self):
-        print(self.filters)
         return self.get_filtered_total()
 
     def get_total_mfg(self):
@@ -65,106 +64,129 @@ class MasterlistSummaryHelper:
     def get_total_wholesaler(self):
         self.filters.pop('primary_activity__name', 'Nothing found') # remove primary_activity__name from default filter so it won't conflict with specific_activity__name
         self.filters['specific_activity__name'] = "Wholesaler"
-        # print(self.filters)
-        return self.get_filtered_total()
+        return self.get_filtered().exclude(specific_activity__name="Importer").exclude(specific_activity__name="Exporter").count()
 
     def get_total_importer(self):
         self.filters.pop('primary_activity__name', 'Nothing found') # remove primary_activity__name from default filter so it won't conflict with specific_activity__name
         self.filters['specific_activity__name'] = 'Importer'
-        # print(self.filters)
-        return self.get_filtered_total()
+        return self.get_filtered().exclude(specific_activity__name="Wholesaler").exclude(specific_activity__name="Exporter").count()
 
     def get_total_exporter(self):
         self.filters.pop('primary_activity__name', 'Nothing found') # remove primary_activity__name from default filter so it won't conflict with specific_activity__name
         self.filters['specific_activity__name'] = 'Exporter'
-        # print(self.filters)
-        return self.get_filtered_total()
+        return self.get_filtered().exclude(specific_activity__name="Wholesaler").exclude(specific_activity__name="Importer").count()
 
     def get_total_wi(self):
         count = 0
         if self.province_or_city == 'Baguio City':
             count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Importer'),
-                        Q(plant_address__municipality_or_city__name=self.province_or_city)
-                    ).count()
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Importer').count()
         else:
-            count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Importer'),
-                        Q(plant_address__province__name=self.province_or_city),
-                    ).count()
+            count_ben = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__province__name=self.province_or_city,
+                    ).filter(specific_activity__name='Importer').count()
 
-        return count
+            count_bag = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__province__name=self.province_or_city,
+                        plant_address__municipality_or_city__name='Baguio City',
+                    ).filter(specific_activity__name='Importer').count()
+            count = count_ben - count_bag
+
+        return abs(count)
 
     def get_total_we(self):
         count = 0
         if self.province_or_city == 'Baguio City':
             count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__municipality_or_city__name=self.province_or_city)
-                    ).count()
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').count()
         else:
-            count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__province__name=self.province_or_city)
-                    ).count()
+            count_ben = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__province__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').count()
 
-        return count
+            count_bag = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__province__name=self.province_or_city,
+                        plant_address__municipality_or_city__name='Baguio City',
+                    ).filter(specific_activity__name='Exporter').count()
+            count = count_ben - count_bag
+
+        return abs(count)
 
     def get_total_ie(self):
         count = 0
         if self.province_or_city == 'Baguio City':
             count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Importer') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__municipality_or_city__name=self.province_or_city)
-                    ).count()
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Importer',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').count()
         else:
-            count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Importer') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__province__name=self.province_or_city)
-                    ).count()
+            count_ben = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Importer',
+                        plant_address__province__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').count()
 
-        return count
+            count_bag = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Importer',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').count()
+
+            count = count_ben - count_bag
+
+        return abs(count)
 
     def get_total_wei(self):
         count = 0
         if self.province_or_city == 'Baguio City':
             count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Importer') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__municipality_or_city__name=self.province_or_city)
-                    ).count()
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').filter(specific_activity__name='Exporter').count()
         else:
-            count = Establishment.objects.filter(
-                        Q(product_type=self.product_type),
-                        Q(status='Active'),
-                        Q(specific_activity__name='Wholesaler') and
-                        Q(specific_activity__name='Importer') and
-                        Q(specific_activity__name='Exporter'),
-                        Q(plant_address__province__name=self.province_or_city)
-                    ).count()
+            count_ben = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__province__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').filter(specific_activity__name='Exporter').count()
 
-        return count
+            count_bag = Establishment.objects.filter(
+                        product_type=self.product_type,
+                        status='Active',
+                        specific_activity__name='Wholesaler',
+                        plant_address__municipality_or_city__name=self.province_or_city,
+                    ).filter(specific_activity__name='Exporter').filter(specific_activity__name='Exporter').count()
+
+            count = count_ben - count_bag
+
+        return abs(count)
 
     def get_filtered(self):
         return Establishment.objects.filter(**self.filters)
