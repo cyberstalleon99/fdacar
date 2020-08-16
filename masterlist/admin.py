@@ -1,7 +1,6 @@
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import admin
-from .models import Establishment, ProductType, PrimaryActivity, \
-    AdditionalActivity, Region, Province, CityOrMunicipality, SpecificActivity, ProductLine, ProductType, \
+from .models import Establishment, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
     EstAdditionalActivity, EstProductLine, Variation
 
@@ -162,10 +161,20 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         return obj.plant_address.municipality_or_city.name
 
     def lto_number(self, obj):
-        return obj.ltos.first().lto_number
+        try:
+            obj.ltos.first().lto_number
+        except:
+            return "N/A"
+        else:
+            return obj.ltos.first().lto_number
 
     def expiry(self, obj):
-        return obj.ltos.first().expiry
+        try:
+            obj.ltos.first().expiry
+        except:
+            return "N/A"
+        else:
+            return obj.ltos.first().expiry
 
     def response_change(self, request, obj):
         return redirect('/admin/masterlist/establishment')

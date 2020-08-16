@@ -29,10 +29,20 @@ class EstablishmentResource(resources.ModelResource):
         return specific_activities
 
     def dehydrate_lto(self, establishment):
-        return establishment.ltos.latest()
+        try:
+            establishment.ltos.latest()
+        except:
+            return None
+        else:
+            return establishment.ltos.latest()
 
     def dehydrate_lto_expiry(self, establishment):
-        return establishment.ltos.latest().expiry
+        try:
+            establishment.ltos.latest().expiry
+        except:
+            return None
+        else:
+            return establishment.ltos.latest().expiry
 
     def dehydrate_product_line(self, establishment):
         product_lines = ''
@@ -100,10 +110,20 @@ class JobResource(resources.ModelResource):
         return specific_activities
 
     def dehydrate_lto(self, job):
-        return job.establishment.ltos.latest()
+        try:
+            job.establishment.ltos.latest()
+        except:
+            return "N/A"
+        else:
+            return job.establishment.ltos.latest()
 
     def dehydrate_lto_expiry(self, job):
-        return job.establishment.ltos.latest().expiry
+        try:
+            job.establishment.ltos.latest().expiry
+        except:
+            return "N/A"
+        else:
+            return job.establishment.ltos.latest().expiry
 
     def dehydrate_product_line(self, job):
         product_lines = ''
