@@ -13,9 +13,9 @@
     </div>
     <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
     <ul class="list-unstyled">
-        <li  class="{{masterlist_dashboard_active}}"><a href="{% url 'dashboard:index' %}"> <i class="icon-grid"></i>Dashboard </a></li>
-        <li><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Inspection Checklist </a>
-            <ul class="list-unstyled ">
+        <li  class="{{masterlist_dashboard_active}}"><a href="{% url 'dashboard:index' %}"> <i class="icon-dashboard"></i>Dashboard </a></li>
+        <li><a href="#checklist" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>Inspection Checklist </a>
+            <ul id="checklist" class="collapse list-unstyled ">
                 <li class="{{ ren_checklist_active }}"><a href="{% url 'checklist:index' %}">Renewal</a></li>
                 <li class="{{ pli_checklist_active }}" disabled><a href="{% url 'checklist:pli' %}">PLI</a></li>
                 <!--<li class="{{ routine_checklist_active }}"><a href="{% url 'checklist:routine' %}">Routine</a></li>-->
@@ -23,8 +23,8 @@
                 <!--<li><a href="#">Recent</a></li>-->
             </ul>
         </li>
-        <li><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>Master List </a>
-          <ul class="list-unstyled ">
+        <li><a href="#masterlist" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>Master List </a>
+          <ul id="masterlist" class="collapse list-unstyled ">
               <li class="{{alllist_active}}"><a href="{% url 'masterlist:index' %}">All</a></li>
               <li class="{{provincelist_active}}"><a href="{% url 'masterlist:abra-list' %}">Provinces</a></li>
               <li class="{{expiredlist_active}}"><a href="{% url 'masterlist:expired-list' %}">Expired</a></li>
@@ -32,42 +32,42 @@
               <li class="{{summary_active}}"><a href="{% url 'masterlist:summary' %}" target="_blank">Summary</a></li>
           </ul>
         </li>
-        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>PMS </a>
-            <ul class="list-unstyled ">
+        <li ><a href="#pms" aria-expanded="false" data-toggle="collapse"> <i class="icon-flask"></i>PMS </a>
+            <ul id="pms" class="collapse list-unstyled ">
                 <li class="{{ pms_active }}"><a href="{% url 'pms:index' %}">All</a></li>
                 <li class="{{ ren_checklist_active }}"><a href="{% url 'admin:pms_product_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
         <!--<li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>-->
-        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Applications Received </a>
-            <ul class="list-unstyled ">
+        <li ><a href="#appsreceived" aria-expanded="false" data-toggle="collapse"> <i class="icon-new-file"></i>Applications Received </a>
+            <ul id="appsreceived" class="collapse list-unstyled ">
                 <li class="{{apps_active}}"><a href="{% url 'appsreceived:index' %}">All</a></li>
                 <li class=""><a href="{% url 'admin:appsreceived_application_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>PLI </a>
-            <ul class="list-unstyled ">
+        <li ><a href="#pli" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>PLI </a>
+            <ul id="pli" class="collapse list-unstyled ">
                 <li class="{{pli_active}}"><a href="{% url 'pli:index' %}">All</a></li>
                 <li class=""><a href="{% url 'admin:pli_pli_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Incoming </a>
-            <ul class="list-unstyled ">
+        <li ><a href="#incoming" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Incoming </a>
+            <ul id="incoming" class="collapse list-unstyled ">
                 <li class="{{incoming_active}}"><a href="{% url 'incoming:index' %}">All</a></li>
                 <li class=""><a href="{% url 'admin:incoming_incoming_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li ><a href="#" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Outgoing </a>
-            <ul class="list-unstyled ">
+        <li ><a href="#outgoing" aria-expanded="false" data-toggle="collapse"> <i class="icon-log-out"></i>Outgoing </a>
+            <ul id="outgoing" class="collapse list-unstyled ">
                 <li class="{{outgoing_active}}"><a href="{% url 'outgoing:index' %}">All</a></li>
                 <li class=""><a href="{% url 'admin:outgoing_outgoing_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
-        <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>
+        <!--<li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>-->
     </ul><span class="heading">Extras</span>
     <ul class="list-unstyled">
+        <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Accomplishment Report </a></li>
         <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
         <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
     </ul>
 </nav>

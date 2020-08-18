@@ -42,7 +42,9 @@ INSPECTION_TYPES = [
     ('INI', 'Initial Inspection'),
     ('RTN', 'Routine Inspection'),
     ('SPA', 'Special Assignment'),
-    ('VTN', 'Variation')
+    ('VTN', 'Variation'),
+    ('CLS', 'For Verification of Closure'),
+    ('For Verification of LTO Renewal', 'For Verification of LTO Renewal')
 ]
 
 VARIATION_TYPES = [

@@ -46,7 +46,12 @@ class MasterlistSummaryHelper:
             plant_address__municipality_or_city__name='Baguio City'
         ).count()
 
-        if self.province_or_city == 'Baguio City':
+        if self.province_or_city == '':
+            count = Establishment.objects.filter(
+                status='Active',
+                product_type=self.product_type,
+            ).count()
+        elif self.province_or_city == 'Baguio City':
             count = count_bag
         elif self.province_or_city == 'Benguet':
             count_ben = Establishment.objects.filter(
@@ -229,7 +234,13 @@ class MasterlistSummaryHelper:
             plant_address__municipality_or_city__name='Baguio City',
         ).count()
 
-        if self.province_or_city == 'Baguio City':
+        if self.province_or_city == '':
+            count = Establishment.objects.filter(
+                status='Active',
+                product_type=self.product_type,
+                primary_activity__name=prim_activ
+            ).count()
+        elif self.province_or_city == 'Baguio City':
             count = count_bag
         elif self.province_or_city == 'Benguet':
             count_ben = Establishment.objects.filter(
@@ -259,7 +270,13 @@ class MasterlistSummaryHelper:
             plant_address__municipality_or_city__name='Baguio City',
         ).exclude(specific_activity__name=exclude1).exclude(specific_activity__name=exclude2).count()
 
-        if self.province_or_city == 'Baguio City':
+        if self.province_or_city == '':
+            count = Establishment.objects.filter(
+                product_type=self.product_type,
+                status='Active',
+                specific_activity__name=spec_activ,
+            ).exclude(specific_activity__name=exclude1).exclude(specific_activity__name=exclude2).count()
+        elif self.province_or_city == 'Baguio City':
             count = count_bag
         elif self.province_or_city == 'Benguet':
             count_ben = Establishment.objects.filter(
@@ -289,7 +306,13 @@ class MasterlistSummaryHelper:
             plant_address__municipality_or_city__name='Baguio City',
         ).count()
 
-        if self.province_or_city == 'Baguio City':
+        if self.province_or_city == '':
+            count = Establishment.objects.filter(
+                product_type=self.product_type,
+                status='Active',
+                specific_activity__name=spec_activ
+            ).count()
+        elif self.province_or_city == 'Baguio City':
             count = count_bag
         elif self.province_or_city == 'Benguet':
             count_ben = Establishment.objects.filter(
