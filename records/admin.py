@@ -38,6 +38,10 @@ class InspectionAdmin(admin.ModelAdmin):
             'Inspection Report',
             {'fields': ['inspection_report']}
         ),
+        (
+            'Forwarded to supervisor',
+            {'fields': ['date_forwarded', 'date_approved']}
+        ),
     ]
 
 

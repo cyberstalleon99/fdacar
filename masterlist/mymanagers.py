@@ -6,6 +6,7 @@ class ExpiredListManager(myhelpers.MyModelManager):
 
     def get_list(self):
         establishments = set()
+        establishments.clear()
         for est in super().get_queryset().filter(status='Active'):
             try:
                 est.ltos.latest().expiry

@@ -185,6 +185,9 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     def type_of_inspection(self, obj):
         return obj.record.inspections.latest().type_of_inspection
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
     def save_model(self, request, obj, form, change):
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
