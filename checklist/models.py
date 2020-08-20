@@ -5,10 +5,10 @@ from masterlist.models import Establishment
 from .mymanagers import RenewalChecklistManager, PLIChecklistManager, RoutineListManager
 
 class Job(models.Model):
-    establishment =     models.OneToOneField(Establishment, on_delete=models.CASCADE, null=True)
+    establishment =     models.OneToOneField(Establishment, on_delete=models.CASCADE)
     date_created =      models.DateTimeField('Date Created', default=timezone.now)
-    inspection_status = models.CharField(max_length=11, default=constants.INSPECTION_STATUS[1])
-    inspection_type =   models.CharField(max_length=20, choices=constants.INSPECTION_TYPES, null=True)
+    inspection_status = models.CharField(max_length=250, choices=constants.INSPECTION_STATUS)
+    job_type =          models.CharField(max_length=250, choices=constants.JOB_TYPES, null=True)
     renchecklist =      RenewalChecklistManager()
     plichecklist =      PLIChecklistManager()
     routinelist =       RoutineListManager()

@@ -95,7 +95,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
 
     search_fields = ['name']
 
-    list_display = ('name', 'plant_address', 'municipality_or_city', 'province',
+    list_display = ('name', 'address',
      'product_type', 'primary_activity', 'specific_activities',
      'lto_number', 'expiry',
      'last_inspection', 'type_of_inspection', 'folder')
@@ -154,11 +154,17 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     def folder(self, obj):
         return obj.record.folder_id
 
-    def province(self, obj):
-        return obj.plant_address.province.name
+    def product_type(self, obj):
+        return obj.product_type.name
 
-    def municipality_or_city(self, obj):
-        return obj.plant_address.municipality_or_city.name
+    def primary_activity(self, obj):
+        return obj.primary_activity.name
+
+    def specific_activities(self, obj):
+        return obj.specific_activities()
+
+    def address(self, obj):
+        return obj.plant_address.full_address()
 
     def lto_number(self, obj):
         try:

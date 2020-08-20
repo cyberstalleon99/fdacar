@@ -18,6 +18,7 @@
             <ul id="checklist" class="collapse list-unstyled ">
                 <li class="{{ ren_checklist_active }}"><a href="{% url 'checklist:index' %}">Renewal</a></li>
                 <li class="{{ pli_checklist_active }}" disabled><a href="{% url 'checklist:pli' %}">PLI</a></li>
+                <li class=""><a href="{% url 'admin:checklist_job_changelist' %}" target="_blank">Advanced Search</a></li>
                 <!--<li class="{{ routine_checklist_active }}"><a href="{% url 'checklist:routine' %}">Routine</a></li>-->
                 <li class=""><a href="#">Followup</a></li>
                 <!--<li><a href="#">Recent</a></li>-->
@@ -35,7 +36,7 @@
         <li ><a href="#pms" aria-expanded="false" data-toggle="collapse"> <i class="icon-flask"></i>PMS </a>
             <ul id="pms" class="collapse list-unstyled ">
                 <li class="{{ pms_active }}"><a href="{% url 'pms:index' %}">All</a></li>
-                <li class="{{ ren_checklist_active }}"><a href="{% url 'admin:pms_product_changelist' %}" target="_blank">Advanced Search</a></li>
+                <li class=""><a href="{% url 'admin:pms_product_changelist' %}" target="_blank">Advanced Search</a></li>
             </ul>
         </li>
         <!--<li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Applications Received </a></li>-->

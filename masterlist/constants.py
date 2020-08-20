@@ -71,7 +71,12 @@ ALL_DESIGNATIONS = [
     ("Authorized Representative",    "Authorized Representative")
 ]
 
-JOB_TYPES = ['PLI', 'REN', 'FUP', 'RTN']
+JOB_TYPES = [
+    ('PLI', 'Post Licensing Inspection'),
+    ('REN', 'Renewal of LTO'),
+    ('FUP', 'Followup Inspection'),
+    ('RTN', 'Routine Inspection')
+]
 
 RISK_RATINGS = [
     ('Low', 'Low'),
@@ -79,5 +84,8 @@ RISK_RATINGS = [
     ('High', 'High')
 ]
 
-INSPECTION_STATUS = [ 'inspected', 'pending']
+INSPECTION_STATUS = [
+    ('Complete', 'Complete'),
+    ('Pending', 'Pending')
+]
 CHECKLIST_STATUS = ['hidden', 'visible']

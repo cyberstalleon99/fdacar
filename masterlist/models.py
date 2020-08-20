@@ -184,9 +184,8 @@ class Lto(models.Model):
     def get_duration(self):
         start_date = datetime.now().date()
         end_date = self.expiry
-        difference = relativedelta.relativedelta(end_date, start_date)
-        month = difference.years * 12 + difference.months
-        return month
+        num_months = (end_date.year - start_date.year) * 12 + end_date.month - start_date.month
+        return num_months
 
     class Meta:
         ordering = ['-expiry']

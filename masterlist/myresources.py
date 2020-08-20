@@ -23,10 +23,7 @@ class EstablishmentResource(resources.ModelResource):
     folder_id = Field(column_name="Folder Number")
 
     def dehydrate_specific_activity(self, establishment):
-        specific_activities = ''
-        for spec_act in establishment.specific_activity.all():
-            specific_activities += spec_act.name + ", "
-        return specific_activities
+        return ",\n".join(activity.name  for activity in establishment.specific_activity.all())
 
     def dehydrate_lto(self, establishment):
         try:
@@ -45,10 +42,11 @@ class EstablishmentResource(resources.ModelResource):
             return establishment.ltos.latest().expiry
 
     def dehydrate_product_line(self, establishment):
-        product_lines = ''
-        for prod_line in establishment.product_lines.all():
-            product_lines += prod_line.product_line.name + ", "
-        return product_lines
+        # product_lines = ''
+        # for prod_line in establishment.product_lines.all():
+        #     product_lines += prod_line.product_line.name + ", "
+        # return product_lines
+        return ",\n".join(product_line.product_line.name  for product_line in establishment.product_lines.all())
 
     def dehydrate_remarks(self, establishment):
         product_remarks = ''
@@ -56,6 +54,7 @@ class EstablishmentResource(resources.ModelResource):
             if prod_line.remarks:
                 product_remarks += prod_line.remarks + ", "
         return product_remarks
+        # return ",\n".join(product_line.remarks  for product_line in establishment.product_lines.all())
 
     def dehydrate_last_inspection(self, establishment):
         try:
@@ -67,11 +66,11 @@ class EstablishmentResource(resources.ModelResource):
 
     def dehydrate_inspected_by(self, establishment):
         try:
-            establishment.record.inspections.latest().inspector
+            establishment.record.inspections.latest().date_inspected
         except:
             return 'No inspections yet'
         else:
-            return establishment.record.inspections.latest().inspector
+            return ",\n".join(inspector.inspector.get_short_name()  for inspector in establishment.record.inspections.latest().est_inspectors.all())
 
     def dehydrate_folder_id(self, establishment):
 
@@ -84,7 +83,7 @@ class EstablishmentResource(resources.ModelResource):
 
     class Meta:
         model=Establishment
-        exclude = ('id', 'date_modified', 'application', 'center', 'additional_activity', 'office_address', 'authorized_officer',)
+        exclude = ('id', 'date_modified', 'application', 'center', 'additional_activity', 'office_address', 'authorized_officer', 'modified_by')
 
 class JobResource(resources.ModelResource):
     name = Field(attribute="establishment__name", column_name="Establishment Name")

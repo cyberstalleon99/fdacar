@@ -3,7 +3,7 @@ from .serializers import RenewalSerializer
 from checklist.models import Job
 
 class RenewalViewSet(viewsets.ModelViewSet):
-    queryset = Job.renchecklist.get_list().order_by('name')
+    queryset = Job.renchecklist.get_list().order_by('establishment__ltos__expiry')
     serializer_class = RenewalSerializer
 
 class PLIViewSet(viewsets.ModelViewSet):

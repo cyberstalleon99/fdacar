@@ -29,7 +29,7 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
 
         )
 
-        search_fields = ['inspection__record__establishment__name', 'inspection__tracking_number']
+        search_fields = ['inspection__record__establishment__name', 'inspection__tracking_number', 'inspection__record__establishment__ltos__lto_number']
         resource_class = PliResource
 
         def name(self, pli):
