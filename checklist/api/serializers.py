@@ -16,7 +16,7 @@ class RenewalSerializer(serializers.ModelSerializer):
         return {'pkey': job.establishment.pk}
 
     def get_date_created(self, job):
-        return job.date_created.date()
+        return job.date_created
 
     class Meta:
         model = Job

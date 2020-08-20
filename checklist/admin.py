@@ -1,11 +1,13 @@
 from django.contrib import admin
 from .models import Job
 from masterlist.admin import EstablishmentAdmin
+from masterlist import constants
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
     model = Job
+    actions = ['mark_done']
     list_per_page = 20
     search_fields = ['establishment__name', 'establishment__ltos__lto_number']
 
@@ -47,3 +49,7 @@ class JobAdmin(admin.ModelAdmin):
 
     def last_inspection(self, job):
         return EstablishmentAdmin.last_inspection(self, job.establishment)
+
+    def mark_done(self, request, queryset):
+        queryset.update(inspection_status=constants.INSPECTION_STATUS[0][0])
+    mark_done.short_description = "Mark selected jobs as Complete"
