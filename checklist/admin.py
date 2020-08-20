@@ -3,6 +3,8 @@ from .models import Job
 from masterlist.admin import EstablishmentAdmin
 from masterlist import constants
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from django.contrib import messages
+from django.utils.translation import ngettext
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
@@ -51,5 +53,11 @@ class JobAdmin(admin.ModelAdmin):
         return EstablishmentAdmin.last_inspection(self, job.establishment)
 
     def mark_done(self, request, queryset):
-        queryset.update(inspection_status=constants.INSPECTION_STATUS[0][0])
+        updated = queryset.update(inspection_status=constants.INSPECTION_STATUS[0][0])
+        self.message_user(request, ngettext(
+            '%d job was successfully marked as Complete.',
+            '%d jobs were successfully marked as Complete.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
     mark_done.short_description = "Mark selected jobs as Complete"
