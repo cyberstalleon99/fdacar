@@ -51,10 +51,20 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
             return pli.inspection.record.establishment.specific_activities()
 
         def lto_number(self, pli):
-            return pli.inspection.record.establishment.ltos.first().lto_number
+            try:
+                pli.inspection.record.establishment.ltos.first().lto_number
+            except:
+                return "N/A"
+            else:
+                return pli.inspection.record.establishment.ltos.first().lto_number
 
         def expiry(self, pli):
-            return pli.inspection.record.establishment.ltos.first().expiry
+            try:
+                pli.inspection.record.establishment.ltos.first().expiry
+            except:
+                return "N/A"
+            else:
+                pli.inspection.record.establishment.ltos.first().expiry
 
         def type_of_inspection(self, pli):
             return pli.inspection.type_of_inspection
