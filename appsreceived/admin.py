@@ -103,10 +103,20 @@ class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
         return application.establishment.specific_activities()
 
     def lto_number(self, application):
-        return application.establishment.ltos.first().lto_number
+        try:
+            application.establishment.ltos.first().lto_number
+        except:
+            return "N/A"
+        else:
+            return application.establishment.ltos.first().lto_number
 
     def expiry(self, application):
-        return application.establishment.ltos.first().expiry
+        try:
+            application.establishment.ltos.first().expiry
+        except:
+            return "N/A"
+        else:
+            return application.establishment.ltos.first().expiry
 
     def inspector(self, application):
         try:
