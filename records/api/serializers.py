@@ -21,6 +21,7 @@ class RecordSerializer(serializers.ModelSerializer):
 class InspectionSerializer(serializers.ModelSerializer):
     record = RecordSerializer(many=False)
     inspector = serializers.SerializerMethodField()
+    inspection_type = serializers.SerializerMethodField()
     DT_RowId = serializers.SerializerMethodField()
     DT_RowAttr = serializers.SerializerMethodField()
 
@@ -29,6 +30,9 @@ class InspectionSerializer(serializers.ModelSerializer):
 
     def get_DT_RowAttr(self, inspection):
         return {'pkey': inspection.pk}
+
+    def get_inspection_type(self, inspection):
+        return inspection.inspection_type.name
 
     def get_inspector(self, inspection):
         try:
@@ -41,7 +45,7 @@ class InspectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inspection
         fields = (
-            'DT_RowId', 'DT_RowAttr','id', 'tracking_number', 'type_of_inspection',
+            'DT_RowId', 'DT_RowAttr','id', 'tracking_number', 'type_of_inspection', 'inspection_type',
             'date_inspected', 'frequency_of_inspection', 'risk_rating', 'date_of_followup_inspection', 'record',
             'inspector', 'remarks', 'date_forwarded', 'date_approved'
         )

@@ -14,13 +14,13 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         ordering = ('-group',)
 
         list_display = ('status', 'name', 'address', 'month', 'product_type', 'primary_activity',
-                        'specific_activities', 'lto_number', 'expiry', 'type_of_inspection', 'date_inspected',
+                        'specific_activities', 'lto_number', 'expiry', 'inspection_type', 'date_inspected',
                         'inspector', 'remarks',
         )
 
         list_filter = (
             ('inspection__est_inspectors__inspector', RelatedDropdownFilter),
-            ('inspection__type_of_inspection', DropdownFilter),
+            ('inspection__inspection_type', RelatedDropdownFilter),
             ('inspection__record__establishment__product_type', RelatedDropdownFilter),
             ('inspection__record__establishment__primary_activity', RelatedDropdownFilter),
             ('inspection__record__establishment__specific_activity', RelatedDropdownFilter),
@@ -64,10 +64,10 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
             except:
                 return "N/A"
             else:
-                pli.inspection.record.establishment.ltos.first().expiry
+                return pli.inspection.record.establishment.ltos.first().expiry
 
-        def type_of_inspection(self, pli):
-            return pli.inspection.type_of_inspection
+        def inspection_type(self, pli):
+            return pli.inspection.inspection_type
 
         def date_inspected(self, pli):
             return pli.inspection.date_inspected

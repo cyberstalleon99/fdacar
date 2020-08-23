@@ -27,13 +27,13 @@ $(document).ready(function () {
                   return data;
               }
           },
-          {'data': 'establishment.plant_address',         'name': 'establishment.plant_address.address',    'searchable': false},
-          {'data': 'establishment.product_type.name',     'name': 'establishment.product_type.name',    'searchable': false},
-          {'data': 'establishment.primary_activity',      'name': 'establishment.primary_activity.name',    'searchable': false},
-          {'data': 'establishment.specific_activities',   'name': 'establishment.specific_activity.name',    'searchable': false},
-          {'data': 'establishment.lto_number',     'name': 'establishment.ltos.lto_number'},
-          {'data': 'establishment.expiry',         'name': 'establishment.ltos.expiry',    'searchable': false},
-          {'data': 'establishment.last_inspection',         'name': 'establishment.record.inspections.latest().date_inspected', 'searchable': false},
+          {'data': 'establishment.plant_address',         'name': 'establishment.plant_address.address',                      'searchable': false},
+          {'data': 'establishment.product_type.name',     'name': 'establishment.product_type.name',                          'searchable': false},
+          {'data': 'establishment.primary_activity',      'name': 'establishment.primary_activity.name',                      'searchable': false},
+          {'data': 'establishment.specific_activities',   'name': 'establishment.specific_activity.name',                     'searchable': false},
+          {'data': 'establishment.lto_number',            'name': 'establishment.ltos.lto_number'},
+          {'data': 'establishment.expiry',                'name': 'establishment.ltos.expiry',                                'searchable': false},
+          {'data': 'establishment.last_inspection',       'name': 'establishment.record.inspections.latest().date_inspected', 'searchable': false},
     ];
 
     var alltable = $('#all_list_table').DataTable ({

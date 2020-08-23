@@ -1,11 +1,19 @@
 from django.contrib import admin
-from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record, EstInspector
+from .models import Inspection, Capa, CapaDeficiency, CapaPreparator, Record, EstInspector, TypeOfInspection
 from dateutil.relativedelta import relativedelta
 from checklist.models import Job
 from masterlist import constants
 from nested_admin import NestedTabularInline, NestedModelAdmin
+from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
+from import_export.admin import ExportActionModelAdmin
+from .myresources import InspectionResource
 
 admin.site.register(CapaPreparator)
+
+@admin.register(TypeOfInspection)
+class TypeOfInspectionAdmin(admin.ModelAdmin):
+    model = TypeOfInspection
+    list_display = ('id', 'name', 'short_name')
 
 class InspectorInline(NestedTabularInline, admin.TabularInline):
     model = EstInspector
@@ -13,14 +21,31 @@ class InspectorInline(NestedTabularInline, admin.TabularInline):
 
 # admin.site.register(Inspection)
 @admin.register(Inspection)
-class InspectionAdmin(admin.ModelAdmin):
+class InspectionAdmin(ExportActionModelAdmin, admin.ModelAdmin):
     inlines = (InspectorInline,)
     list_per_page = 20
+
+    search_fields = ['record__establishment__name', 'tracking_number', 'record__establishment__ltos__lto_number']
+    resource_class = InspectionResource
+
+    list_display = ('name', 'address', 'product_type', 'primary_activity',
+                    'specific_activities', 'lto_number', 'expiry', 'inspection_type', 'date_inspected',
+                    'inspector', 'remarks',
+    )
+
+    list_filter = (
+        ('est_inspectors__inspector', RelatedDropdownFilter),
+        ('inspection_type', RelatedDropdownFilter),
+        ('record__establishment__product_type', RelatedDropdownFilter),
+        ('record__establishment__primary_activity', RelatedDropdownFilter),
+        ('record__establishment__specific_activity', RelatedDropdownFilter),
+
+    )
 
     fieldsets = [
         (
             'General Information',
-            {'fields': ['record', 'tracking_number', 'type_of_inspection', 'date_inspected']}
+            {'fields': ['record', 'tracking_number', 'inspection_type', 'date_inspected']}
         ),
         (
             'Risk Rating',
@@ -44,7 +69,48 @@ class InspectionAdmin(admin.ModelAdmin):
         ),
     ]
 
+    def name(self, inspection):
+        return inspection.record.establishment.name
 
+    def address(self, inspection):
+        return inspection.record.establishment.plant_address.full_address()
+
+    def product_type(self, inspection):
+        return inspection.record.establishment.product_type
+
+    def primary_activity(self, inspection):
+        return inspection.record.establishment.primary_activity.name
+
+    def specific_activities(self, inspection):
+        return inspection.record.establishment.specific_activities()
+
+    def lto_number(self, inspection):
+        try:
+            inspection.record.establishment.ltos.first().lto_number
+        except:
+            return "N/A"
+        else:
+            return inspection.record.establishment.ltos.first().lto_number
+
+    def expiry(self, inspection):
+        try:
+            inspection.record.establishment.ltos.first().expiry
+        except:
+            return "N/A"
+        else:
+            return inspection.record.establishment.ltos.first().expiry
+
+    def inspection_type(self, inspection):
+        return inspection.inspection_type
+
+    def date_inspected(self, inspection):
+        return inspection.date_inspected
+
+    def inspector(self, inspection):
+        return ",\n".join(inspector.inspector.get_short_name()  for inspector in inspection.est_inspectors.all())
+
+    def remarks(self, inspection):
+        return inspection.remarks
 
 class InspectionInline(NestedTabularInline, admin.TabularInline):
     model = Inspection
@@ -90,35 +156,6 @@ class RecordAdmin(NestedModelAdmin):
 
     def municipality_or_city(self, obj):
         return obj.establishment.plant_address.municipality_or_city.name
-
-# @admin.register(Inspection)
-# class InspectionAdmin(admin.ModelAdmin):
-#     fieldsets = [
-#         ('General Information', {'fields': ['record', 'tracking_number', 'type_of_inspection', 'date_inspected', 'inspector', 'remarks']}),
-#         ('Risk Rating', {'fields': ['frequency_of_inspection', 'risk_rating']}),
-#         ('CAPA', {'fields': ['capa']}),
-#         ('Inspection Report', {'fields': ['inspection_report']}),
-#     ]
-
-#     def save_model(self, request, obj, form, change):
-#         frequency_of_inspection = request.POST.get('frequency_of_inspection')
-#         date_inspec = request.POST.get('date_inspected_0')
-#         time_inspec = request.POST.get('date_inspected_1')
-
-#         date_time_inspected = datetime.strptime(date_inspec + ' ' + time_inspec, '%Y-%m-%d %H:%M:%S')
-#         obj.date_of_followup_inspection = date_time_inspected + relativedelta(years=int(frequency_of_inspection))
-
-#         est = obj.record.establishment
-#         if Job.objects.filter(establishment=est).exists():
-#             curr_job = Job.objects.get(establishment=est)
-#             # Set the Job object's inspection status to 'inspected'
-#             curr_job.inspection_status = constants.INSPECTION_STATUS[0]
-#             curr_job.save()
-
-#         return super().save_model(request, obj, form, change)
-
-# class CapaPreparatorInline(admin.StackedInline):
-#     model = CapaPreparator
 
 class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency
