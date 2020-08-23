@@ -84,6 +84,6 @@ class InspectionResource(resources.ModelResource):
 
     class Meta:
         model = Inspection
-        exclude = ('id', 'record', 'date_of_followup_inspection', 'for_capa', 'inspection_report', 'type_of_inspection', 'capa')
+        exclude = ('id', 'record', 'date_of_followup_inspection', 'for_capa', 'inspection_report', 'capa')
 
 

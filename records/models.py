@@ -71,7 +71,7 @@ class Inspection(models.Model):
     record =                        models.ForeignKey(Record, on_delete=models.SET_NULL, null=True, verbose_name="Record", related_name="inspections")
     tracking_number =               models.CharField(max_length=14, null=True, verbose_name="DTN or Case #", help_text="Put N/I if no DTN")
     capa =                          models.OneToOneField(Capa, on_delete=models.SET_NULL, null=True, blank=True)
-    type_of_inspection =            models.CharField(max_length=250, choices=constants.INSPECTION_TYPES)
+    # type_of_inspection =            models.CharField(max_length=250, choices=constants.INSPECTION_TYPES)
     inspection_type =               models.ForeignKey(TypeOfInspection, on_delete=models.CASCADE, null=True, verbose_name="Type of Inspection")
     date_inspected =                models.DateField('Date Inspected', help_text='Format: YYYY/MM/DD')
     frequency_of_inspection =       models.PositiveIntegerField(default=0, verbose_name="Frequency of Inspection", null=True, blank=True, help_text="Leave blank if not applicable")

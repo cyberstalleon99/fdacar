@@ -45,7 +45,7 @@ class InspectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inspection
         fields = (
-            'DT_RowId', 'DT_RowAttr','id', 'tracking_number', 'type_of_inspection', 'inspection_type',
+            'DT_RowId', 'DT_RowAttr','id', 'tracking_number', 'inspection_type',
             'date_inspected', 'frequency_of_inspection', 'risk_rating', 'date_of_followup_inspection', 'record',
             'inspector', 'remarks', 'date_forwarded', 'date_approved'
         )
