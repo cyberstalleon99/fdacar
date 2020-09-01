@@ -189,7 +189,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         return obj.record.inspections.latest().date_inspected
 
     def type_of_inspection(self, obj):
-        return obj.record.inspections.latest().type_of_inspection
+        return obj.record.inspections.latest().inspection_type
 
     def has_delete_permission(self, request, obj=None):
         return False
