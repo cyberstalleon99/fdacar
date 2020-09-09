@@ -37,3 +37,6 @@ class MyExporter:
         response = HttpResponse(dataset.xlsx, content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename={}.xlsx'.format(filename)
         return response
+
+class FolderGenerator:
+    pass
