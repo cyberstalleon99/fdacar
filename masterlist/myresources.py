@@ -15,6 +15,8 @@ class EstablishmentResource(resources.ModelResource):
     plant_address = Field(attribute="plant_address__address", column_name="Address")
     province = Field(attribute="plant_address__province__name", column_name="Province")
     municipality_or_city = Field(attribute="plant_address__municipality_or_city__name", column_name="City or Municipality")
+    owner = Field(column_name="Owner")
+    qualified_person = Field(column_name="Qualified Person/s")
     contact_number = Field(attribute="authorized_officer__mobile", column_name="Contact Number")
     email = Field(attribute="authorized_officer__email", column_name="Email Address")
     last_inspection = Field(column_name="Last Inspection")
@@ -47,6 +49,12 @@ class EstablishmentResource(resources.ModelResource):
         #     product_lines += prod_line.product_line.name + ", "
         # return product_lines
         return ",\n".join(product_line.product_line.name  for product_line in establishment.product_lines.all())
+
+    def dehydrate_qualified_person(self, establishment):
+        return ",\n".join(person.full_name()  for person in establishment.qualifiedperson_set.all())
+
+    def dehydrate_owner(self, establishment):
+        return establishment.authorized_officer.full_name()
 
     def dehydrate_remarks(self, establishment):
         product_remarks = ''

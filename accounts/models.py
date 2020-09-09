@@ -44,14 +44,22 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+class UserDesignation(models.Model):
+    name =              models.CharField(max_length=250)
+    description =       models.TextField()
+
+    def __str__(self):
+        return self.name
+
 class  User(AbstractBaseUser):
-    email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
-    first_name = models.CharField(max_length=255)
-    middle_initial = models.CharField(max_length=1)
-    last_name = models.CharField(max_length=255)
-    active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False) # a admin user; non super-user
-    admin = models.BooleanField(default=False) # a superuser
+    email =             models.EmailField(verbose_name='email address', max_length=255, unique=True)
+    first_name =        models.CharField(max_length=255)
+    middle_initial =    models.CharField(max_length=1)
+    last_name =         models.CharField(max_length=255)
+    active =            models.BooleanField(default=True)
+    staff =             models.BooleanField(default=False) # a admin user; non super-user
+    admin =             models.BooleanField(default=False) # a superuser
+    designation =       models.ManyToManyField(UserDesignation)
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'

@@ -15,6 +15,7 @@ APPLICATIONS = [
     ('Initial', 'Initial'),
     ('Renewal', 'Renewal'),
     ('Variation', 'Variation'),
+    ('Turned Initial', 'Turned Initial'),
 ]
 
 RECOMMENDATION = [

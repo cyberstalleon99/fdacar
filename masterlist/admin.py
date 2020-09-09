@@ -2,7 +2,7 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 from django.contrib import admin
 from .models import Establishment, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
-    EstAdditionalActivity, EstProductLine, Variation
+    EstAdditionalActivity, EstProductLine, Variation, SpecificActivity
 
 # from records.models import Record
 # from checklist.models import Job
@@ -44,6 +44,7 @@ admin.site.register(QualifiedPerson)
 admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
+admin.site.register(SpecificActivity)
 
 
 @admin.register(VariationType)
