@@ -2,6 +2,7 @@ from import_export import resources
 from import_export.fields import Field
 from .models import Establishment
 from checklist.models import Job
+from dateutil.relativedelta import relativedelta
 
 class EstablishmentResource(resources.ModelResource):
     name = Field(attribute="name", column_name="Establishment Name")
@@ -20,6 +21,8 @@ class EstablishmentResource(resources.ModelResource):
     contact_number = Field(attribute="authorized_officer__mobile", column_name="Contact Number")
     email = Field(attribute="authorized_officer__email", column_name="Email Address")
     last_inspection = Field(column_name="Last Inspection")
+    frequency_of_inspection = Field(column_name="Frequency of Inspection")
+    next_inspection = Field(column_name="Next Inspection")
     inspected_by = Field(column_name="Inspector")
     status = Field(attribute="status", column_name="Status")
     folder_id = Field(column_name="Folder Number")
@@ -71,6 +74,33 @@ class EstablishmentResource(resources.ModelResource):
             return 'No inspections yet'
         else:
             return establishment.record.inspections.latest().date_inspected
+
+    def dehydrate_frequency_of_inspection(self, establishment):
+        try:
+            establishment.record.inspections.latest().date_inspected
+        except:
+            return 'No inspections yet'
+        else:
+            frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
+            if frequency_of_inspection:
+                return establishment.record.inspections.latest().frequency_of_inspection
+            else:
+                return 'No Risk Assessment'
+
+    def dehydrate_next_inspection(self, establishment):
+        next_date_inspection = ''
+
+        try:
+            establishment.record.inspections.latest()
+        except:
+            return 'No inspections yet'
+        else:
+            frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
+            if frequency_of_inspection:
+                next_date_inspection = establishment.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
+            else:
+                return 'No Risk Assessment'
+        return next_date_inspection
 
     def dehydrate_inspected_by(self, establishment):
         try:
