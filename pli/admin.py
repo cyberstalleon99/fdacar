@@ -14,7 +14,7 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         ordering = ('-group',)
 
         list_display = ('status', 'name', 'address', 'month', 'product_type', 'primary_activity',
-                        'specific_activities', 'lto_number', 'expiry', 'inspection_type', 'date_inspected',
+                        'specific_activities', 'lto_number', 'expiry', 'inspection_type', 'date_inspected', 'inspection_count',
                         'inspector', 'remarks',
         )
 
@@ -71,6 +71,11 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
 
         def date_inspected(self, pli):
             return pli.inspection.date_inspected
+
+        def inspection_count(self, pli):
+            record = pli.inspection.record
+            count = record.inspections.count()
+            return count
 
         def inspector(self, pli):
             return ",\n".join(inspector.inspector.get_short_name()  for inspector in pli.inspection.est_inspectors.all())
