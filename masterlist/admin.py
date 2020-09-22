@@ -1,6 +1,6 @@
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import admin
-from .models import Establishment, CityOrMunicipality, \
+from .models import Establishment, Province, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
     EstAdditionalActivity, EstProductLine, Variation, SpecificActivity
 
@@ -42,6 +42,7 @@ from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAd
 admin.site.register(AuthorizedOfficer)
 admin.site.register(QualifiedPerson)
 admin.site.register(OfficeAddress)
+admin.site.register(Province)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
 admin.site.register(SpecificActivity)
