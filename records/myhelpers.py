@@ -4,6 +4,8 @@ import re
 class Folder:
 
     new_folder = ''
+    records = ''
+    filters = {}
 
     product_type = ''
     prim_activity = ''
@@ -29,32 +31,39 @@ class Folder:
         self.spec_activities_list = list(establishment.specific_activity.all())
 
     def get_next_number(self):
-        filters = {}
-        records = ''
-        filters = {
+
+        self.filters = {
             'establishment__product_type__name': self.product_type,
             'establishment__primary_activity__name': self.prim_activity,
             'establishment__plant_address__province': self.province,
-            'establishment__plant_address__municipality_or_city__name': self.city_or_municip,
-            'establishment__specific_activity': self.spec_activities_list[0]
+            'establishment__specific_activity': self.spec_activities[0]
         }
-        records = Record.objects.filter(**filters).order_by('folder_id')
+
+        self.records = Record.objects.filter(**self.filters)
+
+        if self.city_or_municip == 'Baguio City':
+            self.filters['establishment__plant_address__municipality_or_city__name'] = self.city_or_municip
+        else:
+            self.records = self.records.exclude(establishment__plant_address__municipality_or_city__name = 'Baguio City')
 
         if len(self.spec_activities_list) == 2:
-            filter1 = {'establishment__specific_activity': self.spec_activities_list[1]}
-            records = Record.objects.filter(**filters).filter(**filter1).order_by('folder_id')
+            filter1 = {'establishment__specific_activity': self.spec_activities[1]}
+            self.records = Record.objects.filter(**self.filters).filter(**filter1)
 
         elif len(self.spec_activities_list) == 3:
-            filter2 = {'establishment__specific_activity': self.spec_activities_list[1]}
-            filter3 = {'establishment__specific_activity': self.spec_activities_list[2]}
-            records = Record.objects.filter(**filters).filter(**filter2).filter(**filter3).order_by('folder_id')
+            filter2 = {'establishment__specific_activity': self.spec_activities[1]}
+            filter3 = {'establishment__specific_activity': self.spec_activities[2]}
+            self.records = Record.objects.filter(**self.filters).filter(**filter2).filter(**filter3)
+
+        self.records = self.records.order_by('id')
 
         try:
-            records.last().folder_id
+            self.records.last().folder_id
         except:
             last_folder = '0'
         else:
-            last_folder = records.last().folder_id
+            last_folder = self.records.last().folder_id
+
         temp = re.findall(r'\d+', last_folder)
         last_number_list = list(map(int, temp))
         self.last_number = int("".join(map(str, last_number_list))) + 1
@@ -70,8 +79,10 @@ class Folder:
 
     def get_second_param(self):
         if self.prim_activity == 'Retailer':
-            if self.spec_activities_list[0] == 'Drugstore':
+            if self.spec_activities_list[0].name == 'Drugstore':
                 self.second_param = 'S'
+            elif self.spec_activities_list[0].name == 'Hospital Pharmacy':
+                self.second_param = 'H'
             else:
                 self.second_param = 'X'
         elif self.prim_activity == 'Distributor':
@@ -89,6 +100,6 @@ class Folder:
         return self.third_param
 
     def create_folder(self):
-        self.new_folder = self.get_first_param() + self.get_second_param() + self.get_thrid_param() + '-' + self.get_next_number()
+        self.new_folder = self.get_first_param() + self.get_second_param() + self.get_thrid_param() + '-' + str(self.get_next_number())
         return self.new_folder
 
