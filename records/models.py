@@ -36,7 +36,12 @@ class Capa(models.Model):
     recommendation =    models.TextField(max_length=500, null=True, blank=True)
 
     def __str__(self):
-        dateStr = self.date_prepared.strftime("%d %b %Y ") + "(" + self.inspection.record.establishment.name + ")"
+        try:
+            self.inspection.record.establishment.name
+        except:
+            dateStr = self.date_prepared.strftime("%d %b %Y ")
+        else:
+            dateStr = self.inspection.record.establishment.name + "(" + self.date_prepared.strftime("%d %b %Y ") + ")"
         return dateStr
 
 class CapaDeficiency(models.Model):

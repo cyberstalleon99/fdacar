@@ -43,6 +43,6 @@ class MountainViewSet(viewsets.ModelViewSet):
     serializer_class = EstablishmentSerializer
 
 class ExpiredViewSet(viewsets.ModelViewSet):
-    except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
-    queryset = Establishment.expiredlist.get_list().filter(status='Active').exclude(specific_activity__name__in=except_activities).order_by('name')
+    except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan', 'Mobile X-Ray']
+    queryset = Establishment.expiredlist.get_list().exclude(specific_activity__name__in=except_activities).order_by('name')
     serializer_class = EstablishmentSerializer

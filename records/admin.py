@@ -19,7 +19,6 @@ class InspectorInline(NestedTabularInline, admin.TabularInline):
     model = EstInspector
     extra = 1
 
-# admin.site.register(Inspection)
 @admin.register(Inspection)
 class InspectionAdmin(ExportActionModelAdmin, admin.ModelAdmin):
     inlines = (InspectorInline,)
