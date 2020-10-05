@@ -1,4 +1,5 @@
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from dateutil.relativedelta import relativedelta
 from django.contrib import admin
 from .models import Establishment, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
@@ -90,6 +91,7 @@ class QualifiedPersonInline(admin.TabularInline, NestedTabularInline):
 class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAdmin):
     model = Establishment
     list_per_page = 20
+    except_activities = ['Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
     # fieldsets = [
     #     ('General Information', {'fields': ['status', 'name', 'center', 'product_type', 'primary_activity',
     #     'specific_activities'], 'classes': ['collapse']}),
@@ -100,7 +102,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     list_display = ('name', 'address',
      'product_type', 'primary_activity', 'specific_activities',
      'lto_number', 'expiry',
-     'last_inspection', 'type_of_inspection', 'folder')
+     'last_inspection', 'next_inspection', 'type_of_inspection', 'folder')
 
     list_filter = (
         ('name', DropdownFilter),
@@ -188,10 +190,33 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         return redirect('/admin/masterlist/establishment')
 
     def last_inspection(self, obj):
-        return obj.record.inspections.latest().date_inspected
+        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
+            return obj.record.inspections.latest().date_inspected
+        else:
+            return 'N/A'
+
+    def next_inspection(self, obj):
+        next_date_inspection = ''
+        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
+            try:
+                obj.record.inspections.latest()
+            except:
+                return 'For inspection'
+            else:
+                frequency_of_inspection = obj.record.inspections.latest().frequency_of_inspection
+                if frequency_of_inspection:
+                    next_date_inspection = obj.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
+                else:
+                    return 'No Risk Assessment'
+            return next_date_inspection
+        else:
+            return 'N/A'
 
     def type_of_inspection(self, obj):
-        return obj.record.inspections.latest().inspection_type
+        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
+            return obj.record.inspections.latest().inspection_type
+        else:
+            return 'N/A'
 
     def has_delete_permission(self, request, obj=None):
         return False

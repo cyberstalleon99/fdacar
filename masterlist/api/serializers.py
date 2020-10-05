@@ -3,7 +3,7 @@ from masterlist.models import Establishment, Lto, ProductType
 from dateutil.relativedelta import relativedelta
 
 class LtoSerializer(serializers.ModelSerializer):
-    id =                        serializers.IntegerField(read_only=True)
+    id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Lto
@@ -36,6 +36,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     folder_number =             serializers.SerializerMethodField()
     last_inspection =           serializers.SerializerMethodField()
     next_inspection =           serializers.SerializerMethodField()
+    inspection_type =        serializers.SerializerMethodField()
 
     DT_RowId =                  serializers.SerializerMethodField()
     DT_RowAttr =                serializers.SerializerMethodField()
@@ -46,7 +47,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         try:
             establishment.record.inspections.latest()
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
             if frequency_of_inspection:
@@ -54,6 +55,15 @@ class EstablishmentSerializer(serializers.ModelSerializer):
             else:
                 return 'No Risk Assessment'
         return next_date_inspection
+
+    def get_inspection_type(self, establishment):
+
+        try:
+            establishment.record.inspections.latest().inspection_type.name
+        except:
+            return 'For inspection'
+        else:
+            return establishment.record.inspections.latest().inspection_type.name
 
     def get_DT_RowId(self, establishment):
         return 'row_%d' % establishment.pk
@@ -73,7 +83,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         try:
             establishment.record.inspections.latest().date_inspected
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             return establishment.record.inspections.latest().date_inspected
 
@@ -112,5 +122,5 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         fields = (
             'DT_RowId', 'DT_RowAttr','id', 'specific_activities', 'name', 'center', 'status', 'product_type',
             'primary_activity', 'plant_address', 'authorized_officer', 'lto_number', 'expiry',
-            'duration', 'folder_number', 'last_inspection', 'next_inspection',
+            'duration', 'folder_number', 'last_inspection', 'next_inspection', 'inspection_type',
         )

@@ -6,6 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('dashboard.urls')),
     path('masterlist/', include('masterlist.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('checklist/', include('checklist.urls')),

@@ -23,6 +23,7 @@ class EstablishmentResource(resources.ModelResource):
     last_inspection = Field(column_name="Last Inspection")
     frequency_of_inspection = Field(column_name="Frequency of Inspection")
     next_inspection = Field(column_name="Next Inspection")
+    type_of_inspection = Field(column_name="Type of Inspection")
     inspected_by = Field(column_name="Inspector")
     status = Field(attribute="status", column_name="Status")
     folder_id = Field(column_name="Folder Number")
@@ -86,6 +87,9 @@ class EstablishmentResource(resources.ModelResource):
                 return establishment.record.inspections.latest().frequency_of_inspection
             else:
                 return 'No Risk Assessment'
+
+    def dehydrate_type_of_inspection(self, establishment):
+        return establishment.record.inspections.latest().inspection_type
 
     def dehydrate_next_inspection(self, establishment):
         next_date_inspection = ''
