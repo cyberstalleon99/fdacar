@@ -89,7 +89,13 @@ class EstablishmentResource(resources.ModelResource):
                 return 'No Risk Assessment'
 
     def dehydrate_type_of_inspection(self, establishment):
-        return establishment.record.inspections.latest().inspection_type
+
+        try:
+            establishment.record.inspections.latest().date_inspected
+        except:
+            return 'No inspections yet'
+        else:
+            return establishment.record.inspections.latest().inspection_type
 
     def dehydrate_next_inspection(self, establishment):
         next_date_inspection = ''
@@ -142,7 +148,7 @@ class JobResource(resources.ModelResource):
     contact_number = Field(attribute="establishment__authorized_officer__mobile", column_name="Contact Number")
     email = Field(attribute="establishment__authorized_officer__email", column_name="Email Address")
     status = Field(attribute="establishment__status", column_name="Status")
-    folder_id = Field(column_name="Folder Number")
+    # folder_id = Field(column_name="Folder Number")
 
     def dehydrate_specific_activity(self, job):
         specific_activities = ''
@@ -179,13 +185,13 @@ class JobResource(resources.ModelResource):
                 product_remarks += prod_line.remarks + ", "
         return product_remarks
 
-    def dehydrate_folder_id(self, job):
-        try:
-            job.establishment.record
-        except:
-            return 'No file'
-        else:
-            return job.establishment.record.folder_id
+    # def dehydrate_folder_id(self, job):
+    #     try:
+    #         job.establishment.record
+    #     except:
+    #         return 'No file'
+    #     else:
+    #         return job.establishment.record.folder_id
 
     class Meta:
         model=Job

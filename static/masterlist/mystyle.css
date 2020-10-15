@@ -8,3 +8,11 @@ ul
     padding: 80px;
     height: 100%;
 }
+
+td.details-control {
+    background: url('/static/masterlist/img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('/static/masterlist/img/details_close.png') no-repeat center center;
+}

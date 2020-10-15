@@ -26,6 +26,13 @@ $(document).ready(function () {
         'searching': true,
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         'columns': [
+            {
+                "class":          'details-control',
+                "orderable":      false,
+                "sortable":                 false,
+                "data":           null,
+                "defaultContent": ''
+            },
               {
                   'data': 'name',
                   'name': 'name',
@@ -45,11 +52,13 @@ $(document).ready(function () {
               {'data': 'specific_activities',   'name': 'specific_activity.name'},
               {'data': 'lto_number',            'name': 'ltos.lto_number'},
               {'data': 'expiry',                'name': 'ltos.expiry',    'searchable': false},
-            //   {'data': 'duration',              'searchable': false, 'sortable': false},
-            //   {'data': 'folder_number',         'name': 'record.folder_id', 'sortable': false},
+              {'data': 'contact_info',          'searchable': false, 'sortable': false, 'visible': false},
+              {'data': 'folder_number',         'sortable': false, 'searchable': false, 'visible': false},
+              {'data': 'application_type',      'sortable': false, 'searchable': false, 'visible': false},
+              {'data': 'owner',                 'sortable': false, 'searchable': false, 'visible': false},
               {'data': 'last_inspection',       'name': 'record.inspections.latest().date_inspected', 'searchable': false, 'sortable': false},
               {'data': 'next_inspection',       'searchable': false, 'sortable': false},
-              {'data': 'inspection_type',    'searchable': false, 'sortable': false},
+              {'data': 'inspection_type',       'searchable': false, 'sortable': false},
         ],
         dom: 'B<fl<t>ip>',
         buttons: {
@@ -57,17 +66,29 @@ $(document).ready(function () {
            buttons: ['copy', 'csv', 'excel', 'pdf']
        },
     });
-
-    $('#summarytable').DataTable( {
-        "createdRow": function ( row, data, index ) {
-            if ( data[5].replace(/[\$,]/g, '') * 1 > 0 ) {
-                $('td', row).eq(5).addClass('highlight');
-                alert('thest');
-            }
-        }
-    } );
-
 });
+
+function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Authorized Officer:</td>'+
+            '<td>'+d.owner+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Type of Application:</td>'+
+            '<td>'+d.application_type+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Folder Number:</td>'+
+            '<td>'+d.folder_number+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Contact Number:</td>'+
+            '<td>'+d.contact_info+'</td>'+
+        '</tr>'+
+    '</table>';
+}
 </script>
 
 

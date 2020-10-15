@@ -33,10 +33,14 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     plant_address =             serializers.SerializerMethodField()
     primary_activity =          serializers.StringRelatedField()
     duration =                  serializers.SerializerMethodField()
-    folder_number =             serializers.SerializerMethodField()
     last_inspection =           serializers.SerializerMethodField()
     next_inspection =           serializers.SerializerMethodField()
-    inspection_type =        serializers.SerializerMethodField()
+    inspection_type =           serializers.SerializerMethodField()
+
+    owner =                     serializers.SerializerMethodField()
+    contact_info =              serializers.SerializerMethodField()
+    folder_number =             serializers.SerializerMethodField()
+    application_type =          serializers.SerializerMethodField()
 
     DT_RowId =                  serializers.SerializerMethodField()
     DT_RowAttr =                serializers.SerializerMethodField()
@@ -101,6 +105,14 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     def get_plant_address(self, establishment):
         return establishment.plant_address.address + ', ' + establishment.plant_address.municipality_or_city.name + ', ' + establishment.plant_address.province.name
 
+    def get_application_type(self, establishment):
+        try:
+            establishment.ltos.latest().lto_number
+        except:
+            return "N/A"
+        else:
+            return establishment.ltos.latest().type_of_application
+    
     def get_lto_number(self, establishment):
         try:
             establishment.ltos.latest().lto_number
@@ -117,10 +129,32 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         else:
             return establishment.ltos.latest().expiry
 
+    def get_owner(self, establishment):
+        owner = establishment.authorized_officer.full_name()
+        designation = establishment.authorized_officer.designation.name
+        return owner + " (" + designation +")"
+
+    def get_contact_info(self, establishment):
+        mobile = ''
+        email = ''
+
+        if establishment.authorized_officer.mobile:
+            mobile = establishment.authorized_officer.mobile
+        else:
+            mobile = "No mobile number"
+
+        if establishment.authorized_officer.email:
+            email = establishment.authorized_officer.email
+        else:
+            email = "No email address"
+
+        return mobile + ", " + email
+
     class Meta:
         model = Establishment
         fields = (
             'DT_RowId', 'DT_RowAttr','id', 'specific_activities', 'name', 'center', 'status', 'product_type',
             'primary_activity', 'plant_address', 'authorized_officer', 'lto_number', 'expiry',
-            'duration', 'folder_number', 'last_inspection', 'next_inspection', 'inspection_type',
+            'duration', 'folder_number', 'last_inspection', 'next_inspection', 'inspection_type', 'contact_info',
+            'application_type', 'owner'
         )

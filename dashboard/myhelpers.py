@@ -383,7 +383,8 @@ class Center:
             mri_xray = super().get_spec_total_single('MRI')
             edu_xray = super().get_spec_total_single('Educational X-Ray')
             ctscan_xray = super().get_spec_total_single('CTScan')
-            return med_xray + vet_xray + den_xray + mri_xray + edu_xray + ctscan_xray
+            mobile_xray = super().get_spec_total_single('Mobile X-Ray')
+            return med_xray + vet_xray + den_xray + mri_xray + edu_xray + ctscan_xray + mobile_xray
 
 class Province:
 

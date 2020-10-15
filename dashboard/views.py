@@ -58,14 +58,14 @@ class DashboardView(LoginRequiredMixin, View):
                                  'total_importer':      cdrrhr_summary.get_total_importer(),
                                  'total_exporter':      cdrrhr_summary.get_total_exporter()},
 
-                                    'total_all':        total_all,
-                                    'total_abra':       total_abra,
-                                    'total_apayao':     total_apayao,
-                                    'total_baguio':     total_baguio,
-                                    'total_benguet':    total_benguet,
-                                    'total_ifugao':     total_ifugao,
-                                    'total_kalinga':    total_kalinga,
-                                    'total_mountainprov':   total_mountainprov,
+                        'total_all':        total_all,
+                        'total_abra':       total_abra,
+                        'total_apayao':     total_apayao,
+                        'total_baguio':     total_baguio,
+                        'total_benguet':    total_benguet,
+                        'total_ifugao':     total_ifugao,
+                        'total_kalinga':    total_kalinga,
+                        'total_mountainprov':   total_mountainprov,
                     }
 
         return render(request, self.template_name, context)

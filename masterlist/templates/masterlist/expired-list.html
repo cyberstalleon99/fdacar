@@ -21,11 +21,28 @@ $(document).ready(function () {
         alltable.columns().search('');
         var rel = $(this).attr('rel');
         if (rel) {
-            alltable.columns(2).search(rel).draw();
+            alltable.columns(3).search(rel).draw();
         } else {
             alltable.draw();
         }
     });
+
+    // Add event listener for opening and closing details
+    $('#all_list_table tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).parents('tr');
+        var row = alltable.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
 });
 </script>
 {% endblock %}
