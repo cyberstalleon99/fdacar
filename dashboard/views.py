@@ -13,11 +13,11 @@ class DashboardView(LoginRequiredMixin, View):
         total_all = Establishment.objects.filter(status='Active').count()
         total_abra = MasterlistSummary.Provinces.Abra.get_total()
         total_apayao = MasterlistSummary.Provinces.Apayao.get_total()
-        total_baguio =  MasterlistSummary.Provinces.Baguio.get_total()
+        total_baguio =  MasterlistSummary.Provinces.Baguio_City.get_total()
         total_benguet = MasterlistSummary.Provinces.Benguet.get_total()
         total_ifugao = MasterlistSummary.Provinces.Ifugao.get_total()
         total_kalinga = MasterlistSummary.Provinces.Kalinga.get_total()
-        total_mountainprov = MasterlistSummary.Provinces.Mountain.get_total()
+        total_mountainprov = MasterlistSummary.Provinces.Mountain_Province.get_total()
 
         if Establishment.objects.all():
             cfrr_summary = MasterlistSummary.Centers.Cfrr()
@@ -25,38 +25,37 @@ class DashboardView(LoginRequiredMixin, View):
             ccrr_summary = MasterlistSummary.Centers.Ccrr()
             cdrrhr_summary = MasterlistSummary.Centers.Cdrrhr()
 
+            temp = MasterlistSummary.Provinces
+            provinces = []
+
+            for attr, value in temp.__dict__.items():
+                if not attr.startswith('__'):
+                    provinces.append([attr, value])
+
             context = {
                         'masterlist_dashboard_active': "active",
                         'cfrr': {'total':               cfrr_summary.get_total(),
-                                 'total_mfg':           cfrr_summary.get_total_mfg(),
-                                 'total_trader':        cfrr_summary.get_total_trader(),
-                                 'total_wholesaler':    cfrr_summary.get_total_wholesaler(),
-                                 'total_importer':      cfrr_summary.get_total_importer(),
-                                 'total_exporter':      cfrr_summary.get_total_exporter()},
+                                 'total_m_p_r_t':       cfrr_summary.get_total_m_p_r_t(),
+                                 'total_dist':          cfrr_summary.get_total_dist()
+
+                        },
 
                         'cdrr': {'total':               cdrr_summary.get_total(),
+                                 'total_ds_ronpd':      cdrr_summary.get_total_ds_ronpd(),
                                  'total_hp':            cdrr_summary.get_total_hp(),
-                                 'total_ds':            cdrr_summary.get_total_ds(),
-                                 'total_mfg':           cdrr_summary.get_total_mfg(),
-                                 'total_trader':        cdrr_summary.get_total_trader(),
-                                 'total_wholesaler':    cdrr_summary.get_total_wholesaler(),
-                                 'total_importer':      cdrr_summary.get_total_importer(),
-                                 'total_exporter':      cdrr_summary.get_total_exporter()},
+                                 'total_dist':          cdrr_summary.get_total_dist()
+                        },
 
                         'ccrr': {'total':               ccrr_summary.get_total(),
-                                 'total_mfg':           ccrr_summary.get_total_mfg(),
-                                 'total_trader':        ccrr_summary.get_total_trader(),
-                                 'total_wholesaler':    ccrr_summary.get_total_wholesaler(),
-                                 'total_importer':      ccrr_summary.get_total_importer(),
-                                 'total_exporter':      ccrr_summary.get_total_exporter()},
+                                 'total_m_p_r_t':       ccrr_summary.get_total_m_p_r_t(),
+                                 'total_dist':          ccrr_summary.get_total_dist()
+                        },
 
                         'cdrrhr': {'total':             cdrrhr_summary.get_total(),
                                  'total_xray':          cdrrhr_summary.get_total_xray(),
-                                 'total_mfg':           cdrrhr_summary.get_total_mfg(),
-                                 'total_trader':        cdrrhr_summary.get_total_trader(),
-                                 'total_wholesaler':    cdrrhr_summary.get_total_wholesaler(),
-                                 'total_importer':      cdrrhr_summary.get_total_importer(),
-                                 'total_exporter':      cdrrhr_summary.get_total_exporter()},
+                                 'total_m_p_r_t':       cdrrhr_summary.get_total_m_p_r_t(),
+                                 'total_dist':          cdrrhr_summary.get_total_dist()
+                        },
 
                         'total_all':        total_all,
                         'total_abra':       total_abra,
@@ -66,6 +65,8 @@ class DashboardView(LoginRequiredMixin, View):
                         'total_ifugao':     total_ifugao,
                         'total_kalinga':    total_kalinga,
                         'total_mountainprov':   total_mountainprov,
+
+                        'provinces': provinces
                     }
 
         return render(request, self.template_name, context)

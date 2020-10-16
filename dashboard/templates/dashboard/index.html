@@ -10,9 +10,9 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">ABRA</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">DS/RONPD</a></strong>
                         </div>
-                        <div class="number dashtext-1">{{total_abra}}</div>
+                        <div class="number dashtext-1">{{cdrr.total_ds_ronpd}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
@@ -24,9 +24,23 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:apayao-list' %}" target="_blank">APAYAO</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">DD</a></strong>
                         </div>
-                        <div class="number dashtext-2">{{total_apayao}}</div>
+                        <div class="number dashtext-1">{{cdrr.total_dist}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:apayao-list' %}" target="_blank">HP</a></strong>
+                        </div>
+                        <div class="number dashtext-2">{{cdrr.total_hp}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
@@ -38,9 +52,9 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:baguio-list' %}" target="_blank">BAGUIO CITY</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:baguio-list' %}" target="_blank">FM/P/R/T</a></strong>
                         </div>
-                        <div class="number dashtext-3">{{total_baguio}}</div>
+                        <div class="number dashtext-3">{{cfrr.total_m_p_r_t}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
@@ -52,39 +66,22 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:benguet-list' %}" target="_blank">BENGUET</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:benguet-list' %}" target="_blank">FD</a></strong>
                         </div>
-                        <div class="number dashtext-4">{{total_benguet}}</div>
+                        <div class="number dashtext-4">{{cfrr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-3 col-sm-6">
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:ifugao-list' %}" target="_blank">IFUGAO</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:ifugao-list' %}" target="_blank">MD</a></strong>
                         </div>
-                        <div class="number dashtext-4">{{total_ifugao}}</div>
-                    </div>
-                    <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="statistic-block block">
-                    <div class="progress-details d-flex align-items-end justify-content-between">
-                        <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:kalinga-list' %}" target="_blank">KALINGA</a></strong>
-                        </div>
-                        <div class="number dashtext-4">{{total_kalinga}}</div>
+                        <div class="number dashtext-4">{{cdrrhr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
@@ -96,9 +93,37 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:mountain-list' %}" target="_blank">MOUNTAIN PROVINCE</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:kalinga-list' %}" target="_blank">XRAY</a></strong>
                         </div>
-                        <div class="number dashtext-4">{{total_mountainprov}}</div>
+                        <div class="number dashtext-4">{{cdrrhr.total_xray}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:mountain-list' %}" target="_blank">CM/P/R/T</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{ccrr.total_m_p_r_t}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:index' %}" target="_blank">CD</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{ccrr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
@@ -119,14 +144,12 @@
                     </div>
                 </div>
             </div>
-
-        </div>
     </div>
 </section>
 
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
                 <div class="stats-3-block block d-flex">
                     <div class="stats-3"><strong class="d-block">{{cfrr.total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">CFRR</a></span>
@@ -143,7 +166,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FM</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_trader}}</strong>
                             <span class="d-block span-sm">
@@ -153,7 +175,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FT</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
@@ -163,7 +184,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FW</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_importer}}</strong>
                             <span class="d-block span-sm">
@@ -173,7 +193,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FI</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cfrr.total_exporter}}</strong>
                             <span class="d-block span-sm">
@@ -183,7 +202,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">FE</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                     </div>
                 </div>
@@ -207,7 +225,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">HP</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_ds}}</strong>
                             <span class="d-block span-sm">
@@ -217,7 +234,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DS</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_mfg}}</strong>
                             <span class="d-block span-sm">
@@ -227,7 +243,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DM</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_trader}}</strong>
                             <span class="d-block span-sm">
@@ -237,7 +252,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DT</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
@@ -247,7 +261,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DW</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
                             <span class="d-block span-sm">
@@ -257,7 +270,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DI</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrr.total_importer}}</strong>
                             <span class="d-block span-sm">
@@ -267,7 +279,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">DE</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                     </div>
                 </div>
@@ -291,7 +302,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CM</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_trader}}</strong>
                             <span class="d-block span-sm">
@@ -301,7 +311,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CT</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
@@ -311,7 +320,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CW</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_importer}}</strong>
                             <span class="d-block span-sm">
@@ -321,7 +329,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CI</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{ccrr.total_exporter}}</strong>
                             <span class="d-block span-sm">
@@ -331,7 +338,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">CE</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                     </div>
                 </div>
@@ -354,7 +360,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">XRAY</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_mfg}}</strong>
                             <span class="d-block span-sm">
@@ -364,7 +369,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDM</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+246</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_trader}}</strong>
                             <span class="d-block span-sm">
@@ -374,7 +378,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDT</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_wholesaler}}</strong>
                             <span class="d-block span-sm">
@@ -384,7 +387,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDW</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_importer}}</strong>
                             <span class="d-block span-sm">
@@ -394,7 +396,6 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDI</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
                         <div class="item"><strong class="d-block strong-sm">{{cdrrhr.total_exporter}}</strong>
                             <span class="d-block span-sm">
@@ -404,8 +405,170 @@
                                     <button class="btn btn-link" type="submit" formtarget="_blank">MDE</button>
                                 </form>
                             </span>
-                            <!-- <div class="line"></div><small>+416</small> -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        {% for attr, value in provinces %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="stats-3-block block d-flex">
+                        <div class="stats-3"><strong class="d-block">{{value.get_total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">{{attr}}</a></span>
+                            <div class="progress progress-template progress-small">
+                                <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
+                            </div>
+                        </div>
+                        <div class="stats-3 d-flex justify-content-between text-center">
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_ds_ronpd}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">DS/RONPD</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_dist}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Manufacturer">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">DD</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+246</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_hp}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Trader">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">HP</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_m_p_r_t}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Wholesaler">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">FM/P/R/T</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_dist}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Importer">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">FD</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_dist}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Exporter">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">MD</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_xray}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Exporter">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">XRay</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_m_p_r_t}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Exporter">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">CM/P/R/T</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_dist}}</strong>
+                                <span class="d-block span-sm">
+                                    <form action="#" method="get">
+                                        {%csrf_token%}
+                                        <input name="q" type="hidden" value="Exporter">
+                                        <button class="btn btn-link" type="submit" formtarget="_blank">CD</button>
+                                    </form>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</section>
+
+<!-- Inspectors -->
+<section class="no-padding-top no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="user-block block text-center">
+                    <div class="avatar"><img src="/static/darkadmin/img/RTBayanes_ID.jpg" alt="..." class="img-fluid">
+                        <div class="order dashbg-2">II</div>
+                    </div>
+                    <a href="#" class="user-title">
+                        <h3 class="h5">Rochelle T. Bayanes</h3><span>rtbayanes@fda.gov.ph</span>
+                    </a>
+                    <div class="contributions">950 Contributions</div>
+                    <div class="details d-flex">
+                        <div class="item"><i class="icon-info"></i><strong>150</strong></div>
+                        <div class="item"><i class="fa fa-gg"></i><strong>340</strong></div>
+                        <div class="item"><i class="icon-flow-branch"></i><strong>460</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="user-block block text-center">
+                    <div class="avatar"><img src="/static/darkadmin/img/NDNavarro_ID.jpg" alt="..." class="img-fluid">
+                        <div class="order dashbg-1">II</div>
+                    </div>
+                    <a href="#" class="user-title">
+                        <h3 class="h5">Nadia D. Navarro</h3><span>ndnavarro@fda.gov.ph</span>
+                    </a>
+                    <div class="contributions">772 Contributions</div>
+                    <div class="details d-flex">
+                        <div class="item"><i class="icon-info"></i><strong>80</strong></div>
+                        <div class="item"><i class="fa fa-gg"></i><strong>420</strong></div>
+                        <div class="item"><i class="icon-flow-branch"></i><strong>272</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="user-block block text-center">
+                    <div class="avatar"><img src="/static/darkadmin/img/GGMonang_ID.jpg" alt="..." class="img-fluid">
+                        <div class="order dashbg-4">II</div>
+                    </div>
+                    <a href="#" class="user-title">
+                        <h3 class="h5">Giovanni G. Monang</h3><span>ggmonang@fda.gov.ph</span>
+                    </a>
+                    <div class="contributions">620 Contributions</div>
+                    <div class="details d-flex">
+                        <div class="item"><i class="icon-info"></i><strong>150</strong></div>
+                        <div class="item"><i class="fa fa-gg"></i><strong>280</strong></div>
+                        <div class="item"><i class="icon-flow-branch"></i><strong>190</strong></div>
                     </div>
                 </div>
             </div>
@@ -413,66 +576,5 @@
     </div>
 </section>
 
-<!-- Inspectors -->
-{% include 'dashboard/partial/inspectors.html' %}
 
-
-<!--<section class="no-padding-bottom">-->
-<!--    <div class="container-fluid">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-6">-->
-<!--                <div class="messages-block block">-->
-<!--                    <div class="title"><strong>Recent Activities</strong></div>-->
-<!--                    <div class="messages">-->
-<!--                        <a href="#" class="message d-flex align-items-center">-->
-<!--                            <div class="profile"><img src="/static/darkadmin/img/avatar-3.jpg" alt="..." class="img-fluid">-->
-<!--                                <div class="status online"></div>-->
-<!--                            </div>-->
-<!--                            <div class="content">-->
-<!--                                <strong class="d-block">Nadia Halsey</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">9:30am</small>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                        <a href="#" class="message d-flex align-items-center">-->
-<!--                            <div class="profile"><img src="/static/darkadmin/img/avatar-2.jpg" alt="..." class="img-fluid">-->
-<!--                                <div class="status away"></div>-->
-<!--                            </div>-->
-<!--                            <div class="content">-->
-<!--                                <strong class="d-block">Peter Ramsy</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">7:40am</small>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                        <a href="#" class="message d-flex align-items-center">-->
-<!--                            <div class="profile"><img src="/static/darkadmin/img/avatar-1.jpg" alt="..." class="img-fluid">-->
-<!--                                <div class="status busy"></div>-->
-<!--                            </div>-->
-<!--                            <div class="content">   <strong class="d-block">Sam Kaheil</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">6:55am</small>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                        <a href="#" class="message d-flex align-items-center">-->
-<!--                            <div class="profile"><img src="/static/darkadmin/img/avatar-5.jpg" alt="..." class="img-fluid">-->
-<!--                                <div class="status offline"></div>-->
-<!--                            </div>-->
-<!--                            <div class="content">   <strong class="d-block">Sara Wood</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">10:30pm</small>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                        <a href="#" class="message d-flex align-items-center">-->
-<!--                            <div class="profile"><img src="/static/darkadmin/img/avatar-1.jpg" alt="..." class="img-fluid">-->
-<!--                                <div class="status online"></div>-->
-<!--                            </div>-->
-<!--                            <div class="content">   <strong class="d-block">Nader Magdy</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">9:47pm</small>-->
-<!--                            </div>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-6">-->
-<!--                <div class="bar-chart block chart">-->
-<!--                    <div class="title"><strong>Bar Chart Example</strong></div>-->
-<!--                    <div class="bar-chart chart">-->
-<!--                        <canvas id="barChartCustom3"></canvas>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 {% endblock %}

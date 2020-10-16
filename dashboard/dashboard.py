@@ -9,8 +9,8 @@ class MasterlistSummary:
     class Provinces:
         Abra = Province('Abra')
         Apayao = Province('Apayao')
-        Baguio = Province('Baguio City')
+        Baguio_City = Province('Baguio City')
         Benguet = Province('Benguet')
         Ifugao = Province('Ifugao')
         Kalinga = Province('Kalinga')
-        Mountain = Province('Mountain Province')
+        Mountain_Province = Province('Mountain Province')

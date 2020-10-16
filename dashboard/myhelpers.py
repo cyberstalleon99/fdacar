@@ -86,6 +86,10 @@ class MasterlistSummaryHelper:
         count = self.get_prim_total('Trader')
         return count
 
+    def get_total_m_p_r_t(self):
+        count = self.get_total_mfg() + self.get_total_packer() + self.get_total_repacker() + self.get_total_trader()
+        return count
+
     def get_total_wholesaler(self):
         return self.get_spec_total(spec_activ='Wholesaler', exclude1='Importer', exclude2='Exporter')
 
@@ -115,7 +119,12 @@ class MasterlistSummaryHelper:
                     ).filter(specific_activity__name='Importer').count()
 
             count = count_ben - count_bag
-
+        elif self.province_or_city == '':
+            count = Establishment.objects.filter(
+                    product_type=self.product_type,
+                    status='Active',
+                    specific_activity__name='Wholesaler',
+            ).filter(specific_activity__name='Importer').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
@@ -146,7 +155,12 @@ class MasterlistSummaryHelper:
             ).filter(specific_activity__name='Exporter').count()
 
             count = count_ben - count_bag
-
+        elif self.province_or_city == '':
+            count = Establishment.objects.filter(
+                    product_type=self.product_type,
+                    status='Active',
+                    specific_activity__name='Wholesaler',
+            ).filter(specific_activity__name='Exporter').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
@@ -177,7 +191,12 @@ class MasterlistSummaryHelper:
             ).filter(specific_activity__name='Exporter').count()
 
             count = count_ben - count_bag
-
+        elif self.province_or_city == '':
+            count = Establishment.objects.filter(
+                    product_type=self.product_type,
+                    status='Active',
+                    specific_activity__name='Importer',
+            ).filter(specific_activity__name='Exporter').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
@@ -208,7 +227,12 @@ class MasterlistSummaryHelper:
             ).filter(specific_activity__name='Importer').filter(specific_activity__name='Exporter').count()
 
             count = count_ben - count_bag
-
+        elif self.province_or_city == '':
+            count = Establishment.objects.filter(
+                    product_type=self.product_type,
+                    status='Active',
+                    specific_activity__name='Wholesaler',
+            ).filter(specific_activity__name='Importer').filter(specific_activity__name='Exporter').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
@@ -218,6 +242,11 @@ class MasterlistSummaryHelper:
             ).filter(specific_activity__name='Importer').filter(specific_activity__name='Exporter').count()
 
         return abs(count)
+
+    def get_total_dist(self):
+        count = 0
+        count = self.get_total_wholesaler() + self.get_total_importer() + self.get_total_exporter() + self.get_total_we() + self.get_total_wi() + self.get_total_ie() + self.get_total_wei()
+        return count
 
     def get_filtered(self):
         return Establishment.objects.filter(**self.filters)
@@ -360,6 +389,9 @@ class Center:
         def get_total_ronpd(self):
             return super().get_spec_total_single('Retail Outlet for Non-Prescription Drugs')
 
+        def get_total_ds_ronpd(self):
+            return self.get_total_ds() + self.get_total_ronpd()
+
     class Ccrr(MasterlistSummaryHelper):
 
         def __init__(self, **kwargs):
@@ -378,7 +410,7 @@ class Center:
 
         def get_total_xray(self):
             med_xray = super().get_spec_total_single('Medical X-Ray')
-            vet_xray = super().get_spec_total_single('Veterinary X-Ra')
+            vet_xray = super().get_spec_total_single('Veterinary X-Ray')
             den_xray = super().get_spec_total_single('Dental X-Ray')
             mri_xray = super().get_spec_total_single('MRI')
             edu_xray = super().get_spec_total_single('Educational X-Ray')
