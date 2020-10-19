@@ -3,6 +3,37 @@ from django.views import View
 from .dashboard  import MasterlistSummary
 from masterlist.models import Establishment
 from django.contrib.auth.mixins import LoginRequiredMixin
+import datetime
+from appsreceived.models import Application
+from pli.models import Pli
+from pms.models import Product
+from accounts.models import Profile
+
+def get_inspector_data(inspector):
+    today = datetime.date.today()
+    today_year = today.year
+    today_month = today.month
+    appsreceived_count = Application.objects.filter(group__year=today_year, group__month=today_month, inspection__est_inspectors__inspector=inspector.user).count()
+    pli_count = Pli.objects.filter(group__year=today_year, group__month=today_month, inspection__est_inspectors__inspector=inspector.user).count()
+    product_count = Product.objects.filter(group__year=today_year, group__month=today_month, product_inspectors__product_inspector=inspector.user).count()
+    
+    appsreceived_yearly_count = Application.objects.filter(group__year=today_year, inspection__est_inspectors__inspector=inspector.user).count()
+    pli_yearly_count = Pli.objects.filter(group__year=today_year, inspection__est_inspectors__inspector=inspector.user).count()
+    product_yearly_count = Product.objects.filter(group__year=today_year, product_inspectors__product_inspector=inspector.user).count()
+
+    data = {
+        'inspector': inspector.user,
+        'img': inspector.img.url,
+        'appsreceived': appsreceived_count,
+        'pli':  pli_count,
+        'products': product_count,
+
+        'appsreceived_yearly': appsreceived_yearly_count,
+        'pli_yearly':  pli_yearly_count,
+        'products_yearly': product_yearly_count,
+    }
+
+    return data
 
 class DashboardView(LoginRequiredMixin, View):
     template_name = 'dashboard/index.html'
@@ -68,5 +99,10 @@ class DashboardView(LoginRequiredMixin, View):
 
                         'provinces': provinces
                     }
+
+        today = datetime.date.today()
+        inspectors = Profile.objects.filter(designation__name="FDRO II")
+        context['inspectors'] = list(map(get_inspector_data, inspectors))
+        context['curr_date'] = today
 
         return render(request, self.template_name, context)

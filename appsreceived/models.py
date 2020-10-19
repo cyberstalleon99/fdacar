@@ -30,6 +30,7 @@ class Application(models.Model):
     eod_2 =                         models.CharField(max_length=3, choices=constants.YESORNO, verbose_name="w/in ARTA (w/ inspection)", null=True, blank=True)
     backlog =                       models.CharField(max_length=3, choices=constants.YESORNO, null=True, blank=True)
     reason_1 =                      models.TextField(verbose_name="Reason for Backlog", null=True, blank=True)
+    remarks =                       models.TextField(verbose_name="Remarks (for manual apps only)", null=True, blank=True)
     date_forwarded_to_center_1 =    models.DateField(verbose_name="Date Forwarded to Center", null=True, blank=True)
     date_returned_by_center =       models.DateField(null=True, blank=True)
     reason_2 =                      models.TextField(verbose_name="Reason", null=True, blank=True)

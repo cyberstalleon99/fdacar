@@ -3,6 +3,10 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -51,6 +55,29 @@ class UserDesignation(models.Model):
     def __str__(self):
         return self.name
 
+def profile_directory_path(instance, filename):
+    return 'accounts/inspector/user_{0}/{1}'.format(instance.user.get_short_name(), filename)
+
+class Profile(models.Model):
+    user =          models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    designation =   models.ManyToManyField(UserDesignation)
+    img =           models.ImageField(null=True, blank=True, upload_to=profile_directory_path, verbose_name='Profile Pic')
+
+    def __str__(self):
+        return self.user.get_short_name()
+
+    def designations(self):
+        return ",\n".join(s.name for s in self.designation.all())
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
 class  User(AbstractBaseUser):
     email =             models.EmailField(verbose_name='email address', max_length=255, unique=True)
     first_name =        models.CharField(max_length=255)
@@ -59,7 +86,6 @@ class  User(AbstractBaseUser):
     active =            models.BooleanField(default=True)
     staff =             models.BooleanField(default=False) # a admin user; non super-user
     admin =             models.BooleanField(default=False) # a superuser
-    designation =       models.ManyToManyField(UserDesignation)
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'

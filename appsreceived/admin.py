@@ -51,7 +51,7 @@ class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     supervisor_fieldset = (
             'Forwarded to Supervisor',
             {'fields': ['licensing_officer', 'date_received_by_supervisor', 'date_approved_by_supervisor', 'date_accomplished', 'processing_duration',
-                        'eod_1', 'eod_2', 'backlog', 'reason_1']}
+                        'eod_1', 'eod_2', 'remarks', 'backlog', 'reason_1']}
     )
 
     center_fieldset = (

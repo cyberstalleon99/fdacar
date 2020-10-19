@@ -1,83 +1,38 @@
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
-        <div class="stats-3"><strong class="d-block"><a>This Month (This section is under construction)</a></span>
+        <div class="stats-3"><strong class="d-block"><a>ACCOMPLISHMENTS THIS MONTH ({{curr_date}})</a></span>
             <div class="progress progress-template progress-small">
                 <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
             </div>
-        </div>
+        </div><br>
         <div class="row">
-            <div class="col-lg-4">
-                <div class="user-block block text-center">
-                    <div class="avatar"><img src="/static/darkadmin/img/RTBayanes_ID.jpg" alt="..." class="img-fluid">
-                        <div class="order dashbg-2">II</div>
-                    </div>
-                    <a href="#" class="user-title">
-                        <h3 class="h5">Rochelle T. Bayanes</h3><span>rtbayanes@fda.gov.ph</span>
-                    </a>
-                    <div class="contributions">
-                        Apps Received: 950
-                    </div>
-                    <div class="contributions">
-                        Products: 90
-                    </div>
-                    <div class="contributions">
-                        Establishment: 10
-                    </div>
-                    <div class="details d-flex">
-                        <div class="item"><i class="icon-info"></i><strong>150</strong></div>
-                        <div class="item"><i class="fa fa-gg"></i><strong>340</strong></div>
-                        <div class="item"><i class="icon-flow-branch"></i><strong>460</strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="user-block block text-center">
-                    <div class="avatar"><img src="/static/darkadmin/img/NDNavarro_ID.jpg" alt="..." class="img-fluid">
-                        <div class="order dashbg-1">II</div>
-                    </div>
-                    <a href="#" class="user-title">
-                        <h3 class="h5">Nadia D. Navarro</h3><span>ndnavarro@fda.gov.ph</span>
-                    </a>
-                    <div class="contributions">
-                        Apps Received: 950
-                    </div>
-                    <div class="contributions">
-                        Products: 90
-                    </div>
-                    <div class="contributions">
-                        Establishment: 10
-                    </div>
-                    <div class="details d-flex">
-                        <div class="item"><i class="icon-info"></i><strong>80</strong></div>
-                        <div class="item"><i class="fa fa-gg"></i><strong>420</strong></div>
-                        <div class="item"><i class="icon-flow-branch"></i><strong>272</strong></div>
+            {% for inspector in inspectors %}
+                <div class="col-lg-4">
+                    <div class="user-block block text-center">
+                        <!-- <div class="avatar"><img src="/static/darkadmin/img/RTBayanes_ID.jpg" alt="..." class="img-fluid"> -->
+                            <div class="avatar"><img src='{{inspector.img}}' alt="..." class="img-fluid">
+                            <div class="order dashbg-2">II</div>
+                        </div>
+                        <a href="#" class="user-title">
+                            <h3 class="h5">{{inspector.inspector.get_full_name}}</h3><span>{{inspector.inspector.email}}</span>
+                        </a>
+                        <div class="contributions">
+                            Apps Received: {{inspector.appsreceived}}
+                        </div>
+                        <div class="contributions">
+                            Products: {{inspector.products}}
+                        </div>
+                        <div class="contributions">
+                            Establishment: {{inspector.pli}}
+                        </div>
+                        <div class="details d-flex">
+                            <div class="item" data-toggle="tooltip" title="Apps Received This Year"><i class="icon-info"></i><strong>{{inspector.appsreceived_yearly}}</strong></div>
+                            <div class="item" data-toggle="tooltip" title="Products This Year"><i class="fa fa-gg"></i><strong>{{inspector.products_yearly}}</strong></div>
+                            <div class="item" data-toggle="tooltip" title="PLI's This Year"><i class="icon-flow-branch"></i><strong>{{inspector.pli_yearly}}</strong></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="user-block block text-center">
-                    <div class="avatar"><img src="/static/darkadmin/img/GGMonang_ID.jpg" alt="..." class="img-fluid">
-                        <div class="order dashbg-4">II</div>
-                    </div>
-                    <a href="#" class="user-title">
-                        <h3 class="h5">Giovanni G. Monang</h3><span>ggmonang@fda.gov.ph</span>
-                    </a>
-                    <div class="contributions">
-                        Apps Received: 950
-                    </div>
-                    <div class="contributions">
-                        Products: 90
-                    </div>
-                    <div class="contributions">
-                        Establishment: 10
-                    </div>
-                    <div class="details d-flex">
-                        <div class="item"><i class="icon-info"></i><strong>150</strong></div>
-                        <div class="item"><i class="fa fa-gg"></i><strong>280</strong></div>
-                        <div class="item"><i class="icon-flow-branch"></i><strong>190</strong></div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
     </div>
