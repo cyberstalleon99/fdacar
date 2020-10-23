@@ -69,13 +69,13 @@ class ProductEstablishment(models.Model):
 class Product(models.Model):
     status =                models.CharField(max_length=20, choices=constants.PMS_STATUS)
     group =                 models.DateField(verbose_name="Month", null=True, blank=False)
-    date_collected =        models.DateField(verbose_name="Date Collected")
-    tracking_number =       models.CharField(max_length=12, verbose_name="DTN/Case No.")
+    date_collected =        models.DateField(verbose_name="Date Collected", null=True, blank=False)
+    tracking_number =       models.CharField(max_length=14, verbose_name="DTN/Case No.")
     date_request_received = models.DateField(verbose_name="Date of Request Letter Received", null=True, blank=True)
-    date_of_referral =      models.DateField(verbose_name="Date of Referral")
+    date_of_referral =      models.DateField(verbose_name="Date of Referral", null=True, blank=True)
     classification =        models.ForeignKey(Classification, on_delete=models.DO_NOTHING, verbose_name="PMS Classification")
     type_of_referral =      models.ForeignKey(ReferralType, on_delete=models.DO_NOTHING, verbose_name="Type of Referral")
-    establishment =         models.ForeignKey(ProductEstablishment, on_delete=models.DO_NOTHING, verbose_name="Establishment")
+    establishment =         models.ForeignKey(ProductEstablishment, on_delete=models.DO_NOTHING, verbose_name="Establishment", null=True, blank=True)
 
     product_category =      models.ForeignKey(ProductCategory, on_delete=models.DO_NOTHING, verbose_name="Product Category")
     dosage_form =           models.ForeignKey(DosageForm, on_delete=models.DO_NOTHING, verbose_name="Dosage Form")

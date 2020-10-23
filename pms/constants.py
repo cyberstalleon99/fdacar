@@ -1,4 +1,5 @@
 PMS_STATUS = [
-    ('Pending', 'Pending'),
+    ('Awaiting Result', 'Awaiting Result'),
+    ('For Action', 'For Action'),
     ('Complete', 'Complete'),
 ]
