@@ -72,9 +72,9 @@ class ProductAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     resource_class = ProductResource
 
     list_display = ('status', 'generic_name', 'brand_name', 'month', 'date_collected', 'tracking_number',
-                    'classification', 'type_of_referral', 'analysis_request', 'establishment', 'address',
+                    'classification', 'type_of_referral', 'analysis_request', 'establishment_name', 'address',
                     'product_category', 'collection_mode', 'inspector', 'date_forwarded', 'date_result_received', 'result',
-                    'center_remarks',
+                    'center_remarks', 'remarks',
     )
 
     list_filter = (
@@ -85,8 +85,8 @@ class ProductAdmin(ExportActionModelAdmin, TabbedModelAdmin):
         ('result', DropdownFilter),
     )
 
-    search_fields = ['generic_name', 'brand_name', 'tracking_number', 'establishment',
-                    'product_category', 'result', 'center_remarks'
+    search_fields = ['generic_name', 'brand_name', 'tracking_number', 'establishment__name',
+                    'product_category__name', 'result', 'center_remarks'
     ]
 
     general_fieldset = (
@@ -143,11 +143,21 @@ class ProductAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     def month(self, product):
         return product.group.strftime('%B')
 
-    def establishment(self, product):
-        return product.establishment.name
+    def establishment_name(self, product):
+        try:
+            product.establishment.name
+        except:
+            return product.remarks
+        else:
+            return product.establishment.name
 
     def address(self, product):
-        return product.establishment.address.full_address()
+        try:
+            product.establishment.name
+        except:
+            return product.remarks
+        else:
+            return product.establishment.address.full_address()
 
     def inspector(self, product):
         return ",\n".join(s.product_inspector.get_short_name()  for s in product.product_inspectors.all())

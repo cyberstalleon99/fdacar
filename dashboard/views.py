@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.views import View
 from .dashboard  import MasterlistSummary
 from masterlist.models import Establishment
+from pms.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from appsreceived.models import Application
 from pli.models import Pli
-from pms.models import Product
 from accounts.models import Profile
 
 def get_inspector_data(inspector):
@@ -39,22 +39,17 @@ class DashboardView(LoginRequiredMixin, View):
     template_name = 'dashboard/index.html'
 
     def get(self, request):
+
         context = {}
         context['masterlist_dashboard_active'] = "active"
         total_all = Establishment.objects.filter(status='Active').count()
-        total_abra = MasterlistSummary.Provinces.Abra.get_total()
-        total_apayao = MasterlistSummary.Provinces.Apayao.get_total()
-        total_baguio =  MasterlistSummary.Provinces.Baguio_City.get_total()
-        total_benguet = MasterlistSummary.Provinces.Benguet.get_total()
-        total_ifugao = MasterlistSummary.Provinces.Ifugao.get_total()
-        total_kalinga = MasterlistSummary.Provinces.Kalinga.get_total()
-        total_mountainprov = MasterlistSummary.Provinces.Mountain_Province.get_total()
 
         if Establishment.objects.all():
             cfrr_summary = MasterlistSummary.Centers.Cfrr()
             cdrr_summary = MasterlistSummary.Centers.Cdrr()
             ccrr_summary = MasterlistSummary.Centers.Ccrr()
             cdrrhr_summary = MasterlistSummary.Centers.Cdrrhr()
+            pendings_summary = MasterlistSummary.Pendings()
 
             temp = MasterlistSummary.Provinces
             provinces = []
@@ -65,10 +60,10 @@ class DashboardView(LoginRequiredMixin, View):
 
             context = {
                         'masterlist_dashboard_active': "active",
+                        'total_all':        total_all,
                         'cfrr': {'total':               cfrr_summary.get_total(),
                                  'total_m_p_r_t':       cfrr_summary.get_total_m_p_r_t(),
                                  'total_dist':          cfrr_summary.get_total_dist()
-
                         },
 
                         'cdrr': {'total':               cdrr_summary.get_total(),
@@ -87,16 +82,12 @@ class DashboardView(LoginRequiredMixin, View):
                                  'total_m_p_r_t':       cdrrhr_summary.get_total_m_p_r_t(),
                                  'total_dist':          cdrrhr_summary.get_total_dist()
                         },
-
-                        'total_all':        total_all,
-                        'total_abra':       total_abra,
-                        'total_apayao':     total_apayao,
-                        'total_baguio':     total_baguio,
-                        'total_benguet':    total_benguet,
-                        'total_ifugao':     total_ifugao,
-                        'total_kalinga':    total_kalinga,
-                        'total_mountainprov':   total_mountainprov,
-
+                        'pendings': {
+                            'expired': pendings_summary.get_total_expired(),
+                            'awaiting_results': pendings_summary.get_total_awaiting_result(),
+                            'awaiting_closure': pendings_summary.get_total_awaiting_closure(),
+                            'awaiting_capa': pendings_summary.get_total_awaiting_capa(),
+                        },
                         'provinces': provinces
                     }
 
@@ -104,5 +95,6 @@ class DashboardView(LoginRequiredMixin, View):
         inspectors = Profile.objects.filter(designation__name="FDRO II")
         context['inspectors'] = list(map(get_inspector_data, inspectors))
         context['curr_date'] = today
+
 
         return render(request, self.template_name, context)

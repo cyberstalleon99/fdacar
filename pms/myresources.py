@@ -19,6 +19,7 @@ class ProductResource(resources.ModelResource):
     date_result_received = Field(attribute="date_result_received", column_name="Date Result Received")
     result = Field(attribute="result", column_name="Result")
     center_remarks = Field(attribute="center_remarks", column_name="Remarks of Center")
+    remarks = Field(attribute="remarks", column_name="Remarks")
 
     def dehydrate_month(self, product):
         return product.group.strftime('%B')
@@ -33,10 +34,20 @@ class ProductResource(resources.ModelResource):
         return product.analysis_request.name
 
     def dehydrate_establishment(self, product):
-        return product.establishment.name
+        try:
+            product.establishment.name
+        except:
+            return product.remarks
+        else:
+            return product.establishment.name
 
     def dehydrate_address(self, product):
-        return product.establishment.address.full_address()
+        try:
+            product.establishment.name
+        except:
+            return product.remarks
+        else:
+            return product.establishment.address.full_address()
 
     def dehydrate_product_category(self, product):
         return product.product_category.name

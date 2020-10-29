@@ -45,6 +45,7 @@
                                         <th>Date Result Received</th>
                                         <th>Result</th>
                                         <th>Center Remarks</th>
+                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -125,8 +126,8 @@ $(document).ready(function () {
               'sortable': false
           },
           {
-              'data': 'establishment.name',
-              'name': 'establishment.name',
+              'data': 'establishment_name',
+              'name': 'establishment_name'
             //   'render': function(data, type, row, meta){
             //       if(type === 'display') {
             //           var url = "{% url 'masterlist:est-detail' 0 %}";
@@ -138,8 +139,8 @@ $(document).ready(function () {
             //   }
           },
           {
-              'data': 'establishment.address',
-              'name': 'establishment.address.address',
+              'data': 'establishment_address',
+              'name': 'establishment_address',
               'searchable': false,
               'sortable': false
           },
@@ -152,32 +153,43 @@ $(document).ready(function () {
           {
               'data': 'collection_mode',
               'name': 'collection_mode',
-              'searchable': false
+              'searchable': false,
+              'sortable': false
           },
           {
               'data': 'inspector',
               'name': 'inspector',
-              'searchable': false
+              'searchable': false,
+              'sortable': false
           },
           {
               'data': 'date_forwarded',
               'name': 'date_forwarded',
-              'searchable': false
+              'searchable': false,
+              'sortable': false
           },
           {
               'data': 'date_result_received',
               'name': 'date_result_received',
-              'searchable': false
+              'searchable': false,
+              'sortable': false
           },
           {
               'data': 'result',
               'name': 'result',
-              'searchable': true
+              'searchable': false,
+              'sortable': false
           },
           {
               'data': 'center_remarks',
               'name': 'center_remarks',
-              'sortable': true,
+              'sortable': false,
+              'searchable': false
+          },
+          {
+              'data': 'remarks',
+              'name': 'remarks',
+              'sortable': false,
               'searchable': false
           },
     ];

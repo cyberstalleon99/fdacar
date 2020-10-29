@@ -64,7 +64,7 @@ class ProductEstablishment(models.Model):
     specific_activity = models.ManyToManyField(ProductSpecificActivity)
 
     def __str__(self):
-        return self.name
+        return self.name + " - " + self.address.address
 
 class Product(models.Model):
     status =                models.CharField(max_length=20, choices=constants.PMS_STATUS)

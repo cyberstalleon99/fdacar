@@ -1,4 +1,4 @@
-from .myhelpers import Center, Province
+from .myhelpers import Center, Province, Pendings
 
 
 class MasterlistSummary:
@@ -14,3 +14,6 @@ class MasterlistSummary:
         Ifugao = Province('Ifugao')
         Kalinga = Province('Kalinga')
         Mountain_Province = Province('Mountain Province')
+
+    class Pendings(Pendings):
+        pass

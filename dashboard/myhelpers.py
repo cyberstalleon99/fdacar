@@ -1,4 +1,7 @@
 from masterlist.models import Establishment, ProductType
+from pms.models import Product
+from pli.models import Pli
+from appsreceived.models import Application
 # from django.db.models import Q
 
 class MasterlistSummaryHelper:
@@ -416,7 +419,8 @@ class Center:
             edu_xray = super().get_spec_total_single('Educational X-Ray')
             ctscan_xray = super().get_spec_total_single('CTScan')
             mobile_xray = super().get_spec_total_single('Mobile X-Ray')
-            return med_xray + vet_xray + den_xray + mri_xray + edu_xray + ctscan_xray + mobile_xray
+            non_medical_xray = super().get_spec_total_single('Non-Medical X-Ray')
+            return med_xray + vet_xray + den_xray + mri_xray + edu_xray + ctscan_xray + mobile_xray + non_medical_xray
 
 class Province:
 
@@ -444,3 +448,24 @@ class Province:
 
     def cdrrhr(self):
         return Center.Cdrrhr(center='CDRRHR', province_or_city=self.province_or_city)
+
+class Pendings:
+
+    def get_total_expired(self):
+        except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan', 'Mobile X-Ray']
+        total = Establishment.expiredlist.get_list().exclude(specific_activity__name__in=except_activities).order_by('name').count()
+        return total
+
+    def get_total_awaiting_result(self):
+        total = Product.objects.filter(status='Awaiting Result').count()
+        return total
+
+    def get_total_awaiting_closure(self):
+        total = Pli.objects.filter(status__status = 'Awaiting Letter of Closure').count()
+        return total
+
+    def get_total_awaiting_capa(self):
+        total_apps = Application.objects.filter(status='Returned to Client').count()
+        total_pli = Pli.objects.filter(status__status='Awaiting CAPA').count()
+        total = total_apps + total_pli
+        return total

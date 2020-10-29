@@ -76,7 +76,8 @@ class InspectionResource(resources.ModelResource):
         except:
             return "N/A"
         else:
-            return inspection.capadeficiency__set.count()
+            return inspection.capa.capadeficiency_set.all().count()
+
 
     def dehydrate_remarks(self, inspection):
         return inspection.remarks
