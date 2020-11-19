@@ -20,6 +20,7 @@ class ApplicationAdmin(ExportActionModelAdmin, TabbedModelAdmin):
     )
 
     search_fields = ['establishment__name', 'tracking_number']
+    autocomplete_fields = ['establishment', 'inspection']
     list_filter = (
         ('establishment__name', DropdownFilter),
         ('establishment__product_type', RelatedDropdownFilter),

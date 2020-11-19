@@ -13,7 +13,7 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         list_per_page = 20
         ordering = ('-group',)
 
-        list_display = ('status', 'name', 'address', 'month', 'product_type', 'primary_activity',
+        list_display = ('status', 'dtn', 'name', 'address', 'month', 'product_type', 'primary_activity',
                         'specific_activities', 'lto_number', 'expiry', 'inspection_type', 'date_inspected', 'inspection_count',
                         'inspector', 'remarks',
         )
@@ -30,10 +30,14 @@ class PliAdmin(ExportActionModelAdmin, admin.ModelAdmin):
         )
 
         search_fields = ['inspection__record__establishment__name', 'inspection__tracking_number', 'inspection__record__establishment__ltos__lto_number']
+        autocomplete_fields = ['inspection']
         resource_class = PliResource
 
         def name(self, pli):
             return pli.inspection.record.establishment.name
+
+        def dtn(self, pli):
+            return pli.inspection.tracking_number
 
         def address(self, pli):
             return pli.inspection.record.establishment.plant_address.full_address()

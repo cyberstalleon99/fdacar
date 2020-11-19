@@ -10,7 +10,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">DS/RONPD</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>DS/RONPD</a></strong>
                         </div>
                         <div class="number dashtext-1">{{cdrr.total_ds_ronpd}}</div>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:abra-list' %}" target="_blank">DD</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>DD</a></strong>
                         </div>
                         <div class="number dashtext-1">{{cdrr.total_dist}}</div>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:apayao-list' %}" target="_blank">HP</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>HP</a></strong>
                         </div>
                         <div class="number dashtext-2">{{cdrr.total_hp}}</div>
                     </div>
@@ -52,7 +52,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:baguio-list' %}" target="_blank">FM/P/R/T</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>FM/P/R/T</a></strong>
                         </div>
                         <div class="number dashtext-3">{{cfrr.total_m_p_r_t}}</div>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:benguet-list' %}" target="_blank">FD</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>FD</a></strong>
                         </div>
                         <div class="number dashtext-4">{{cfrr.total_dist}}</div>
                     </div>
@@ -79,7 +79,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:ifugao-list' %}" target="_blank">MD</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>MD</a></strong>
                         </div>
                         <div class="number dashtext-4">{{cdrrhr.total_dist}}</div>
                     </div>
@@ -93,7 +93,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:kalinga-list' %}" target="_blank">XRAY</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>XRAY</a></strong>
                         </div>
                         <div class="number dashtext-4">{{cdrrhr.total_xray}}</div>
                     </div>
@@ -107,7 +107,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:mountain-list' %}" target="_blank">CM/P/R/T</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>CM/P/R/T</a></strong>
                         </div>
                         <div class="number dashtext-4">{{ccrr.total_m_p_r_t}}</div>
                     </div>
@@ -121,7 +121,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:index' %}" target="_blank">CD</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>CD</a></strong>
                         </div>
                         <div class="number dashtext-4">{{ccrr.total_dist}}</div>
                     </div>
@@ -135,7 +135,7 @@
                 <div class="statistic-block block">
                     <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                            <div class="icon"><i class="icon-user-1"></i></div><strong><a href="{% url 'masterlist:index' %}" target="_blank">ALL (Active)</a></strong>
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>ALL (Active)</a></strong>
                         </div>
                         <div class="number dashtext-4">{{total_all}}</div>
                     </div>
@@ -162,90 +162,55 @@
                         <div class="stats-3 d-flex justify-content-between text-center">
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_ds_ronpd}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">DS/RONPD</button>
-                                    </form>
+                                    <a>DS/RONPD</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_dist}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Manufacturer">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">DD</button>
-                                    </form>
+                                    <a>DD</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+246</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_hp}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Trader">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">HP</button>
-                                    </form>
+                                    <a>HP</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_m_p_r_t}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Wholesaler">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">FM/P/R/T</button>
-                                    </form>
+                                    <a>FM/P/R/T</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_dist}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Importer">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">FD</button>
-                                    </form>
+                                    <a>FD</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_dist}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Exporter">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">MD</button>
-                                    </form>
+                                    <a>MD</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_xray}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Exporter">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">XRay</button>
-                                    </form>
+                                    <a>XRay</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_m_p_r_t}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Exporter">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">CM/P/R/T</button>
-                                    </form>
+                                    <a>CM/P/R/T</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_dist}}</strong>
                                 <span class="d-block span-sm">
-                                    <form action="#" method="get">
-                                        {%csrf_token%}
-                                        <input name="q" type="hidden" value="Exporter">
-                                        <button class="btn btn-link" type="submit" formtarget="_blank">CD</button>
-                                    </form>
+                                    <a>CD</a>
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>

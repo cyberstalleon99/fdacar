@@ -1,6 +1,6 @@
 from import_export import resources
 from import_export.fields import Field
-from .models import Establishment
+from .models import Establishment, Lto
 from checklist.models import Job
 from dateutil.relativedelta import relativedelta
 
@@ -72,7 +72,7 @@ class EstablishmentResource(resources.ModelResource):
         try:
             establishment.record.inspections.latest().date_inspected
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             return establishment.record.inspections.latest().date_inspected
 
@@ -80,7 +80,7 @@ class EstablishmentResource(resources.ModelResource):
         try:
             establishment.record.inspections.latest().date_inspected
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
             if frequency_of_inspection:
@@ -93,7 +93,7 @@ class EstablishmentResource(resources.ModelResource):
         try:
             establishment.record.inspections.latest().date_inspected
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             return establishment.record.inspections.latest().inspection_type
 
@@ -116,7 +116,7 @@ class EstablishmentResource(resources.ModelResource):
         try:
             establishment.record.inspections.latest().date_inspected
         except:
-            return 'No inspections yet'
+            return 'For inspection'
         else:
             return ",\n".join(inspector.inspector.get_short_name()  for inspector in establishment.record.inspections.latest().est_inspectors.all())
 
@@ -196,3 +196,68 @@ class JobResource(resources.ModelResource):
     class Meta:
         model=Job
         exclude = ('id', 'date_modified', 'application', 'center', 'additional_activity', 'office_address', 'authorized_officer',)
+
+class LtoResource(resources.ModelResource):
+    # ('lto_number', 'type_of_application', 'issuance', 'expiry',
+    # 'name', 'address', 'city_or_municipality', 'inspections')
+    lto_number = Field(column_name="LTO #")
+    type_of_application = Field(attribute="type_of_application", column_name="Application Type")
+    issuance = Field(attribute="issuance", column_name="Issuance")
+    expiry = Field(column_name="Expiry")
+    name = Field(column_name="Establishment")
+    address = Field(column_name="Address")
+    city_or_municipality = Field(column_name="City or Municipality")
+    province = Field(column_name="Province")
+    primary_activity = Field(column_name="Primary Activity")
+    specific_activity = Field(column_name="Specific Activity")
+    inspections = Field(column_name="PLI Inspections (2018-Present)")
+    status = Field(column_name="Status")
+    folder_number = Field(column_name="Folder #")
+
+    def dehydrate_lto_number(self, lto):
+        return lto.establishment.ltos.latest()
+
+    def dehydrate_expiry(self, lto):
+        return lto.establishment.ltos.latest().expiry
+
+    def dehydrate_name(self, lto):
+        return lto.establishment.name
+
+    def dehydrate_address(self, lto):
+        return lto.establishment.plant_address.address
+
+    def dehydrate_city_or_municipality(self, lto):
+        return lto.establishment.plant_address.municipality_or_city
+
+    def dehydrate_province(self, lto):
+        return lto.establishment.plant_address.province.name
+
+    def dehydrate_primary_activity(self, lto):
+        return lto.establishment.primary_activity.name
+
+    def dehydrate_specific_activity(self, lto):
+         return lto.establishment.specific_activities()
+
+    def dehydrate_inspections(self, lto):
+        try:
+            lto.establishment.record.inspections.all()
+        except:
+            return 'No inspections'
+        else:
+            inspections = lto.establishment.record.inspections.filter(inspection_type__name='Post Licensing Inspection', date_inspected__gte='2018-01-01')
+            return ", \n".join(s.date_inspected.strftime('%d %b %Y') + ' - ' + s.inspection_type.name for s in inspections)
+
+    def dehydrate_status(self, lto):
+        return lto.establishment.status
+
+    def dehydrate_folder_number(self, lto):
+        try:
+            lto.establishment.record.inspections.all()
+        except:
+            return 'No Folder'
+        else:
+            return lto.establishment.record.folder_id
+
+    class Meta:
+        model = Lto
+        exclude = ('id', 'establishment',)

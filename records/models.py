@@ -102,6 +102,20 @@ class Inspection(models.Model):
             month = difference.years * 12 + difference.months
         return month
 
+    def get_next_inspection(self):
+        next_date_inspection = ''
+        try:
+            self.date_inspected + relativedelta(years=int(self.frequency_of_inspection))
+        except:
+            return 'For inspection'
+        else:
+            frequency_of_inspection = self.frequency_of_inspection
+            if frequency_of_inspection:
+                next_date_inspection = self.date_inspected + relativedelta(years=int(frequency_of_inspection))
+            else:
+                return 'No Risk Assessment'
+            return next_date_inspection
+
     class Meta:
         ordering = ['-date_inspected']
         get_latest_by = 'date_inspected'

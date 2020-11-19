@@ -63,6 +63,10 @@ class InspectionAdmin(ExportActionModelAdmin, admin.ModelAdmin):
             {'fields': ['inspection_report']}
         ),
         (
+            'CAPA Status',
+            {'fields': ['for_capa']}
+        ),
+        (
             'Forwarded to supervisor',
             {'fields': ['date_forwarded', 'date_approved']}
         ),

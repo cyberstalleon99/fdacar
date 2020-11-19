@@ -3,14 +3,14 @@ from dateutil.relativedelta import relativedelta
 from django.contrib import admin
 from .models import Establishment, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
-    EstAdditionalActivity, EstProductLine, Variation, SpecificActivity, QualifiedPersonDesignation
+    EstAdditionalActivity, EstProductLine, Variation, SpecificActivity, QualifiedPersonDesignation, QualifiedPerson
 
 # from records.models import Record
 # from checklist.models import Job
 # from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
 from import_export.admin import ExportActionModelAdmin
-from .myresources import EstablishmentResource
+from .myresources import EstablishmentResource, LtoResource
 from tabbed_admin import TabbedModelAdmin
 from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAdmin
 
@@ -47,6 +47,68 @@ admin.site.register(PlantAddress)
 admin.site.register(Variation)
 admin.site.register(SpecificActivity)
 admin.site.register(QualifiedPersonDesignation)
+
+@admin.register(Lto)
+class LtoAdmin(ExportActionModelAdmin):
+    model = Lto
+    # list_display = ('LTO #', 'Type', 'Date Issued', 'Expiry', 'Establishment',
+    # 'Address', 'City or Municip', 'Primary Activity', 'Specific Activity',  'Inspections',)
+
+    list_display = ('lto_number', 'type_of_application', 'issuance', 'expiry',
+    'name', 'address', 'city_or_municipality', 'province', 'primary_activity', 'specific_activity',
+    'inspections', 'status', 'folder_number')
+
+    list_filter = (
+        ('type_of_application', DropdownFilter),
+        ('establishment__record__inspections__inspection_type', RelatedDropdownFilter),
+        ('establishment__primary_activity', RelatedDropdownFilter),
+        ('establishment__specific_activity', RelatedDropdownFilter),
+        ('establishment__plant_address__province', RelatedDropdownFilter),
+        ('establishment__plant_address__municipality_or_city', RelatedDropdownFilter),
+    )
+
+    search_fields = ['establishment__name', 'establishment__ltos__lto_number']
+
+    resource_class = LtoResource
+
+    def name(self, lto):
+        return lto.establishment.name
+
+    def address(self, lto):
+        return lto.establishment.plant_address.address
+
+    def city_or_municipality(self, lto):
+        return lto.establishment.plant_address.municipality_or_city
+
+    def province(self, lto):
+        return lto.establishment.plant_address.province.name
+
+    def primary_activity(self, lto):
+        return lto.establishment.primary_activity.name
+
+    def specific_activity(self, lto):
+         return lto.establishment.specific_activities()
+
+    def inspections(self, lto):
+        try:
+            lto.establishment.record.inspections.all()
+        except:
+            return 'No inspections'
+        else:
+            inspections = lto.establishment.record.inspections.all()
+            return ", \n".join(s.date_inspected.strftime('%d %b %Y') + ' - ' + s.inspection_type.name for s in inspections)
+
+    def status(self, lto):
+        return lto.establishment.status
+
+    def folder_number(self, lto):
+        try:
+            lto.establishment.record.inspections.all()
+        except:
+            return 'No Folder'
+        else:
+            return lto.establishment.record.folder_id
+
 
 
 @admin.register(VariationType)
@@ -97,7 +159,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     #     'specific_activities'], 'classes': ['collapse']}),
     # ]
 
-    search_fields = ['name']
+    search_fields = ['name', 'ltos__lto_number']
 
     list_display = ('name', 'address',
      'product_type', 'primary_activity', 'specific_activities',
@@ -224,3 +286,7 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
     def save_model(self, request, obj, form, change):
         obj.modified_by = request.user
         super().save_model(request, obj, form, change)
+
+@admin.register(QualifiedPerson)
+class QualifiedPersonAdmin(admin.ModelAdmin):
+    list_display = ('status', 'establishment', 'designation')

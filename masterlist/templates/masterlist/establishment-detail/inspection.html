@@ -25,13 +25,14 @@
                         <thead>
                             <tr>
                                 <th>Date Inspected</th>
+                                <th>DTN/Case #</th>
                                 <th>No. of CAPA</th>
                                 <th>CAPA Status</th>
                                 <th>CAPA Deficiencies</th>
                                 <th>Inspected by</th>
                                 <th>Type</th>
                                 <th>Frequency</th>
-                                <th>Followup</th>
+                                <th>Next Inspection</th>
                                 <th>Remarks</th>
                                 <th>Inspection Report</th>
                             </tr>
@@ -41,6 +42,7 @@
                             {% for inspection in inspections %}
                             <tr>
                                 <td><a href="{% url 'admin:records_inspection_change' inspection.id %}" target="_blank">{{inspection.date_inspected}}</a></td>
+                                <td>{{inspection.tracking_number}}</td>
                                 {% if inspection.capa %}
                                 <td><a href="{% url 'admin:records_capa_change' inspection.capa.id %}" target="_blank">{{inspection.capa.capadeficiency_set.all.count}}</a></td>
                                 {% else %}
@@ -85,7 +87,7 @@
                                 </td>
                                 <td>{{inspection.inspection_type}}</td>
                                 <td>{{inspection.frequency_of_inspection}}</td>
-                                <td>{{inspection.date_of_followup_inspection.date}}</td>
+                                <td>{{inspection.get_next_inspection}}</td>
                                 <td>{{inspection.remarks}}</td>
                                 <td>
                                     {% if inspection.inspection_report %}
