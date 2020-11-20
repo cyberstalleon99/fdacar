@@ -1,6 +1,6 @@
 from import_export import resources
 from import_export.fields import Field
-from .models import Establishment, Lto
+from .models import Establishment, Lto, QualifiedPerson
 from checklist.models import Job
 from dateutil.relativedelta import relativedelta
 
@@ -261,3 +261,63 @@ class LtoResource(resources.ModelResource):
     class Meta:
         model = Lto
         exclude = ('id', 'establishment',)
+
+class QualifiedPersonResource(resources.ModelResource):
+    firstname =             Field(column_name="FirstName")
+    lastname =              Field(column_name="LastName")
+    establishment =         Field(column_name="Establishment")
+    lto_number =            Field(column_name="LTO Number")
+    address =               Field(column_name="Address")
+    primary_activity =      Field(column_name="Primary Activity")
+    specific_activities =   Field(column_name="Specific Activity")
+
+    def dehydrate_firstname(self, person):
+        return person.first_name
+
+    def dehydrate_lastname(self, person):
+        return person.last_name
+
+    def dehydrate_establishment(self, person):
+        try:
+            person.establishment.name
+        except:
+            return ''
+        else:
+            return person.establishment.name
+
+    def dehydrate_lto_number(self, person):
+        try:
+            person.establishment.ltos.latest()
+        except:
+            return 'No LTO Number'
+        else:
+            return person.establishment.ltos.latest()
+
+    def dehydrate_address(self, person):
+        try:
+            person.establishment.plant_address.full_address()
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.plant_address.full_address()
+
+    def dehydrate_primary_activity(self, person):
+        try:
+            person.establishment.primary_activity
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.primary_activity
+
+    def dehydrate_specific_activities(self, person):
+
+        try:
+            person.establishment.specific_activities()
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.specific_activities()
+
+    class Meta:
+        model = QualifiedPerson
+        exclude = ('id', 'status', 'person_ptr', 'first_name', 'last_name', 'middle_initial', 'email', 'mobile', 'designation')

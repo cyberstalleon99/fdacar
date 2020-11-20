@@ -10,7 +10,7 @@ from .models import Establishment, CityOrMunicipality, \
 # from django_reverse_admin import ReverseModelAdmin
 from django.shortcuts import redirect
 from import_export.admin import ExportActionModelAdmin
-from .myresources import EstablishmentResource, LtoResource
+from .myresources import EstablishmentResource, LtoResource, QualifiedPersonResource
 from tabbed_admin import TabbedModelAdmin
 from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAdmin
 
@@ -41,7 +41,7 @@ from nested_admin import NestedStackedInline, NestedTabularInline, NestedModelAd
 #         return super().save_model(request, obj, form, change)
 
 admin.site.register(AuthorizedOfficer)
-admin.site.register(QualifiedPerson)
+# admin.site.register(QualifiedPerson)
 admin.site.register(OfficeAddress)
 admin.site.register(PlantAddress)
 admin.site.register(Variation)
@@ -288,5 +288,49 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         super().save_model(request, obj, form, change)
 
 @admin.register(QualifiedPerson)
-class QualifiedPersonAdmin(admin.ModelAdmin):
-    list_display = ('status', 'establishment', 'designation')
+class QualifiedPersonAdmin(ExportActionModelAdmin):
+    list_display = ('status', 'name', 'establishment', 'lto_number', 'address',
+    'primary_activity', 'specific_activities', 'designation')
+    list_filter = (
+        ('status', DropdownFilter),
+        ('designation', RelatedDropdownFilter),
+        ('establishment__primary_activity', RelatedDropdownFilter),
+        ('establishment__specific_activity', RelatedDropdownFilter),
+    )
+    resource_class = QualifiedPersonResource
+
+    def name(self, person):
+        return person.full_name()
+    
+    def primary_activity(self, person):
+        try:
+            person.establishment.primary_activity
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.primary_activity
+
+    def specific_activities(self, person):
+        
+        try:
+            person.establishment.specific_activities()
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.specific_activities()
+
+    def lto_number(self, person):
+        try:
+            person.establishment.ltos.latest()
+        except:
+            return 'No LTO Number'
+        else:
+            return person.establishment.ltos.latest()
+
+    def address(self, person):
+        try:
+            person.establishment.plant_address.full_address()
+        except:
+            return 'Does not belong to an establishment'
+        else:
+            return person.establishment.plant_address.full_address()
