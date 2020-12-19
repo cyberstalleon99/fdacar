@@ -17,6 +17,7 @@ urlpatterns = [
     path('pms/', include('pms.urls')),
     path('appsreceived/', include('appsreceived.urls')),
     path('admin/', admin.site.urls),
+    path('records/', include('records.urls')),
 
     # API URLS
     path('api/est-list/', include('masterlist.api.urls', 'masterlist-api')),

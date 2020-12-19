@@ -294,14 +294,18 @@ class QualifiedPersonAdmin(ExportActionModelAdmin):
     list_filter = (
         ('status', DropdownFilter),
         ('designation', RelatedDropdownFilter),
+        ('establishment__product_type', RelatedDropdownFilter),
         ('establishment__primary_activity', RelatedDropdownFilter),
         ('establishment__specific_activity', RelatedDropdownFilter),
+        ('establishment__status', DropdownFilter),
     )
     resource_class = QualifiedPersonResource
+    list_per_page = 20
+    search_fields = ['first_name', 'last_name', 'establishment__name']
 
     def name(self, person):
         return person.full_name()
-    
+
     def primary_activity(self, person):
         try:
             person.establishment.primary_activity
@@ -311,7 +315,7 @@ class QualifiedPersonAdmin(ExportActionModelAdmin):
             return person.establishment.primary_activity
 
     def specific_activities(self, person):
-        
+
         try:
             person.establishment.specific_activities()
         except:

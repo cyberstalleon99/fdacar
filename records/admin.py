@@ -7,6 +7,7 @@ from nested_admin import NestedTabularInline, NestedModelAdmin
 from django_admin_listfilter_dropdown.filters import RelatedDropdownFilter
 from import_export.admin import ExportActionModelAdmin
 from .myresources import InspectionResource
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 
 admin.site.register(CapaPreparator)
 
@@ -145,20 +146,54 @@ class InspectionInline(NestedTabularInline, admin.TabularInline):
 
 @admin.register(Record)
 class RecordAdmin(NestedModelAdmin):
-    list_display = ('folder_id', 'name', 'address', 'province', 'municipality_or_city', )
+    search_fields = ['establishment__name', 'establishment__ltos__lto_number', 'folder_id']
+
+    list_display = ('folder_id', 'name', 'address',
+     'product_type', 'primary_activity', 'specific_activities',
+     'lto_number', 'expiry',)
     inlines = [InspectionInline]
+
+    list_filter = (
+        ('establishment__name', DropdownFilter),
+        ('establishment__product_type', RelatedDropdownFilter),
+        ('establishment__primary_activity', RelatedDropdownFilter),
+        ('establishment__specific_activity', RelatedDropdownFilter),
+        ('establishment__plant_address__province', RelatedDropdownFilter),
+        ('establishment__plant_address__municipality_or_city', RelatedDropdownFilter),
+        ('establishment__status', ChoiceDropdownFilter),
+    )
 
     def name(self, obj):
         return obj.establishment.name
 
     def address(self, obj):
-        return obj.establishment.plant_address.address
+        return obj.establishment.plant_address.full_address()
 
-    def province(self, obj):
-        return obj.establishment.plant_address.province.name
+    def product_type(self, obj):
+        return obj.establishment.product_type.name
 
-    def municipality_or_city(self, obj):
-        return obj.establishment.plant_address.municipality_or_city.name
+    def primary_activity(self, obj):
+        return obj.establishment.primary_activity.name
+
+    def specific_activities(self, obj):
+        return obj.establishment.specific_activities()
+
+    def lto_number(self, obj):
+        try:
+            obj.establishment.ltos.first().lto_number
+        except:
+            return "N/A"
+        else:
+            return obj.establishment.ltos.first().lto_number
+
+    def expiry(self, obj):
+        try:
+            obj.establishment.ltos.first().expiry
+        except:
+            return "N/A"
+        else:
+            return obj.establishment.ltos.first().expiry
+
 
 class CapaDeficiencyInline(admin.TabularInline):
     model=CapaDeficiency

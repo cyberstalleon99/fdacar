@@ -8,7 +8,14 @@
                         <span class="d-block">Displayed is the list of inspection for this establishment</span>
                     </div>
                     <div class="col-md-6 text-right">
-                        <a class="btn btn-secondary {{ establishment.record|yesno:"disabled," }}" href="{% url 'admin:records_record_add' %}" target="_blank">Create Folder</a>
+                        <form method="post" action="{% url 'records:record-add' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="est_id" value={{establishment.id}} />
+                            <button class="btn btn-secondary {{ establishment.record|yesno:"disabled," }}" type="submit">Create Folder</button>
+                        </form>
+                        {% comment %}
+                        <a class="btn btn-secondary {{ establishment.record|yesno:"disabled," }}" href="{% url 'records:record-add' %}" target="_blank">Create Folder</a>
+                        {% endcomment %}
 
                         <a class="btn btn-primary {{ establishment.record|yesno:",disabled" }}"
                         href={% if establishment.record %}
