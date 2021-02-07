@@ -52,7 +52,7 @@ def get_last_number(est):
     similar_ests = get_similar_establishments(est)
     folder_numbers = []
     for similar_est in similar_ests:
-        folder_numbers.append(similar_est.folder_id.split('-')[1])
+        folder_numbers.append(int(similar_est.folder_id.split('-')[1]))
     folder_numbers.sort()
 
     return folder_numbers[-1]
