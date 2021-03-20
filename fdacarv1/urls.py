@@ -4,8 +4,10 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('dashboard.urls')),
     path('masterlist/', include('masterlist.urls')),
     path('dashboard/', include('dashboard.urls')),
@@ -16,8 +18,8 @@ urlpatterns = [
     path('pli/', include('pli.urls')),
     path('pms/', include('pms.urls')),
     path('appsreceived/', include('appsreceived.urls')),
-    path('admin/', admin.site.urls),
     path('records/', include('records.urls')),
+    path('profile/', include('inspector.urls')),
 
     # API URLS
     path('api/est-list/', include('masterlist.api.urls', 'masterlist-api')),
@@ -27,6 +29,9 @@ urlpatterns = [
     path('api/pli/', include('pli.api.urls', 'pli-api')),
     path('api/pms/', include('pms.api.urls', 'pms-api')),
     path('api/appsreceived/', include('appsreceived.api.urls', 'appsreceived-api')),
+
+    # Dependent Dropdown URL
+    url(r'^chaining/', include('smart_selects.urls')),
 ]
 
 if settings.DEBUG:

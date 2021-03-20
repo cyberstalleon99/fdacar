@@ -14,60 +14,12 @@
 <script src="{% static 'darkadmin/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
 <!--<script src="{% static 'darkadmin/js/charts-custom.js' %}"></script>-->
 <script src="{% static 'darkadmin/js/front.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
 
 <script>
-$(document).ready(function () {
-    $.extend( $.fn.dataTable.defaults, {
-        'serverSide': true,
-        'processing': true,
-        'pageLength': 20,
-        // 'order': [[ 0, "desc" ]],
-        'searching': true,
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        'columns': [
-            {
-                "class":          'details-control',
-                "orderable":      false,
-                "sortable":                 false,
-                "data":           null,
-                "defaultContent": ''
-            },
-              {
-                  'data': 'name',
-                  'name': 'name',
-                  'render': function(data, type, row, meta){
-                      if(type === 'display') {
-                          var url = "{% url 'masterlist:est-detail' 0 %}";
-                          var id = row.DT_RowAttr.pkey;
-                          url = url.replace(0, id);
-                          data = '<a href="' + url + '" target="_blank">' + data + '</a>';
-                      }
-                      return data;
-                  }
-              },
-              {'data': 'plant_address',         'name': 'plant_address.address'},
-              {'data': 'product_type.name',     'name': 'product_type.name'},
-              {'data': 'primary_activity',      'name': 'primary_activity.name'},
-              {'data': 'specific_activities',   'name': 'specific_activity.name'},
-              {'data': 'lto_number',            'name': 'ltos.lto_number'},
-              {'data': 'expiry',                'name': 'ltos.expiry',    'searchable': false},
-              {'data': 'contact_info',          'searchable': false, 'sortable': false, 'visible': false},
-              {'data': 'folder_number',         'sortable': false, 'searchable': false, 'visible': false},
-              {'data': 'application_type',      'sortable': false, 'searchable': false, 'visible': false},
-              {'data': 'owner',                 'sortable': false, 'searchable': false, 'visible': false},
-              {'data': 'last_inspection',       'name': 'record.inspections.latest().date_inspected', 'searchable': false, 'sortable': false},
-              {'data': 'inspection_type',       'searchable': false, 'sortable': false},
-              {'data': 'next_inspection',       'searchable': false, 'sortable': false},
-        ],
-        dom: 'B<fl<t>ip>',
-        buttons: {
-           name: 'primary',
-           buttons: ['copy', 'csv', 'excel', 'pdf']
-       },
-    });
-});
 
+{% comment %}
 function format ( d ) {
     // `d` is the original data object for the row
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
@@ -89,53 +41,5 @@ function format ( d ) {
         '</tr>'+
     '</table>';
 }
-</script>
-
-
-<script>
-// $("#id_region").change(function() {
-//     var url = $("#plantaddressform").attr("data-provinces-url");
-//     var regionId = $(this).val();
-
-//     $.ajax({
-//         url: url,
-//         data: {
-//             'region': regionId
-//         },
-//         success: function(data) {
-//             $("#id_province").html(data);
-//         }
-//     });
-// });
-
-// $("#id_province").change(function() {
-//     var url = $("#plantaddressform").attr("data-cities-url");
-//     var provinceId = $(this).val();
-
-//     $.ajax({
-//         url: url,
-//         data: {
-//             'province': provinceId
-//         },
-//         success: function(data) {
-//             $("#id_municipality_or_city").html(data);
-//         }
-//     });
-// });
-
-
-// $("#id_product_type").change(function() {
-//     var url = $("#steponeform").attr("data-productlines-url");
-//     var productTypeId = $(this).val();
-
-//     $.ajax({
-//         url: url,
-//         data: {
-//             'productType': productTypeId
-//         },
-//         success: function(data) {
-//             $("#id_product_line").html(data);
-//         }
-//     });
-// });
+{% endcomment %}
 </script>

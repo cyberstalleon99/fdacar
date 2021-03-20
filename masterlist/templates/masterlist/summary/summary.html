@@ -1,133 +1,320 @@
- {% extends 'base-site.html' %}
-{% block title %} Summary  {% endblock %}
-{% block subtitle %} SUMMARY  {% endblock %}
+{% extends 'base-site.html' %}
+{% block title %} Summary {% endblock %}
+{% block subtitle %} SUMMARY {% endblock %}
 
 {% block content %}
 <section class="no-padding-top">
     <div class="container-fluid">
-        {% for name, province in provinces.items %}
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="block">
-                    <div class="title">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <strong>{{name}} Summary ({{province.get_total}})</strong>
-                                <!-- <span class="d-block">Displayed is the summary of Abra</span> -->
+        <div class="row d-flex align-items-stretch">
+            <div class="col-lg-7">
+                {% for name, province in provinces.items %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="block">
+                            <div class="title">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>{{name}} Summary</strong>
+                                        <!-- <span class="d-block">Displayed is the summary of Abra</span> -->
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="block-body">
+                                <!-- <strong>FOOD</strong> -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table id="summarytable" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Type</th>
+                                                        <th data-toggle="tooltip" data-placement="top"
+                                                            title="Wholesaler">M</th>
+                                                        <th>P</th>
+                                                        <th>R</th>
+                                                        <th>T</th>
+                                                        <th>W</th>
+                                                        <th>E</th>
+                                                        <th>I</th>
+                                                        <th>W/E</th>
+                                                        <th>W/I</th>
+                                                        <th>E/I</th>
+                                                        <th>W/E/I</th>
+                                                        <th>DS</th>
+                                                        <th>HP</th>
+                                                        <th>RONPD</th>
+                                                        <th>XRAY</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Food</td>
+                                                        <td>{{province.cfrr.get_total_mfg}}</td>
+                                                        <td>{{province.cfrr.get_total_packer}}</td>
+                                                        <td>{{province.cfrr.get_total_repacker}}</td>
+                                                        <td>{{province.cfrr.get_total_trader}}</td>
+                                                        <td>{{province.cfrr.get_total_wholesaler}}</td>
+                                                        <td>{{province.cfrr.get_total_exporter}}</td>
+                                                        <td>{{province.cfrr.get_total_importer}}</td>
+                                                        <td>{{province.cfrr.get_total_we}}</td>
+                                                        <td>{{province.cfrr.get_total_wi}}</td>
+                                                        <td>{{province.cfrr.get_total_ie}}</td>
+                                                        <td>{{province.cfrr.get_total_wei}}</td>
+                                                        <td>{{province.cfrr.get_total_ds}}</td>
+                                                        <td>{{province.cfrr.get_total_hp}}</td>
+                                                        <td>{{province.cfrr.get_total_ronpd}}</td>
+                                                        <td>{{province.cfrr.get_total_xray}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Drug</td>
+                                                        <td>{{province.cdrr.get_total_mfg}}</td>
+                                                        <td>{{province.cdrr.get_total_packer}}</td>
+                                                        <td>{{province.cdrr.get_total_repacker}}</td>
+                                                        <td>{{province.cdrr.get_total_trader}}</td>
+                                                        <td>{{province.cdrr.get_total_wholesaler}}</td>
+                                                        <td>{{province.cdrr.get_total_exporter}}</td>
+                                                        <td>{{province.cdrr.get_total_importer}}</td>
+                                                        <td>{{province.cdrr.get_total_we}}</td>
+                                                        <td>{{province.cdrr.get_total_wi}}</td>
+                                                        <td>{{province.cdrr.get_total_ie}}</td>
+                                                        <td>{{province.cdrr.get_total_wei}}</td>
+                                                        <td>{{province.cdrr.get_total_ds}}</td>
+                                                        <td>{{province.cdrr.get_total_hp}}</td>
+                                                        <td>{{province.cdrr.get_total_ronpd}}</td>
+                                                        <td>{{province.cdrr.get_total_xray}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Cosmetic</td>
+                                                        <td>{{province.ccrr.get_total_mfg}}</td>
+                                                        <td>{{province.ccrr.get_total_packer}}</td>
+                                                        <td>{{province.ccrr.get_total_repacker}}</td>
+                                                        <td>{{province.ccrr.get_total_trader}}</td>
+                                                        <td>{{province.ccrr.get_total_wholesaler}}</td>
+                                                        <td>{{province.ccrr.get_total_exporter}}</td>
+                                                        <td>{{province.ccrr.get_total_importer}}</td>
+                                                        <td>{{province.ccrr.get_total_we}}</td>
+                                                        <td>{{province.ccrr.get_total_wi}}</td>
+                                                        <td>{{province.ccrr.get_total_ie}}</td>
+                                                        <td>{{province.ccrr.get_total_wei}}</td>
+                                                        <td>{{province.ccrr.get_total_ds}}</td>
+                                                        <td>{{province.ccrr.get_total_hp}}</td>
+                                                        <td>{{province.ccrr.get_total_ronpd}}</td>
+                                                        <td>{{province.ccrr.get_total_xray}}</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Medical Device</td>
+                                                        <td>{{province.cdrrhr.get_total_mfg}}</td>
+                                                        <td>{{province.cdrrhr.get_total_packer}}</td>
+                                                        <td>{{province.cdrrhr.get_total_repacker}}</td>
+                                                        <td>{{province.cdrrhr.get_total_trader}}</td>
+                                                        <td>{{province.cdrrhr.get_total_wholesaler}}</td>
+                                                        <td>{{province.cdrrhr.get_total_exporter}}</td>
+                                                        <td>{{province.cdrrhr.get_total_importer}}</td>
+                                                        <td>{{province.cdrrhr.get_total_we}}</td>
+                                                        <td>{{province.cdrrhr.get_total_wi}}</td>
+                                                        <td>{{province.cdrrhr.get_total_ie}}</td>
+                                                        <td>{{province.cdrrhr.get_total_wei}}</td>
+                                                        <td>{{province.cdrrhr.get_total_ds}}</td>
+                                                        <td>{{province.cdrrhr.get_total_hp}}</td>
+                                                        <td>{{province.cdrrhr.get_total_ronpd}}</td>
+                                                        <td>{{province.cdrrhr.get_total_xray}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="block-body">
-                        <!-- <strong>FOOD</strong> -->
-                        <div class="table-responsive">
-                            <table id="summarytable" class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Product Type</th>
-                                        <th data-toggle="tooltip" data-placement="top" title="Wholesaler">M</th>
-                                        <th>P</th>
-                                        <th>R</th>
-                                        <th>T</th>
-                                        <th>W</th>
-                                        <th>E</th>
-                                        <th>I</th>
-                                        <th>W/E</th>
-                                        <th>W/I</th>
-                                        <th>E/I</th>
-                                        <th>W/E/I</th>
-                                        <th>DS</th>
-                                        <th>HP</th>
-                                        <th>RONPD</th>
-                                        <th>XRAY</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Food</td>
-                                        <td>{{province.cfrr.get_total_mfg}}</td>
-                                        <td>{{province.cfrr.get_total_packer}}</td>
-                                        <td>{{province.cfrr.get_total_repacker}}</td>
-                                        <td>{{province.cfrr.get_total_trader}}</td>
-                                        <td>{{province.cfrr.get_total_wholesaler}}</td>
-                                        <td>{{province.cfrr.get_total_exporter}}</td>
-                                        <td>{{province.cfrr.get_total_importer}}</td>
-                                        <td>{{province.cfrr.get_total_we}}</td>
-                                        <td>{{province.cfrr.get_total_wi}}</td>
-                                        <td>{{province.cfrr.get_total_ie}}</td>
-                                        <td>{{province.cfrr.get_total_wei}}</td>
-                                        <td>{{province.cfrr.get_total_ds}}</td>
-                                        <td>{{province.cfrr.get_total_hp}}</td>
-                                        <td>{{province.cfrr.get_total_ronpd}}</td>
-                                        <td>{{province.cfrr.get_total_xray}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Drug</td>
-                                        <td>{{province.cdrr.get_total_mfg}}</td>
-                                        <td>{{province.cdrr.get_total_packer}}</td>
-                                        <td>{{province.cdrr.get_total_repacker}}</td>
-                                        <td>{{province.cdrr.get_total_trader}}</td>
-                                        <td>{{province.cdrr.get_total_wholesaler}}</td>
-                                        <td>{{province.cdrr.get_total_exporter}}</td>
-                                        <td>{{province.cdrr.get_total_importer}}</td>
-                                        <td>{{province.cdrr.get_total_we}}</td>
-                                        <td>{{province.cdrr.get_total_wi}}</td>
-                                        <td>{{province.cdrr.get_total_ie}}</td>
-                                        <td>{{province.cdrr.get_total_wei}}</td>
-                                        <td>{{province.cdrr.get_total_ds}}</td>
-                                        <td>{{province.cdrr.get_total_hp}}</td>
-                                        <td>{{province.cdrr.get_total_ronpd}}</td>
-                                        <td>{{province.cdrr.get_total_xray}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Cosmetic</td>
-                                        <td>{{province.ccrr.get_total_mfg}}</td>
-                                        <td>{{province.ccrr.get_total_packer}}</td>
-                                        <td>{{province.ccrr.get_total_repacker}}</td>
-                                        <td>{{province.ccrr.get_total_trader}}</td>
-                                        <td>{{province.ccrr.get_total_wholesaler}}</td>
-                                        <td>{{province.ccrr.get_total_exporter}}</td>
-                                        <td>{{province.ccrr.get_total_importer}}</td>
-                                        <td>{{province.ccrr.get_total_we}}</td>
-                                        <td>{{province.ccrr.get_total_wi}}</td>
-                                        <td>{{province.ccrr.get_total_ie}}</td>
-                                        <td>{{province.ccrr.get_total_wei}}</td>
-                                        <td>{{province.ccrr.get_total_ds}}</td>
-                                        <td>{{province.ccrr.get_total_hp}}</td>
-                                        <td>{{province.ccrr.get_total_ronpd}}</td>
-                                        <td>{{province.ccrr.get_total_xray}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Medical Device</td>
-                                        <td>{{province.cdrrhr.get_total_mfg}}</td>
-                                        <td>{{province.cdrrhr.get_total_packer}}</td>
-                                        <td>{{province.cdrrhr.get_total_repacker}}</td>
-                                        <td>{{province.cdrrhr.get_total_trader}}</td>
-                                        <td>{{province.cdrrhr.get_total_wholesaler}}</td>
-                                        <td>{{province.cdrrhr.get_total_exporter}}</td>
-                                        <td>{{province.cdrrhr.get_total_importer}}</td>
-                                        <td>{{province.cdrrhr.get_total_we}}</td>
-                                        <td>{{province.cdrrhr.get_total_wi}}</td>
-                                        <td>{{province.cdrrhr.get_total_ie}}</td>
-                                        <td>{{province.cdrrhr.get_total_wei}}</td>
-                                        <td>{{province.cdrrhr.get_total_ds}}</td>
-                                        <td>{{province.cdrrhr.get_total_hp}}</td>
-                                        <td>{{province.cdrrhr.get_total_ronpd}}</td>
-                                        <td>{{province.cdrrhr.get_total_xray}}</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-5">
+                {% for name, province in provinces.items %}
+                    <div class="row d-flex align-items-stretch">
+                        <div class="col-lg-12">
+                            <div class="block">
+                                <div class="block-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="title"> <strong class="d-block">{{name}}</strong>
+                                                <!-- <spanclass="d-block">Lorem ipsum dolor sit</span> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="text pull-right">
+                                                <strong class="d-block dashtext-3">Total: {{province.get_total}}</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="chart">
+                                                <canvas id="{{name}}_chart" height="89"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
     </div>
 </section>
+{% endblock %}
+
+{% block js %}
+<script>
+    var chartlabel = '# of Establishments'
+    var backgoundCol = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        // 'rgba(153, 102, 255, 0.2)',
+        // 'rgba(255, 159, 64, 0.2)'
+    ]
+    var borderCol = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        // 'rgba(153, 102, 255, 1)',
+        // 'rgba(255, 159, 64, 1)'
+    ]
+
+    var opts = {
+        scales: {
+            yAxes: [{
+                    ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+
+    var abra_canv = document.getElementById('Abra_chart').getContext('2d');
+    var abra_chart = new Chart(abra_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Abra}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var apayao_canv = document.getElementById('Apayao_chart').getContext('2d');
+    var apayao_chart = new Chart(apayao_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Apayao}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var baguio_canv = document.getElementById('Baguio_City_chart').getContext('2d');
+    var baguio_chart = new Chart(baguio_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Baguio_City}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var benguet_canv = document.getElementById('Benguet_chart').getContext('2d');
+    var benguet_chart = new Chart(benguet_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data:{{provinces_data.Benguet}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var ifugao_canv = document.getElementById('Ifugao_chart').getContext('2d');
+    var ifugao_chart = new Chart(ifugao_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Ifugao}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var kalinga_canv = document.getElementById('Kalinga_chart').getContext('2d');
+    var kalinga_chart = new Chart(kalinga_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Kalinga}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var mountain_canv = document.getElementById('Mountain_Province_chart').getContext('2d');
+    var mountain_chart = new Chart(mountain_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels| safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Mountain_Province}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+</script>
 {% endblock %}

@@ -11,43 +11,71 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from dashboard.dashboard  import MasterlistSummary
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import MasterlistFilterForm, AddressForm, ExpiredlistFilterForm
 
 class AllListView(LoginRequiredMixin, ListView):
     model = Establishment
     template_name = 'masterlist/index.html'
+    context_object_name = 'establishments'
+
+    def get_queryset(self, *args, **kwargs):
+
+        filter = {}
+
+        for field in self.request.GET:
+            if field != 'csrfmiddlewaretoken':
+                if self.request.GET.get(field) != '':
+                    if field == 'region' or field == 'province' or field == 'municipality_or_city':
+                        filter['plant_address__' + field] = self.request.GET.get(field)
+                    else:
+                        filter[field] = self.request.GET.get(field)
+
+        # First load of masterlist page or if filters are empty
+        if len(filter) < 1:
+            return
+        
+        qs = Establishment.objects.filter(**filter)
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['alllist_active'] = "active"
-        context['alllist_tab_active'] = "active"
+        context['filter_form'] = MasterlistFilterForm(self.request.GET)
+        context['address_form'] = AddressForm(self.request.GET)
         return context
 
-class InactiveListView(LoginRequiredMixin, ListView):
+class ExpiredListView(LoginRequiredMixin, ListView):
     model = Establishment
-    template_name = 'masterlist/inactive-list.html'
+    template_name = 'masterlist/expired-list.html'
+    context_object_name = 'establishments'
+
+    def get_queryset(self, *args, **kwargs):
+        filter = {}
+
+        for field in self.request.GET:
+            if field != 'csrfmiddlewaretoken':
+                if self.request.GET.get(field) != '':
+                    if field == 'region' or field == 'province' or field == 'municipality_or_city':
+                        filter['plant_address__' + field] = self.request.GET.get(field)
+                    else:
+                        filter[field] = self.request.GET.get(field)
+
+        # First load of masterlist page or if filters are empty
+        if len(filter) < 1:
+            return
+
+        except_activities = ['Hospital Pharmacy', 'Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan', 'Mobile X-Ray']
+        qs = Establishment.expiredlist.get_list().exclude(specific_activity__name__in=except_activities).order_by('name')
+        qs = qs.filter(**filter)
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['inactive_tab_active'] = "active"
-        context['alllist_active'] = "active"
+        context['expiredlist_active'] = "active"
+        context['filter_form'] = ExpiredlistFilterForm(self.request.GET)
+        context['address_form'] = AddressForm(self.request.GET)
         return context
-
-class ClosedListView(LoginRequiredMixin, ListView):
-    model = Establishment
-    template_name = 'masterlist/closed-list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['closed_tab_active'] = "active"
-        context['alllist_active'] = "active"
-        return context
-
-    def get_list(self):
-        closedlist = Establishment.inactivelist.get_list()
-        query = self.request.GET.get('q', None)
-        if query:
-            closedlist = Establishment.closedlist.get_filtered_list(query=query)
-        return closedlist
 
 class AbraListView(LoginRequiredMixin, ListView):
     model = Establishment
@@ -119,14 +147,7 @@ class MountainListView(LoginRequiredMixin, ListView):
         context['provincelist_active'] = "active"
         return context
 
-class ExpiredListView(LoginRequiredMixin, ListView):
-    model = Establishment
-    template_name = 'masterlist/expired-list.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['expiredlist_active'] = "active"
-        return context
 
 def export_expired(request):
     checklist = Establishment.expiredlist.get_list()
@@ -176,4 +197,13 @@ class SummaryView(LoginRequiredMixin, View):
 
         context['provinces'] = provinces
         context['summary_active'] = "active"
+
+        provinces_data = {}
+        for name, prov in provinces.items():
+            provinces_data[name] = [prov.cfrr().get_total(), prov.cdrr().get_total(), prov.ccrr().get_total(), prov.cdrrhr().get_total()]
+            # print([province.cfrr().get_total(), province.cdrr().get_total(), province.ccrr().get_total(), province.cdrrhr().get_total()])
+
+        print(type(provinces))
+        context['provinces_data'] = provinces_data
+        context['chart_labels'] = ['Food', 'Drug', 'Cosmetics', 'Medical Device']
         return render(request, self.template_name, context)

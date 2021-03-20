@@ -3,7 +3,7 @@ from .serializers import EstablishmentSerializer
 from masterlist.models import Establishment
 
 class EstablishmentViewSet(viewsets.ModelViewSet):
-    queryset = Establishment.objects.filter(status='Active').order_by('date_modified')
+    queryset = Establishment.objects.filter(status='Active').order_by('date_modified')[:5]
     serializer_class = EstablishmentSerializer
 
 class ClosedViewSet(viewsets.ModelViewSet):

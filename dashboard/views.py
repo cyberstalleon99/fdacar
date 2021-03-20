@@ -13,6 +13,7 @@ def get_inspector_data(inspector):
     today = datetime.date.today()
     today_year = today.year
     today_month = today.month
+    
     appsreceived_count = Application.objects.filter(group__year=today_year, group__month=today_month, inspection__est_inspectors__inspector=inspector.user).count()
     pli_count = Pli.objects.filter(group__year=today_year, group__month=today_month, inspection__est_inspectors__inspector=inspector.user).count()
     product_count = Product.objects.filter(group__year=today_year, group__month=today_month, product_inspectors__product_inspector=inspector.user).count()
@@ -23,7 +24,7 @@ def get_inspector_data(inspector):
 
     data = {
         'inspector': inspector.user,
-        'img': inspector.img.url,
+        # 'img': inspector.img.url,
         'appsreceived': appsreceived_count,
         'pli':  pli_count,
         'products': product_count,
@@ -32,6 +33,13 @@ def get_inspector_data(inspector):
         'pli_yearly':  pli_yearly_count,
         'products_yearly': product_yearly_count,
     }
+    try:
+        inspector.img.url
+    except:
+        data['img'] = "/static/darkadmin/img/user-icon.png"
+    else:
+        data['img'] = inspector.img.url
+        
 
     return data
 
@@ -96,5 +104,22 @@ class DashboardView(LoginRequiredMixin, View):
         context['inspectors'] = list(map(get_inspector_data, inspectors))
         context['curr_date'] = today
 
+        # Data for Charts
+        context['chart_labels'] = ['DS/RONPD', 'DD', 'HP', 'FM/P/R/T', 'FD', 'MM/P/R/T', 'MD', 'XRay', 'CM/P/R/T', 'CD']
+        province_totals = {}
+        provinces_data = {}
+        # print(provinces)
+        for prov in provinces:
+            provinces_data[prov[0]] = [prov[1].cdrr().get_total_ds_ronpd(), prov[1].cdrr().get_total_dist(), prov[1].cdrr().get_total_hp(), 
+                                prov[1].cfrr().get_total_m_p_r_t(), prov[1].cfrr().get_total_dist(), prov[1].cdrrhr().get_total_m_p_r_t(), prov[1].cdrrhr().get_total_dist(), 
+                                prov[1].cdrrhr().get_total_xray(), prov[1].ccrr().get_total_m_p_r_t(), prov[1].ccrr().get_total_dist()]
+            province_totals[prov[0]] = prov[1].get_total()
+        context['province_totals'] = province_totals
+        context['provinces_data'] = provinces_data
+        context['masterlist_data'] = [cdrr_summary.get_total_ds_ronpd(), cdrr_summary.get_total_dist(), cdrr_summary.get_total_hp(), 
+                                      cfrr_summary.get_total_m_p_r_t(), cfrr_summary.get_total_dist(),
+                                      cdrrhr_summary.get_total_m_p_r_t(), cdrrhr_summary.get_total_dist(), cdrrhr_summary.get_total_xray(), 
+                                      ccrr_summary.get_total_m_p_r_t(), ccrr_summary.get_total_dist()]
 
+        # context['provinces'] = 
         return render(request, self.template_name, context)

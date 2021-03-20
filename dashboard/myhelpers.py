@@ -68,7 +68,7 @@ class MasterlistSummaryHelper:
             count = Establishment.objects.filter(
                 status='Active',
                 product_type=self.product_type,
-                plant_address__province__name='Benguet',
+                plant_address__province__name=self.province_or_city,
             ).count()
 
         return abs(count)
@@ -109,7 +109,7 @@ class MasterlistSummaryHelper:
                         status='Active',
                         specific_activity__name='Wholesaler',
                         plant_address__municipality_or_city__name='Baguio City',
-                    ).filter(specific_activity__name='Importer').count()
+                    ).filter(specific_activity__name='Importer').exclude(specific_activity__name='Exporter').count()
 
         if self.province_or_city == 'Baguio City':
             count = count_bag
@@ -119,7 +119,7 @@ class MasterlistSummaryHelper:
                         status='Active',
                         specific_activity__name='Wholesaler',
                         plant_address__province__name='Benguet',
-                    ).filter(specific_activity__name='Importer').count()
+                    ).filter(specific_activity__name='Importer').exclude(specific_activity__name='Exporter').count()
 
             count = count_ben - count_bag
         elif self.province_or_city == '':
@@ -127,14 +127,14 @@ class MasterlistSummaryHelper:
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Wholesaler',
-            ).filter(specific_activity__name='Importer').count()
+            ).filter(specific_activity__name='Importer').exclude(specific_activity__name='Exporter').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Wholesaler',
                     plant_address__province__name=self.province_or_city,
-            ).filter(specific_activity__name='Importer').count()
+            ).filter(specific_activity__name='Importer').exclude(specific_activity__name='Exporter').count()
 
         return abs(count)
 
@@ -145,7 +145,7 @@ class MasterlistSummaryHelper:
                         status='Active',
                         specific_activity__name='Wholesaler',
                         plant_address__municipality_or_city__name='Baguio City',
-                    ).filter(specific_activity__name='Exporter').count()
+                    ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Importer').count()
 
         if self.province_or_city == 'Baguio City':
             count = count_bag
@@ -155,7 +155,7 @@ class MasterlistSummaryHelper:
                     status='Active',
                     specific_activity__name='Wholesaler',
                     plant_address__province__name='Benguet',
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Importer').count()
 
             count = count_ben - count_bag
         elif self.province_or_city == '':
@@ -163,14 +163,14 @@ class MasterlistSummaryHelper:
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Wholesaler',
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Importer').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Wholesaler',
                     plant_address__province__name=self.province_or_city,
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Importer').count()
 
         return abs(count)
 
@@ -181,7 +181,7 @@ class MasterlistSummaryHelper:
                         status='Active',
                         specific_activity__name='Importer',
                         plant_address__municipality_or_city__name='Baguio City',
-                    ).filter(specific_activity__name='Exporter').count()
+                    ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Wholesaler').count()
 
         if self.province_or_city == 'Baguio City':
             count = count_bag
@@ -191,7 +191,7 @@ class MasterlistSummaryHelper:
                     status='Active',
                     specific_activity__name='Importer',
                     plant_address__province__name='Benguet',
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Wholesaler').count()
 
             count = count_ben - count_bag
         elif self.province_or_city == '':
@@ -199,14 +199,14 @@ class MasterlistSummaryHelper:
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Importer',
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Wholesaler').count()
         else:
             count = Establishment.objects.filter(
                     product_type=self.product_type,
                     status='Active',
                     specific_activity__name='Importer',
                     plant_address__province__name=self.province_or_city,
-            ).filter(specific_activity__name='Exporter').count()
+            ).filter(specific_activity__name='Exporter').exclude(specific_activity__name='Wholesaler').count()
 
         return abs(count)
 

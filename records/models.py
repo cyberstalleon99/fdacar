@@ -18,6 +18,37 @@ class Record(models.Model):
         else:
             return self.establishment.name + "(" + self.folder_id + ")"
 
+    def get_last_inspection(self):
+        try:
+            self.inspections.latest().date_inspected
+        except:
+            return 'For inspection'
+        else:
+                return self.inspections.latest().date_inspected
+
+    def get_inspection_type(self):
+        try:
+            self.inspections.latest().inspection_type.name
+        except:
+            return 'For inspection'
+        else:
+            return self.inspections.latest().inspection_type.name
+
+    def get_next_inspection(self):
+        next_date_inspection = ''
+
+        try:
+            self.inspections.latest()
+        except:
+            return 'For inspection'
+        else:
+            frequency_of_inspection = self.inspections.latest().frequency_of_inspection
+            if frequency_of_inspection:
+                next_date_inspection = self.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
+            else:
+                return 'No Risk Assessment'
+        return next_date_inspection
+
 class CapaPreparator(Person):
     # capa = models.OneToOneField(Capa, on_delete=models.CASCADE, null=True)
     designation =       models.CharField(max_length=255, choices=constants.ALL_DESIGNATIONS, null=True, blank=False)

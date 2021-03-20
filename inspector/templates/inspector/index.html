@@ -1,0 +1,225 @@
+{% extends 'base-site.html' %}
+{% block title %} My Profile {% endblock %}
+{% block subtitle %} MY PROFILE {% endblock %}
+
+{% block content %}
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card card-profile">
+                    <div style="background-image: url(static/darkadmin/img/paul-morris-116514.jpg);" class="card-header">
+                        <img src="/inspector/static/img/paul-morris-116514.jpg" alt="">
+                    </div>
+                    <div class="card-body text-center"><img
+                            src="{{user.profile.img.url}}"
+                            class="card-profile-img">
+                        <h4 class="mb-3 text-gray-light">{{user.get_full_name}}</h4>
+                        <p class="mb-4">{{user.profile.designations}} </p>
+                        <!-- <button class="btn btn-outline-secondary"><span class="fa fa-twitter"></span> Change Photo</button> -->
+                    </div>
+                </div>
+                
+                <!-- <form class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">My Profile</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-auto d-flex align-items-center"><span
+                                    style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-7.jpg)"
+                                    class="avatar avatar-lg"></span></div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input placeholder="Your name" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            <textarea rows="8"
+                                class="form-control">The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input placeholder="you@domain.com" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" value="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary">Save</button>
+                    </div>
+                </form> -->
+            </div>
+            <div class="col-lg-8">
+                <!-- <div class="card">
+                    <div class="card-header">
+                        <div class="input-group">
+                            <input type="text" placeholder="Message" class="form-control">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary"><i
+                                        class="fa fa-send"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group card-list-group">
+                        <div class="list-group-item py-5">
+                            <div class="media">
+                                <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-7.jpg)"
+                                    class="media-object avatar avatar-md mr-3"></div>
+                                <div class="media-body">
+                                    <div class="media-heading"><small class="float-right">10 min</small>
+                                        <h5 class="text-gray">Nathan Andrews</h5>
+                                    </div>
+                                    <div class="text-small">One morning, when Gregor Samsa woke from troubled dreams, he
+                                        found himself transformed in his bed into a horrible vermin. He lay on his
+                                        armour-like back, and if he lifted his head a little he could see his brown
+                                        belly, slightly domed and divided by arches into stiff sections</div>
+                                    <div class="media-list">
+                                        <div class="media mt-4">
+                                            <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-3.jpg)"
+                                                class="media-object avatar mr-3"></div>
+                                            <div class="media-body text-muted text-small"><strong
+                                                    class="text-gray">Serenity Mitchelle: </strong>&nbsp; The bedding
+                                                was hardly able to cover it and seemed ready to slide off any moment.
+                                                His many legs, pitifully thin compared with the size of the rest of him,
+                                                waved about helplessly as he looked. &quot;What's happened to me?&quot;
+                                                he thought. It wasn't a dream.</div>
+                                        </div>
+                                        <div class="media mt-4">
+                                            <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-1.jpg)"
+                                                class="media-object avatar mr-3"></div>
+                                            <div class="media-body text-muted text-small"><strong class="text-gray">Tony
+                                                    O'Brian: </strong>&nbsp; His room, a proper human room although a
+                                                little too small, lay peacefully between its four familiar walls. A
+                                                collection of textile samples lay spread out on the table.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item py-5">
+                            <div class="media">
+                                <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-7.jpg)"
+                                    class="media-object avatar avatar-md mr-3"></div>
+                                <div class="media-body">
+                                    <div class="media-heading"><small class="float-right text-muted">12 min</small>
+                                        <h5>Nathan Andrews</h5>
+                                    </div>
+                                    <div class="text-small">Samsa was a travelling salesman - and above it there hung a
+                                        picture that he had recently cut out of an illustrated magazine and housed in a
+                                        nice, gilded frame.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item py-5">
+                            <div class="media">
+                                <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-7.jpg)"
+                                    class="media-object avatar avatar-md mr-3"></div>
+                                <div class="media-body">
+                                    <div class="media-heading"><small class="float-right text-muted">34 min</small>
+                                        <h5>Nathan Andrews</h5>
+                                    </div>
+                                    <div class="text-small">He must have tried it a hundred times, shut his eyes so that
+                                        he wouldn't have to look at the floundering legs, and only stopped when he began
+                                        to feel a mild, dull pain there that he had never felt before.</div>
+                                    <div class="media-list">
+                                        <div class="media mt-4">
+                                            <div style="background-image: url(https://d19m59y37dris4.cloudfront.net/dark-admin-premium/1-4-6/img/avatar-6.jpg)"
+                                                class="media-object avatar mr-3"></div>
+                                            <div class="media-body text-muted text-small"><strong
+                                                    class="text-gray">Javier Gregory: </strong>&nbsp;One morning, when
+                                                Gregor Samsa woke from troubled dreams, he found himself transformed in
+                                                his bed into a horrible vermin. He lay on his armour-like back, and if
+                                                he lifted his head a little he could see his brown belly, slightly domed
+                                                and divided by arches into stiff sections</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <form class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <h5 class="card-title">My Inspections</h5>
+                            </div>
+                            <div class="col-lg-2 pull-right">
+                                <select name="" id="" class="form-control" disabled>
+                                    <option value="">2021</option>
+                                    <option value="">2020</option>
+                                    <option value="">2019</option>
+                                    
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="inspection_table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name of Establishment</th>
+                                        <th>Address</th>
+                                        <th>Product Type</th>
+                                        <th>Primary Activity</th>
+                                        <th>Specific Activity</th>
+                                        <th>LTO No.</th>
+                                        <th>Expiry</th>
+                                        <th>Date Inspected</th>
+                                        <th>Inspection Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for inspection in inspections %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'masterlist:est-detail' inspection.record.establishment.id%}">{{inspection.record.establishment.name}}</a>
+                                            </td>
+                                            <td>{{inspection.record.establishment.plant_address.full_address}}</td>
+                                            <td>{{inspection.record.establishment.product_type.name}}</td>
+                                            <td>{{inspection.record.establishment.primary_activity.name}}</td>
+                                            <td>{{inspection.record.establishment.specific_activities}}</td>
+                                            <td>{{inspection.record.establishment.ltos.latest.lto_number}}</td>
+                                            <td>{{inspection.record.establishment.ltos.latest.expiry}}</td>
+                                            <td>{{inspection.date_inspected}}</td>
+                                            <td>{{inspection.inspection_type}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function () {
+    $('#inspection_table').DataTable({
+        'processing': true,
+        'searching': true,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'B<fl<t>ip>',
+        
+        buttons: {
+           name: 'primary',
+           buttons: ['copy', 'csv', 'excel', 'pdf']
+       },
+    });
+});
+</script>
+{% endblock %}

@@ -9,4 +9,174 @@
 
 {% include 'dashboard/partial/inspectors.html' %}
 
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    var chartlabel = '# of Establishments'
+    var backgoundCol = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(145, 88, 122, 0.2)',
+        'rgba(44, 152, 225, 0.2)',
+        'rgba(65, 182, 182, 0.2)',
+        'rgba(85, 162, 162, 0.2)'
+    ]
+    var borderCol = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(145, 88, 122, 1)',
+        'rgba(44, 152, 225, 1)',
+        'rgba(65, 182, 182, 1)',
+        'rgba(85, 162, 162, 1)'
+    ]
+
+    var opts = {
+        scales: {
+            yAxes: [{
+                    ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+
+    var masterlist_canv = document.getElementById('Masterlist_chart').getContext('2d');
+    var masterlist_chart = new Chart(masterlist_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{masterlist_data}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var abra_canv = document.getElementById('Abra_chart').getContext('2d');
+    var abra_chart = new Chart(abra_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Abra}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var apayao_canv = document.getElementById('Apayao_chart').getContext('2d');
+    var apayao_chart = new Chart(apayao_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Apayao}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var baguio_canv = document.getElementById('Baguio_City_chart').getContext('2d');
+    var baguio_chart = new Chart(baguio_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Baguio_City}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var benguet_canv = document.getElementById('Benguet_chart').getContext('2d');
+    var benguet_chart = new Chart(benguet_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Benguet}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var ifugao_canv = document.getElementById('Ifugao_chart').getContext('2d');
+    var ifugao_chart = new Chart(ifugao_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Ifugao}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var kalinga_canv = document.getElementById('Kalinga_chart').getContext('2d');
+    var kalinga_chart = new Chart(kalinga_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Kalinga}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+
+    var mountain_canv = document.getElementById('Mountain_Province_chart').getContext('2d');
+    var mountain_chart = new Chart(mountain_canv, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels | safe }},
+            datasets: [{
+                label: chartlabel,
+                data: {{provinces_data.Mountain_Province}},
+                backgroundColor: backgoundCol,
+                borderColor: borderCol,
+                borderWidth: 1
+            }]
+        },
+        options: opts
+    });
+</script>
 {% endblock %}

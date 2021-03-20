@@ -1,10 +1,24 @@
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
         <div class="stats-3"><strong class="d-block"><a>ESTABLISHMENT SUMMARY</a></span>
-            <div class="progress progress-template progress-small">
-                <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                <div class="progress progress-template progress-small">
+                    <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                </div>
+        </div><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Masterlist_chart" height="65"></canvas>
+                    </div>
+                </div>
             </div>
         </div><br>
+        {% comment %}
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <div class="statistic-block block">
@@ -15,7 +29,8 @@
                         <div class="number dashtext-1">{{cdrr.total_ds_ronpd}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
                     </div>
                 </div>
             </div>
@@ -29,7 +44,8 @@
                         <div class="number dashtext-1">{{cdrr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
                     </div>
                 </div>
             </div>
@@ -43,7 +59,8 @@
                         <div class="number dashtext-2">{{cdrr.total_hp}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
                     </div>
                 </div>
             </div>
@@ -57,7 +74,8 @@
                         <div class="number dashtext-3">{{cfrr.total_m_p_r_t}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
                     </div>
                 </div>
             </div>
@@ -71,7 +89,8 @@
                         <div class="number dashtext-4">{{cfrr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
                     </div>
                 </div>
             </div>
@@ -84,7 +103,8 @@
                         <div class="number dashtext-4">{{cdrrhr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
                     </div>
                 </div>
             </div>
@@ -98,7 +118,8 @@
                         <div class="number dashtext-4">{{cdrrhr.total_xray}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
                     </div>
                 </div>
             </div>
@@ -112,7 +133,8 @@
                         <div class="number dashtext-4">{{ccrr.total_m_p_r_t}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
                     </div>
                 </div>
             </div>
@@ -126,7 +148,8 @@
                         <div class="number dashtext-4">{{ccrr.total_dist}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
                     </div>
                 </div>
             </div>
@@ -140,23 +163,49 @@
                         <div class="number dashtext-4">{{total_all}}</div>
                     </div>
                     <div class="progress progress-template">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-5"></div>
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-5"></div>
                     </div>
                 </div>
             </div>
+        </div>
+        {% endcomment %}
     </div>
+
 </section>
 
 <section class="no-padding-top no-padding-bottom">
     <div class="container-fluid">
-
-        {% for attr, value in provinces %}
-            <div class="row">
+        <div class="stats-3"><strong class="d-block"><a>PROVINCES</a></span>
+                <div class="progress progress-template progress-small">
+                    <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                </div>
+        </div><br>
+        <div class="row">
+            {% for attr, value in provinces %}
+                <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                        <div class="progress-details d-flex align-items-end justify-content-between">
+                            <div class="title">
+                                <div class="icon"><i class="icon-user-1"></i></div><strong><a href="#" data-toggle="modal" data-target="#{{attr}}Modal">{{attr}}</a></strong>
+                            </div>
+                            <div class="number dashtext-1">{{value.get_total}}</div>
+                        </div>
+                        <div class="progress progress-template">
+                            <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                                aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                        </div>
+                    </div>
+                </div>
+                {% comment %}
                 <div class="col-lg-12">
                     <div class="stats-3-block block d-flex">
-                        <div class="stats-3"><strong class="d-block">{{value.get_total}}</strong><span class="d-block"><a href="{% url 'masterlist:index' %}" target="_blank">{{attr}}</a></span>
+                        <div class="stats-3"><strong class="d-block">{{value.get_total}}</strong><span class="d-block"><a href="#" data-toggle="modal" data-target="#{{attr}}Modal">{{attr}} <small>(see graph)</small></a></span>
                             <div class="progress progress-template progress-small">
-                                <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
+                                <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0"
+                                    aria-valuemax="100"
+                                    class="progress-bar progress-bar-template progress-bar-small dashbg-4"></div>
                             </div>
                         </div>
                         <div class="stats-3 d-flex justify-content-between text-center">
@@ -190,6 +239,12 @@
                                 </span>
                                 <!-- <div class="line"></div><small>+416</small> -->
                             </div>
+                            <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_m_p_r_t}}</strong>
+                                <span class="d-block span-sm">
+                                    <a>MM/P/R/T</a>
+                                </span>
+                                <!-- <div class="line"></div><small>+416</small> -->
+                            </div>
                             <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_dist}}</strong>
                                 <span class="d-block span-sm">
                                     <a>MD</a>
@@ -217,7 +272,256 @@
                         </div>
                     </div>
                 </div>
+                {% endcomment %}
+                <!-- Modal -->
+                <div class="modal fade" id="{{attr}}Modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{attr}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="bar-chart chart">
+                                    <canvas id="{{attr}}_chart" height="65"></canvas><br>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            
+                                                <div class="stats-3 d-flex justify-content-between text-center">
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_ds_ronpd}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>DS/RONPD</small> </a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_dist}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>DD</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+246</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrr.get_total_hp}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>HP</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_m_p_r_t}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>FM/P/R/T</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cfrr.get_total_dist}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>FD</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_m_p_r_t}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>MM/P/R/T</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_dist}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>MD</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.cdrrhr.get_total_xray}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>XRay</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_m_p_r_t}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>CM/P/R/T</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                    <div class="item"><strong class="d-block strong-sm">{{value.ccrr.get_total_dist}}</strong>
+                                                        <span class="d-block span-sm">
+                                                            <a><small>CD</small></a>
+                                                        </span>
+                                                        <!-- <div class="line"></div><small>+416</small> -->
+                                                    </div>
+                                                </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-md-3 col-sm-6">
+                <div class="statistic-block block">
+                    <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                            <div class="icon"><i class="icon-user-1"></i></div><strong><a>ALL (Active)</a></strong>
+                        </div>
+                        <div class="number dashtext-4">{{total_all}}</div>
+                    </div>
+                    <div class="progress progress-template">
+                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar-template dashbg-5"></div>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 </section>
+
+{% comment %}
+<section class="margin-bottom-sm">
+    <div class="container-fluid">
+        <div class="stats-3"><strong class="d-block"><a>PROVINCES</a></span>
+                <div class="progress progress-template progress-small">
+                    <div role="progressbar" style="width: 35%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"
+                        class="progress-bar progress-bar-template progress-bar-small dashbg-3"></div>
+                </div>
+        </div><br>
+        <div class="row d-flex align-items-stretch">
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Abra</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-1">{{province_totals.Abra}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Abra_chart" height="65"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Apayao</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-2">{{province_totals.Apayao}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Apayao_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Baguio City</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-3">{{province_totals.Baguio_City}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Baguio_City_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Benguet</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-4">{{province_totals.Benguet}}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Benguet_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row d-flex align-items-stretch">
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Ifugao</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-1">{{province_totals.Ifugao}}</strong></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Ifugao_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Kalinga</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-2">{{province_totals.Kalinga}}</strong></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Kalinga_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="stats-with-chart-1 block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <strong class="d-block">Mountain Province</strong>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="text pull-right"><strong
+                                        class="d-block dashtext-3">{{province_totals.Mountain_Province}}</strong></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="bar-chart chart">
+                        <canvas id="Mountain_chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endcomment %}

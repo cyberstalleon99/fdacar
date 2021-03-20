@@ -1,48 +1,118 @@
-{% extends 'masterlist/partial/masterlist-base.html' %}
-{% block title %} Expired List  {% endblock %}
-{% block subtitle %} EXPIRED LIST {% endblock %}
+{% extends 'base-site.html' %}
+{% block title %} Establishment List  {% endblock %}
+{% block subtitle %} EXPIRED MASTER LIST {% endblock %}
 
-{% block content-title %}
-List of Expired Establishments
+
+{% block content %}
+{% load widget_tweaks %}
+<section class="no-padding-top">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="block">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <strong>Filter</strong>
+                        </div>
+                        <div class="col-lg-6">
+                            <i class="icon-light-bulb pull-right" data-toggle="tooltip" data-html="true" 
+                            title="<em>Reminders: </em><br> 
+                                    - Narrow down your filters as much as possible for faster load time <br> 
+                                    - Address filters are based on the plant address of the establishments"></i>
+                            <br><br>
+                        </div>
+                    </div>
+                     
+                    <form class="form-horizontal" method="GET" action="{% url 'masterlist:expired-list' %}">
+                        {% csrf_token %}
+                        {{ address_form.media.js }}
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{filter_form.product_type.label_tag}}</label>
+                            {% render_field filter_form.product_type class="form-control" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{filter_form.primary_activity.label_tag}}</label>
+                            {% render_field filter_form.primary_activity class="form-control" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{filter_form.specific_activity.label_tag}}</label>
+                            {% render_field filter_form.specific_activity class="form-control" %}
+                            <small class="help-text">Hold down “Control”, or “Command” on a Mac, to select more than one.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{address_form.region.label_tag}}</label>
+                            {% render_field address_form.region class="form-control" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{address_form.province.label_tag}}</label>
+                            {% render_field address_form.province class="form-control" %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="form-control-label">{{address_form.municipality_or_city.label_tag}}</label>
+                            {% render_field address_form.municipality_or_city class="form-control" %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Search</button>
+                    </form>
+                    
+                </div>
+                <div class="alert alert-info" role="alert">
+                    <strong>Updates: </strong><br>
+                    - New and Simplified User Interface <br>
+                    - Faster Load time <br>
+                    - Check the remiders by hovering your mouse on the icon (<i class="icon-light-bulb"></i>) above
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="block">
+                    <div class="title">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>List of Expired Establishments</strong>
+                                <span class="d-block">Displayed is the list of active expired establishments</span>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                            </div>
+                            <div class="col-md-4 text-right">
+                                <a class="btn btn-primary" href="{% url 'admin:masterlist_establishment_add' %}" target="_blank">Add an Establishment</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block-body">
+                        <div class="table-responsive">
+                            {% include 'masterlist/partial/masterlist-table.html' %}
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
 {% endblock %}
 
-{% block content-subtitle %}
-Displayed is the list of expired establishments
-{% endblock %}
 
 {% block js %}
 <script>
 $(document).ready(function () {
-    var alltable = $('#all_list_table').DataTable ({
-        'ajax': '/api/est-list/expired/?format=datatables',
+    $('#all_list_table').DataTable({
+        'processing': true,
+        'searching': true,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        dom: 'B<fl<t>ip>',
+        
+        buttons: {
+           name: 'primary',
+           buttons: ['copy', 'csv', 'excel', 'pdf']
+       },
     });
-
-    $('.btn-prod-type').on('click', function() {
-        alltable.columns().search('');
-        var rel = $(this).attr('rel');
-        if (rel) {
-            alltable.columns(3).search(rel).draw();
-        } else {
-            alltable.draw();
-        }
-    });
-
-    // Add event listener for opening and closing details
-    $('#all_list_table tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).parents('tr');
-        var row = alltable.row( tr );
- 
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-        }
-    } );
 });
 </script>
 {% endblock %}

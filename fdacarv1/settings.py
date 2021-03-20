@@ -25,7 +25,7 @@ SECRET_KEY = '7jrf=_sb^!kys%+410u*pvniqffb)oxhutjw@##=^cy(^)bu$a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dongilay.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 	'nested_admin',
 # 	'rest_framework',
 	'rest_framework_datatables',
+    'smart_selects',
 ]
 
 MIDDLEWARE = [

@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 from django.contrib import admin
 from .models import Establishment, CityOrMunicipality, \
     PlantAddress, WarehouseAddress, OfficeAddress, AuthorizedOfficer, QualifiedPerson, Lto, VariationType, \
-    EstAdditionalActivity, EstProductLine, Variation, SpecificActivity, QualifiedPersonDesignation, QualifiedPerson
+    EstAdditionalActivity, EstProductLine, Variation, SpecificActivity, QualifiedPersonDesignation, QualifiedPerson, ProductType
 
 # from records.models import Record
 # from checklist.models import Job
@@ -148,10 +148,17 @@ class QualifiedPersonInline(admin.TabularInline, NestedTabularInline):
     model=QualifiedPerson
     extra=1
 
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    model = ProductType
+    search_fields  = ["name"]
+
 @admin.register(Establishment)
 # class EstablishmentAdmin(ExportActionModelAdmin, ReverseModelAdmin, TabbedModelAdmin):
 class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAdmin):
     model = Establishment
+    # search_fields   = ["product_type", ]
+    autocomplete_fields  = ["product_type", ]
     list_per_page = 20
     except_activities = ['Medical X-Ray', 'Veterinary X-Ray', 'Dental X-Ray', 'Educational X-Ray', 'MRI', 'CTScan']
     # fieldsets = [
@@ -217,75 +224,75 @@ class EstablishmentAdmin(NestedModelAdmin, ExportActionModelAdmin, TabbedModelAd
         # ('Records', tab_record),
     ]
 
-    def folder(self, obj):
-        return obj.record.folder_id
+    def folder(self, establishment):
+        return establishment.record.folder_id
 
-    def product_type(self, obj):
-        return obj.product_type.name
+    def product_type(self, establishment):
+        return establishment.product_type.name
 
-    def primary_activity(self, obj):
-        return obj.primary_activity.name
+    def primary_activity(self, establishment):
+        return establishment.primary_activity.name
 
-    def specific_activities(self, obj):
-        return obj.specific_activities()
+    def specific_activities(self, establishment):
+        return establishment.specific_activities()
 
-    def address(self, obj):
-        return obj.plant_address.full_address()
+    def address(self, establishment):
+        return establishment.plant_address.full_address()
 
-    def lto_number(self, obj):
+    def lto_number(self, establishment):
         try:
-            obj.ltos.first().lto_number
+            establishment.ltos.first().lto_number
         except:
             return "N/A"
         else:
-            return obj.ltos.first().lto_number
+            return establishment.ltos.first().lto_number
 
-    def expiry(self, obj):
+    def expiry(self, establishment):
         try:
-            obj.ltos.first().expiry
+            establishment.ltos.first().expiry
         except:
             return "N/A"
         else:
-            return obj.ltos.first().expiry
+            return establishment.ltos.first().expiry
 
-    def response_change(self, request, obj):
+    def response_change(self, request, establishment):
         return redirect('/admin/masterlist/establishment')
 
-    def last_inspection(self, obj):
-        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
-            return obj.record.inspections.latest().date_inspected
+    def last_inspection(self, establishment):
+        if establishment.specific_activity.filter(name__in=self.except_activities).exists()==False:
+            return establishment.record.inspections.latest().date_inspected
         else:
             return 'N/A'
 
-    def next_inspection(self, obj):
+    def next_inspection(self, establishment):
         next_date_inspection = ''
-        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
+        if establishment.specific_activity.filter(name__in=self.except_activities).exists()==False:
             try:
-                obj.record.inspections.latest()
+                establishment.record.inspections.latest()
             except:
                 return 'For inspection'
             else:
-                frequency_of_inspection = obj.record.inspections.latest().frequency_of_inspection
+                frequency_of_inspection = establishment.record.inspections.latest().frequency_of_inspection
                 if frequency_of_inspection:
-                    next_date_inspection = obj.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
+                    next_date_inspection = establishment.record.inspections.latest().date_inspected + relativedelta(years=int(frequency_of_inspection))
                 else:
                     return 'No Risk Assessment'
             return next_date_inspection
         else:
             return 'N/A'
 
-    def type_of_inspection(self, obj):
-        if obj.specific_activity.filter(name__in=self.except_activities).exists()==False:
-            return obj.record.inspections.latest().inspection_type
+    def type_of_inspection(self, establishment):
+        if establishment.specific_activity.filter(name__in=self.except_activities).exists()==False:
+            return establishment.record.inspections.latest().inspection_type
         else:
             return 'N/A'
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request, establishment=None):
         return False
 
-    def save_model(self, request, obj, form, change):
-        obj.modified_by = request.user
-        super().save_model(request, obj, form, change)
+    def save_model(self, request, establishment, form, change):
+        establishment.modified_by = request.user
+        super().save_model(request, establishment, form, change)
 
 @admin.register(QualifiedPerson)
 class QualifiedPersonAdmin(ExportActionModelAdmin):

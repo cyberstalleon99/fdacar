@@ -4,6 +4,7 @@ from datetime import datetime
 from dateutil import relativedelta
 from . import mymanagers
 from django.conf import settings
+from smart_selects.db_fields import ChainedForeignKey
 
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
@@ -94,10 +95,10 @@ class CityOrMunicipality(models.Model):
         return str
 
 class Address(models.Model):
-    address = models.CharField(max_length=250)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
-    municipality_or_city = models.ForeignKey(CityOrMunicipality, on_delete=models.CASCADE)
+    address                 = models.CharField(max_length=250)
+    region                  = models.ForeignKey(Region, on_delete=models.CASCADE)
+    province                = ChainedForeignKey(Province, chained_field="region", chained_model_field="region", show_all=False, auto_choose=True, sort=True)
+    municipality_or_city    = ChainedForeignKey(CityOrMunicipality, chained_field="province", chained_model_field="province", show_all=False, auto_choose=True, sort=True)
 
     def __str__(self):
         return self.address
